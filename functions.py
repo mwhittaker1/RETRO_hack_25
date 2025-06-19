@@ -118,6 +118,56 @@ class ReturnsClusteringAnalysis:
         ].groupby('CUSTOMER_EMAILID').size()
         customer_agg['RECENT_RETURNS'] = recent_returns.fillna(0)
         
+        # RECENT vs AVERAGE RETURN RATIO - Churn Predictor
+        # Filter to customers with sufficient order history (10+ orders)
+        customers_with_history = customer_agg[customer_agg['SALES_ORDER_NO_nunique'] >= 10].index
+        
+        recent_vs_avg_ratios = []
+        for customer_id in customers_with_history:
+            customer_data = analysis_df[analysis_df['CUSTOMER_EMAILID'] == customer_id].copy()
+            customer_data = customer_data.sort_values('ORDER_DATE')
+            
+            # Method 1: Last 25% of orders (or minimum 3 orders)
+            total_orders = customer_data['SALES_ORDER_NO'].nunique()
+            recent_order_count = max(3, int(total_orders * 0.25))
+            
+            # Get recent order numbers
+            recent_order_numbers = customer_data['SALES_ORDER_NO'].unique()[-recent_order_count:]
+            
+            # Calculate recent return rate
+            recent_data = customer_data[customer_data['SALES_ORDER_NO'].isin(recent_order_numbers)]
+            recent_items_returned = (recent_data['RETURN_QTY'] > 0).sum()
+            recent_total_items = len(recent_data)
+            recent_return_rate = recent_items_returned / recent_total_items if recent_total_items > 0 else 0
+            
+            # Overall return rate for this customer
+            overall_return_rate = customer_agg.loc[customer_id, 'RETURN_RATE']
+            
+            # Calculate ratio (recent vs average)
+            if overall_return_rate > 0:
+                recent_vs_avg_ratio = recent_return_rate / overall_return_rate
+            else:
+                recent_vs_avg_ratio = 1.0 if recent_return_rate == 0 else 5.0  # High value if started returning
+            
+            recent_vs_avg_ratios.append({
+                'CUSTOMER_EMAILID': customer_id,
+                'RECENT_RETURN_RATE': recent_return_rate,
+                'RECENT_VS_AVG_RATIO': recent_vs_avg_ratio,
+                'RECENT_ORDER_COUNT': recent_order_count
+            })
+        
+        # Convert to DataFrame and merge
+        recent_behavior_df = pd.DataFrame(recent_vs_avg_ratios).set_index('CUSTOMER_EMAILID')
+        
+        # Add to customer_agg (with defaults for customers with <10 orders)
+        customer_agg['RECENT_RETURN_RATE'] = recent_behavior_df['RECENT_RETURN_RATE'].fillna(0)
+        customer_agg['RECENT_VS_AVG_RATIO'] = recent_behavior_df['RECENT_VS_AVG_RATIO'].fillna(1.0)
+        customer_agg['RECENT_ORDER_COUNT'] = recent_behavior_df['RECENT_ORDER_COUNT'].fillna(0)
+        
+        # Churn risk indicators
+        customer_agg['RETURN_TREND_INCREASING'] = (customer_agg['RECENT_VS_AVG_RATIO'] > 1.5).astype(int)
+        customer_agg['RETURN_TREND_DECREASING'] = (customer_agg['RECENT_VS_AVG_RATIO'] < 0.5).astype(int)
+
         # Return timing analysis (if valid return dates exist)
         if len(returned_items) > 0:
             return_timing = returned_items.groupby('CUSTOMER_EMAILID')['DAYS_TO_RETURN'].agg(['mean', 'std'])
@@ -187,6 +237,8 @@ class ReturnsClusteringAnalysis:
             'AVG_RETURNS_PER_ORDER',          # Batch return behavior
             'RETURN_FREQUENCY_RATIO',         # Returns per order ratio
             'AVG_RETURN_INTENSITY',           # Partial vs full return tendency
+            'RECENT_VS_AVG_RATIO',            # Recent vs historical return behavior
+            'RETURN_TREND_INCREASING',        # Binary: Return trend going up
         ]
         
         print(f"\nUsing features for clustering: {clustering_features}")
@@ -209,6 +261,9 @@ class ReturnsClusteringAnalysis:
         if 'CLUSTER' in features_for_clustering.columns:
             features_for_clustering = features_for_clustering.drop('CLUSTER', axis=1)
         
+        # Store features for future usage
+        self._optimiation_features = features_for_clustering.copy()
+
         # Scale features
         X_scaled = self.scaler.fit_transform(features_for_clustering)
         
@@ -252,14 +307,18 @@ class ReturnsClusteringAnalysis:
     def perform_clustering(self, n_clusters=5):
         """Perform K-means clustering"""
         
-        if self.customer_features is None:
-            self.prepare_customer_features()
-        
-        # Remove CLUSTER column if it exists from previous runs
-        features_for_clustering = self.customer_features.copy()
-        if 'CLUSTER' in features_for_clustering.columns:
-            features_for_clustering = features_for_clustering.drop('CLUSTER', axis=1)
-        
+        if hasattr(self, '_optimization_features'):
+            features_for_clustering = self._optimization_features.copy()
+            print("Using features from optimization run")
+        else:
+            if self.customer_features is None:
+                self.prepare_customer_features()
+            
+            features_for_clustering = self.customer_features.copy()
+            if 'CLUSTER' in features_for_clustering.columns:
+                features_for_clustering = features_for_clustering.drop('CLUSTER', axis=1)
+            print("No optimization run found - using current features")
+
         # Debug: print actual feature columns
         print(f"Features for clustering: {list(features_for_clustering.columns)}")
         print(f"Number of features: {len(features_for_clustering.columns)}")
@@ -311,7 +370,9 @@ class ReturnsClusteringAnalysis:
             'RETURN_TIMING_SPREAD': 'mean',
             'AVG_RETURNS_PER_ORDER': 'mean',
             'RETURN_FREQUENCY_RATIO': 'mean',
-            'AVG_RETURN_INTENSITY': 'mean'
+            'AVG_RETURN_INTENSITY': 'mean',
+            'RECENT_VS_AVG_RATIO': 'mean',
+            'RETURN_TREND_INCREASING': 'mean',
         }).round(3)
         
         # Flatten column names
@@ -334,7 +395,9 @@ class ReturnsClusteringAnalysis:
             'RETURN_TIMING_SPREAD_mean': 'AVG_RETURN_TIMING_SPREAD',
             'AVG_RETURNS_PER_ORDER_mean': 'AVG_RETURNS_PER_ORDER',
             'RETURN_FREQUENCY_RATIO_mean': 'AVG_RETURN_FREQUENCY_RATIO',
-            'AVG_RETURN_INTENSITY_mean': 'AVG_RETURN_INTENSITY'
+            'AVG_RETURN_INTENSITY_mean': 'AVG_RETURN_INTENSITY',
+            'RECENT_VS_AVG_RATIO_mean': 'AVG_RECENT_VS_AVG_RATIO',
+            'RETURN_TREND_INCREASING_mean': 'AVG_RETURN_TREND_INCREASING'
         }
         
         cluster_summary = cluster_summary.rename(columns=rename_dict)
@@ -350,6 +413,12 @@ class ReturnsClusteringAnalysis:
         recent_orders_25 = self.customer_features['RECENT_ORDERS'].quantile(0.25)
         return_intensity_75 = self.customer_features['AVG_RETURN_INTENSITY'].quantile(0.75)
         returns_per_order_75 = self.customer_features['AVG_RETURNS_PER_ORDER'].quantile(0.75)
+        if 'RECENT_VS_AVG_RATIO' in self.customer_features.columns:
+            recent_vs_avg_75 = self.customer_features['RECENT_VS_AVG_RATIO'].quantile(0.75)
+            recent_vs_avg_25 = self.customer_features['RECENT_VS_AVG_RATIO'].quantile(0.25)
+        else:
+            recent_vs_avg_75 = 2.0  # Default fallback
+            recent_vs_avg_25 = 0.5
         
         print(f"\nData-driven thresholds:")
         print(f"Return Rate - 75th percentile: {return_rate_75:.3f}")
@@ -358,6 +427,8 @@ class ReturnsClusteringAnalysis:
         print(f"Recent Orders - 25th percentile: {recent_orders_25:.1f}")
         print(f"Return Intensity - 75th percentile: {return_intensity_75:.3f}")
         print(f"Returns Per Order - 75th percentile: {returns_per_order_75:.2f}")
+        print(f"Recent vs Avg Ratio - 75th percentile: {recent_vs_avg_75:.2f}")
+
 
         # Create cluster interpretations with data-driven thresholds
         interpretations = {}
@@ -365,6 +436,15 @@ class ReturnsClusteringAnalysis:
             profile = cluster_summary.loc[cluster]
             
             # Determine cluster characteristics based on combined order-return behavior
+            if ('RECENT_VS_AVG_RATIO' in cluster_summary.columns and 
+                profile.get('RECENT_VS_AVG_RATIO', 1.0) > recent_vs_avg_75 and
+                profile['AVG_RECENT_ORDERS'] <= recent_orders_25):
+                cluster_type = "🚨 CHURN ALERT - Return Behavior Worsening"
+                action = "Immediate intervention - analyze recent order issues"
+            if (profile['AVG_RECENT_VS_AVG_RATIO'] > recent_vs_avg_75 and
+                profile['AVG_RETURN_TREND_INCREASING'] > 0.3):  # 30%+ have increasing trend
+                cluster_type = "⚠️ CHURN ALERT - Increasing Return Trend"
+                action = "Immediate intervention - return behavior worsening"
             if (profile['AVG_RETURN_RATE'] >= return_rate_75 and 
                 profile['AVG_RETURN_RATIO'] >= return_ratio_75):
                 cluster_type = "HIGH RISK - Heavy Returners"
@@ -389,6 +469,7 @@ class ReturnsClusteringAnalysis:
                     profile['AVG_RETURN_RATE'] >= return_rate_75):
                 cluster_type = "COMPLEX - High Volume High Returns"
                 action = "Personalized service + product quality review"
+            
             elif profile['AVG_PRODUCT_VARIETY'] >= self.customer_features['SKU_nunique'].quantile(0.75):
                 cluster_type = "EXPLORERS - High Product Variety"
                 action = "Product discovery campaigns"
