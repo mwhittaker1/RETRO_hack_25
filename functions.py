@@ -16,6 +16,7 @@ class ReturnsClusteringAnalysis:
         Initialize with your returns dataframe
         Expected columns: CUSTOMER_EMAILID, SALES_ORDER_NO, SKU, SALES_QTY, 
             RETURN_QTY, ORDER_DATE, RETURN_DATE, UNITS_RETURNED_FLAG
+        Note: Each row represents a combined order-return record, not separate transactions
         """
         self.df = df.copy()
         self.customer_features = None
@@ -23,187 +24,175 @@ class ReturnsClusteringAnalysis:
         self.scaler = StandardScaler()
         
     def prepare_customer_features(self):
-        """Create customer-level features for clustering"""
+        """Create customer-level features for clustering from combined order-return data"""
         
-        # Convert dates
+        # Convert dates - handle Excel serial numbers for RETURN_DATE
         self.df['ORDER_DATE'] = pd.to_datetime(self.df['ORDER_DATE'])
-        
-        # Identify actual returns using UNITS_RETURNED_FLAG and RETURN_QTY
-        print("Analyzing data structure...")
-        print(f"UNITS_RETURNED_FLAG distribution:")
-        print(self.df['UNITS_RETURNED_FLAG'].value_counts())
-        print(f"\nRecords with RETURN_QTY > 0: {(self.df['RETURN_QTY'] > 0).sum():,}")
-        
-        # Method 1: Use UNITS_RETURNED_FLAG = 'Y' to identify returns
-        actual_returns = self.df[self.df['UNITS_RETURNED_FLAG'] == 'Yes'].copy()
-        
-        # Verify this matches RETURN_QTY > 0
-        returns_by_qty = self.df[self.df['RETURN_QTY'] > 0].copy()
-        
-        print(f"Returns by FLAG='Yes': {len(actual_returns):,}")
-        print(f"Returns by QTY>0: {len(returns_by_qty):,}")
-        
-        # Should match, but if not, use the larger dataset.
-        if len(returns_by_qty) > len(actual_returns):
-            print("Using RETURN_QTY > 0 method (more comprehensive)")
-            actual_returns = returns_by_qty
-        else:
-            print("Using UNITS_RETURNED_FLAG = 'Yes' method")
-        
-        print(f"Final return records: {len(actual_returns):,} out of {len(self.df):,} total records")
-        
-        # convert return dates to datetime
-        actual_returns['RETURN_DATE'] = pd.to_datetime(actual_returns['RETURN_DATE'], errors='coerce')
+                
+        # Convert Excel serial numbers to dates for RETURN_DATE
+        def convert_excel_date(date_val):
+            if pd.isna(date_val) or date_val == '-':
+                return pd.NaT
+            try:
+                # Convert Excel serial number to datetime
+                # Excel serial date starts from 1900-01-01 (but Excel incorrectly treats 1900 as leap year)
+                return pd.to_datetime('1899-12-30') + pd.Timedelta(days=float(date_val))
+            except:
+                return pd.NaT
 
-        # Get customers who have made returns
-        customers_with_returns = actual_returns['CUSTOMER_EMAILID'].unique()
+        self.df['RETURN_DATE'] = self.df['RETURN_DATE'].apply(convert_excel_date)        
         
-        # Get ALL records (sales + returns) for these customers
-        all_customer_records = self.df[
-            self.df['CUSTOMER_EMAILID'].isin(customers_with_returns)
-        ].copy()
+        print("Analyzing combined order-return data structure...")
+        print(f"Total records: {len(self.df):,}")
+        print(f"Records with returns (RETURN_QTY > 0): {(self.df['RETURN_QTY'] > 0).sum():,}")
+        print(f"Records with no returns (RETURN_QTY = 0): {(self.df['RETURN_QTY'] == 0).sum():,}")
+        print(f"Valid return dates: {self.df['RETURN_DATE'].notna().sum():,}")
+        
+        # Focus on customers who have made at least one return
+        customers_with_returns = self.df[self.df['RETURN_QTY'] > 0]['CUSTOMER_EMAILID'].unique()
+        analysis_df = self.df[self.df['CUSTOMER_EMAILID'].isin(customers_with_returns)].copy()
         
         print(f"Analyzing {len(customers_with_returns):,} customers who have made returns")
-        print(f"Total records for these customers: {len(all_customer_records):,}")
+        print(f"Total records for these customers: {len(analysis_df):,}")
         
-        # Separate sales and returns for better analysis
-        customer_sales = all_customer_records[all_customer_records['UNITS_RETURNED_FLAG'] != 'Yes']
-        customer_returns = all_customer_records[all_customer_records['UNITS_RETURNED_FLAG'] == 'Yes']
+        # Calculate days to return for items that were returned
+        returned_items = analysis_df[
+            (analysis_df['RETURN_QTY'] > 0) & (analysis_df['RETURN_DATE'].notna())
+        ].copy()
         
-        print(f"Sales records: {len(customer_sales):,}")
-        print(f"Return records: {len(customer_returns):,}")
+        if len(returned_items) > 0:
+            returned_items['DAYS_TO_RETURN'] = (
+                returned_items['RETURN_DATE'] - returned_items['ORDER_DATE']
+            ).dt.days
+            print(f"Items with valid return timing: {len(returned_items):,}")
+        else:
+            print("No valid return dates found - proceeding without return timing analysis")
         
-        # Clean return_date "-" values
-        customer_returns['RETURN_DATE'] = pd.to_datetime(customer_returns['RETURN_DATE'], errors='coerce')
-        print(f"Valid return dates: {customer_returns['RETURN_DATE'].notna().sum():,}")
-
-        # Aggregate sales data by customer
-        sales_agg = customer_sales.groupby('CUSTOMER_EMAILID').agg({
-            'SALES_ORDER_NO': 'nunique',  # Total unique orders
-            'SKU': 'nunique',  # Product variety purchased
-            'SALES_QTY': ['sum', 'mean'],  # Total and average purchase quantities
-            'ORDER_DATE': ['min', 'max'],  # Customer lifetime
-        })
+        # Main customer aggregation
+        customer_agg = analysis_df.groupby('CUSTOMER_EMAILID').agg({
+            'SALES_ORDER_NO': 'nunique',              # Unique orders
+            'SKU': 'nunique',                         # Product variety purchased
+            'SALES_QTY': ['sum', 'mean'],             # Purchase behavior
+            'RETURN_QTY': ['sum', 'mean'],            # Return quantities
+            'ORDER_DATE': ['min', 'max'],             # Customer lifetime
+        }).round(2)
         
-        # Aggregate returns data by customer  
-        returns_agg = customer_returns.groupby('CUSTOMER_EMAILID').agg({
-            'RETURN_QTY': ['sum', 'mean', 'count'],  # Return patterns
-            'RETURN_NO': 'nunique',  # Number of return transactions
-            'SKU': 'nunique',  # Variety of products returned
-            'RETURN_DATE': ['min', 'max'],  # Return lifetime
-        })
+        # Flatten column names
+        customer_agg.columns = ['_'.join(col).strip() if isinstance(col, tuple) else col 
+            for col in customer_agg.columns]
         
-        # Flatten DataFrames to single-level columns Fbefore joining
-        sales_agg.columns = ['_'.join(col).strip() if isinstance(col, tuple) else col for col in sales_agg.columns]
-        returns_agg.columns = ['_'.join(col).strip() if isinstance(col, tuple) else col for col in returns_agg.columns]
+        # Calculate return metrics
+        customer_agg['RETURN_RATIO'] = (
+            customer_agg['RETURN_QTY_sum'] / customer_agg['SALES_QTY_sum']
+        )
         
-        # Add prefix to return columns to avoid conflicts
-        returns_agg = returns_agg.add_prefix('RETURN_')
+        # Count of items that had returns (not return transactions)
+        items_with_returns = analysis_df[analysis_df['RETURN_QTY'] > 0].groupby('CUSTOMER_EMAILID').size()
+        customer_agg['ITEMS_RETURNED_COUNT'] = items_with_returns.fillna(0)
         
-        # Combine sales and returns data
-        customer_agg = sales_agg.join(returns_agg, how='inner')
+        # Return rate = items returned / total items purchased
+        total_items_purchased = analysis_df.groupby('CUSTOMER_EMAILID').size()
+        customer_agg['RETURN_RATE'] = customer_agg['ITEMS_RETURNED_COUNT'] / total_items_purchased
         
-        # Flatten column names for sales
-        sales_columns = {}
-        for col in customer_agg.columns:
-            if isinstance(col, tuple):
-                sales_columns[col] = f'{col[0]}_{col[1]}'
-            else:
-                sales_columns[col] = col
+        # Product return diversity
+        return_sku_variety = analysis_df[analysis_df['RETURN_QTY'] > 0].groupby('CUSTOMER_EMAILID')['SKU'].nunique()
+        customer_agg['RETURN_PRODUCT_VARIETY'] = return_sku_variety.fillna(0)
         
-        customer_agg = customer_agg.rename(columns=sales_columns)
-        
-        # Calculate derived features
+        # Customer lifetime
         customer_agg['CUSTOMER_LIFETIME_DAYS'] = (
             customer_agg['ORDER_DATE_max'] - customer_agg['ORDER_DATE_min']
         ).dt.days
         
-        # Return rate = return transactions per order
-        customer_agg['RETURN_RATE'] = (
-            customer_agg['RETURN_RETURN_NO_nunique'] / customer_agg['SALES_ORDER_NO_nunique']
-        )
-        
-        # Return ratio = quantity returned vs purchased
-        customer_agg['RETURN_RATIO'] = (
-            customer_agg['RETURN_RETURN_QTY_sum'] / customer_agg['SALES_QTY_sum']
-        )
-        
-        # Return frequency = individual return events
-        customer_agg['RETURN_FREQUENCY'] = customer_agg['RETURN_RETURN_QTY_count']
-        
-        # Product return diversity = how many different SKUs returned
-        customer_agg['RETURN_PRODUCT_VARIETY'] = customer_agg['RETURN_SKU_nunique']
-        
         # Recent activity (last 90 days)
-        recent_date = all_customer_records['ORDER_DATE'].max() - timedelta(days=90)
-        recent_sales = customer_sales[customer_sales['ORDER_DATE'] >= recent_date].groupby('CUSTOMER_EMAILID').size()
-        valid_return_dates = customer_returns['RETURN_DATE'].notna()
-        recent_returns = customer_returns[
-            valid_return_dates & (customer_returns['RETURN_DATE'] >= recent_date)
-        ].groupby('CUSTOMER_EMAILID').size()
+        recent_date = analysis_df['ORDER_DATE'].max() - timedelta(days=90)
         
-        customer_agg['RECENT_ORDERS'] = recent_sales.fillna(0)
+        # Recent orders (unique order numbers)
+        recent_orders = analysis_df[
+            analysis_df['ORDER_DATE'] >= recent_date
+        ].groupby('CUSTOMER_EMAILID')['SALES_ORDER_NO'].nunique()
+        customer_agg['RECENT_ORDERS'] = recent_orders.fillna(0)
+        
+        # Recent returns (items returned recently)
+        recent_returns = analysis_df[
+            (analysis_df['ORDER_DATE'] >= recent_date) & (analysis_df['RETURN_QTY'] > 0)
+        ].groupby('CUSTOMER_EMAILID').size()
         customer_agg['RECENT_RETURNS'] = recent_returns.fillna(0)
         
-        # Cross-order return analysis
-        print("Calculating cross-order return patterns...")
-
-        # Get return timing relative to ALL orders (not just the returned order)
-        customer_orders = all_customer_records.groupby('CUSTOMER_EMAILID')['ORDER_DATE'].agg(['min', 'max', 'count'])
-        customer_returns_timing = customer_returns.groupby('CUSTOMER_EMAILID')['ORDER_DATE'].agg(['min', 'max', 'count'])
-
-        # Time between first order and first return
-        customer_agg['DAYS_TO_FIRST_RETURN'] = (
-            customer_returns_timing['min'] - customer_orders['min']
-        ).dt.days
-
-        # Return concentration - do they return everything at once?
-        return_date_spread = customer_returns.groupby('CUSTOMER_EMAILID')['ORDER_DATE'].agg(
-            lambda x: (x.max() - x.min()).days if len(x) > 1 else 0
+        # Return timing analysis (if valid return dates exist)
+        if len(returned_items) > 0:
+            return_timing = returned_items.groupby('CUSTOMER_EMAILID')['DAYS_TO_RETURN'].agg(['mean', 'std'])
+            customer_agg['AVG_DAYS_TO_RETURN'] = return_timing['mean'].fillna(0)
+            customer_agg['RETURN_TIMING_CONSISTENCY'] = return_timing['std'].fillna(0)
+            
+            # First return timing
+            first_return_timing = returned_items.groupby('CUSTOMER_EMAILID')['DAYS_TO_RETURN'].min()
+            customer_agg['DAYS_TO_FIRST_RETURN'] = first_return_timing.fillna(0)
+            
+            # Return timing spread
+            return_spread = returned_items.groupby('CUSTOMER_EMAILID')['DAYS_TO_RETURN'].agg(
+                lambda x: x.max() - x.min() if len(x) > 1 else 0
+            )
+            customer_agg['RETURN_TIMING_SPREAD'] = return_spread.fillna(0)
+            
+        else:
+            # Use placeholder values when no return dates available
+            customer_agg['AVG_DAYS_TO_RETURN'] = 0
+            customer_agg['RETURN_TIMING_CONSISTENCY'] = 0
+            customer_agg['DAYS_TO_FIRST_RETURN'] = 0
+            customer_agg['RETURN_TIMING_SPREAD'] = 0
+        
+        # Advanced return behavior patterns
+        
+        # Batch return behavior - items returned on same order
+        returns_per_order = analysis_df[analysis_df['RETURN_QTY'] > 0].groupby(
+            ['CUSTOMER_EMAILID', 'SALES_ORDER_NO']
+        ).size().reset_index(name='items_returned_per_order')
+        
+        avg_returns_per_order = returns_per_order.groupby('CUSTOMER_EMAILID')['items_returned_per_order'].mean()
+        customer_agg['AVG_RETURNS_PER_ORDER'] = avg_returns_per_order.fillna(0)
+        
+        # Return frequency relative to purchase frequency
+        customer_agg['RETURN_FREQUENCY_RATIO'] = (
+            customer_agg['ITEMS_RETURNED_COUNT'] / customer_agg['SALES_ORDER_NO_nunique']
         )
-        customer_agg['RETURN_DATE_SPREAD'] = return_date_spread.fillna(0)
-
-        # Stockpiling indicators
-        customer_agg['ORDERS_BEFORE_FIRST_RETURN'] = customer_orders['count'] - customer_returns_timing['count']
-
-        # Batch return behavior - returns per distinct return date
-        returns_per_date = customer_returns.groupby(['CUSTOMER_EMAILID', 'ORDER_DATE']).size().reset_index(name='returns_per_date')
-        avg_returns_per_batch = returns_per_date.groupby('CUSTOMER_EMAILID')['returns_per_date'].mean()
-        customer_agg['AVG_RETURNS_PER_BATCH'] = avg_returns_per_batch.fillna(0)
-
-        # Return velocity - returns per day during active return period
-        customer_agg['RETURN_VELOCITY'] = np.where(
-            customer_agg['RETURN_DATE_SPREAD'] > 0,
-            customer_agg['RETURN_FREQUENCY'] / customer_agg['RETURN_DATE_SPREAD'],
-            customer_agg['RETURN_FREQUENCY']  # If all returns same day
-        )
-
-        # Fill NaN values
+        
+        # Partial vs full returns - average return intensity per returned item
+        partial_return_analysis = analysis_df[analysis_df['RETURN_QTY'] > 0].copy()
+        if len(partial_return_analysis) > 0:
+            partial_return_analysis['RETURN_INTENSITY'] = (
+                partial_return_analysis['RETURN_QTY'] / partial_return_analysis['SALES_QTY']
+            )
+            avg_return_intensity = partial_return_analysis.groupby('CUSTOMER_EMAILID')['RETURN_INTENSITY'].mean()
+            customer_agg['AVG_RETURN_INTENSITY'] = avg_return_intensity.fillna(0)
+        else:
+            customer_agg['AVG_RETURN_INTENSITY'] = 0
+        
+        # Fill any remaining NaN values
         customer_agg = customer_agg.fillna(0)
         
         # Select features for clustering
         clustering_features = [
-            'SALES_ORDER_NO_nunique',      # Order frequency
-            'SKU_nunique',                 # Product variety purchased
-            'RETURN_RATE',                 # Return rate (returns per order)
-            'RETURN_RATIO',                # Return intensity (qty returned/purchased)
-            'RETURN_FREQUENCY',            # Total return events
-            'RETURN_PRODUCT_VARIETY',      # Variety of products returned
-            'CUSTOMER_LIFETIME_DAYS',      # Customer tenure
-            'RECENT_ORDERS',               # Recent purchase activity
-            'RECENT_RETURNS',              # Recent return activity
-            'SALES_QTY_mean',              # Average order size
-            'DAYS_TO_FIRST_RETURN',        # Cross-order: time to first return
-            'RETURN_DATE_SPREAD',          # Stockpiling: return timing spread
-            'ORDERS_BEFORE_FIRST_RETURN',  # Stockpiling: orders before returning
-            'AVG_RETURNS_PER_BATCH',       # Batch behavior
-            'RETURN_VELOCITY',             # Returns per day intensity
+            'SALES_ORDER_NO_nunique',         # Order frequency
+            'SKU_nunique',                    # Product variety purchased
+            'RETURN_RATE',                    # Items returned / total items
+            'RETURN_RATIO',                   # Quantity returned / quantity purchased
+            'ITEMS_RETURNED_COUNT',           # Total items returned
+            'RETURN_PRODUCT_VARIETY',         # Variety of products returned
+            'CUSTOMER_LIFETIME_DAYS',         # Customer tenure
+            'RECENT_ORDERS',                  # Recent purchase activity
+            'RECENT_RETURNS',                 # Recent return activity
+            'SALES_QTY_mean',                 # Average purchase quantity per item
+            'AVG_DAYS_TO_RETURN',             # Average return timing
+            'RETURN_TIMING_SPREAD',           # Return timing variability
+            'AVG_RETURNS_PER_ORDER',          # Batch return behavior
+            'RETURN_FREQUENCY_RATIO',         # Returns per order ratio
+            'AVG_RETURN_INTENSITY',           # Partial vs full return tendency
         ]
         
         print(f"\nUsing features for clustering: {clustering_features}")
         
         self.customer_features = customer_agg[clustering_features].copy()
-        self.customer_features = self.customer_features.round(2)
+        self.customer_features = self.customer_features.round(3)
         
         print(f"Customer features created for {len(self.customer_features):,} customers")
         
@@ -272,9 +261,7 @@ class ReturnsClusteringAnalysis:
             features_for_clustering = features_for_clustering.drop('CLUSTER', axis=1)
         
         # Debug: print actual feature columns
-        print(f"Features for clustering:")
-        for col in features_for_clustering.columns:
-            print(f" - {col}\n")
+        print(f"Features for clustering: {list(features_for_clustering.columns)}")
         print(f"Number of features: {len(features_for_clustering.columns)}")
         
         # Use transform() instead of fit_transform() to use existing scaler
@@ -293,10 +280,6 @@ class ReturnsClusteringAnalysis:
         
         # Add clusters to customer features
         self.customer_features['CLUSTER'] = cluster_labels
-        
-        # Debug: print cluster centers shape
-        print(f"Cluster centers shape: {kmeans.cluster_centers_.shape}")
-        print(f"Features columns length: {len(features_for_clustering.columns)}")
         
         # Calculate cluster centers in original scale
         cluster_centers = pd.DataFrame(
@@ -318,19 +301,22 @@ class ReturnsClusteringAnalysis:
             'SALES_ORDER_NO_nunique': ['mean', 'count'],
             'RETURN_RATE': 'mean',
             'RETURN_RATIO': 'mean',
+            'ITEMS_RETURNED_COUNT': 'mean',
             'CUSTOMER_LIFETIME_DAYS': 'mean',
             'RECENT_ORDERS': 'mean',
+            'RECENT_RETURNS': 'mean',
             'SKU_nunique': 'mean',
-            'SALES_QTY_mean': 'mean'
-        }).round(2)
-        
-        # Add DAYS_TO_RETURN if available
-        if 'DAYS_TO_RETURN_mean' in self.customer_features.columns:
-            days_summary = self.customer_features.groupby('CLUSTER')['DAYS_TO_RETURN_mean'].mean().round(2)
-            cluster_summary = cluster_summary.join(days_summary.to_frame('DAYS_TO_RETURN_mean'))
+            'SALES_QTY_mean': 'mean',
+            'AVG_DAYS_TO_RETURN': 'mean',
+            'RETURN_TIMING_SPREAD': 'mean',
+            'AVG_RETURNS_PER_ORDER': 'mean',
+            'RETURN_FREQUENCY_RATIO': 'mean',
+            'AVG_RETURN_INTENSITY': 'mean'
+        }).round(3)
         
         # Flatten column names
-        cluster_summary.columns = ['_'.join(col).strip() if isinstance(col, tuple) else col for col in cluster_summary.columns]
+        cluster_summary.columns = ['_'.join(col).strip() if isinstance(col, tuple) else col 
+            for col in cluster_summary.columns]
         
         # Rename for clarity
         rename_dict = {
@@ -338,18 +324,23 @@ class ReturnsClusteringAnalysis:
             'SALES_ORDER_NO_nunique_count': 'CUSTOMER_COUNT',
             'RETURN_RATE_mean': 'AVG_RETURN_RATE',
             'RETURN_RATIO_mean': 'AVG_RETURN_RATIO',
+            'ITEMS_RETURNED_COUNT_mean': 'AVG_ITEMS_RETURNED',
             'CUSTOMER_LIFETIME_DAYS_mean': 'AVG_LIFETIME_DAYS',
             'RECENT_ORDERS_mean': 'AVG_RECENT_ORDERS',
+            'RECENT_RETURNS_mean': 'AVG_RECENT_RETURNS',
             'SKU_nunique_mean': 'AVG_PRODUCT_VARIETY',
             'SALES_QTY_mean_mean': 'AVG_ORDER_SIZE',
-            'DAYS_TO_RETURN_mean': 'AVG_DAYS_TO_RETURN'
+            'AVG_DAYS_TO_RETURN_mean': 'AVG_DAYS_TO_RETURN',
+            'RETURN_TIMING_SPREAD_mean': 'AVG_RETURN_TIMING_SPREAD',
+            'AVG_RETURNS_PER_ORDER_mean': 'AVG_RETURNS_PER_ORDER',
+            'RETURN_FREQUENCY_RATIO_mean': 'AVG_RETURN_FREQUENCY_RATIO',
+            'AVG_RETURN_INTENSITY_mean': 'AVG_RETURN_INTENSITY'
         }
         
         cluster_summary = cluster_summary.rename(columns=rename_dict)
         
         print("=== CLUSTER ANALYSIS ===")
-        for col in cluster_summary:
-            print(col+"\n")
+        print(cluster_summary)
         
         # Calculate percentiles for better thresholds
         return_rate_75 = self.customer_features['RETURN_RATE'].quantile(0.75)
@@ -357,59 +348,45 @@ class ReturnsClusteringAnalysis:
         return_ratio_75 = self.customer_features['RETURN_RATIO'].quantile(0.75)
         orders_75 = self.customer_features['SALES_ORDER_NO_nunique'].quantile(0.75)
         recent_orders_25 = self.customer_features['RECENT_ORDERS'].quantile(0.25)
+        return_intensity_75 = self.customer_features['AVG_RETURN_INTENSITY'].quantile(0.75)
+        returns_per_order_75 = self.customer_features['AVG_RETURNS_PER_ORDER'].quantile(0.75)
         
-        # stockpile thresholds
-        first_return_25 = self.customer_features['DAYS_TO_FIRST_RETURN'].quantile(0.25)
-        return_spread_75 = self.customer_features['RETURN_DATE_SPREAD'].quantile(0.75)
-        orders_before_return_75 = self.customer_features['ORDERS_BEFORE_FIRST_RETURN'].quantile(0.75)
-        returns_per_batch_75 = self.customer_features['AVG_RETURNS_PER_BATCH'].quantile(0.75)
-        velocity_75 = self.customer_features['RETURN_VELOCITY'].quantile(0.75)
-
         print(f"\nData-driven thresholds:")
-        print(f"Return Rate - 75th percentile: {return_rate_75:.2f}")
-        print(f"Return Ratio - 75th percentile: {return_ratio_75:.2f}")
+        print(f"Return Rate - 75th percentile: {return_rate_75:.3f}")
+        print(f"Return Ratio - 75th percentile: {return_ratio_75:.3f}")
         print(f"Orders - 75th percentile: {orders_75:.0f}")
-        print(f"Recent Orders - 25th percentile: {recent_orders_25:.2f}")
-        print(f"Days to First Return - 25th percentile: {first_return_25:.1f}")
-        print(f"Return Date Spread - 75th percentile: {return_spread_75:.1f}")
-        print(f"Orders Before First Return - 75th percentile: {orders_before_return_75:.1f}")
-        print(f"Returns Per Batch - 75th percentile: {returns_per_batch_75:.2f}")
-        print(f"Return Velocity - 75th percentile: {velocity_75:.3f}")
+        print(f"Recent Orders - 25th percentile: {recent_orders_25:.1f}")
+        print(f"Return Intensity - 75th percentile: {return_intensity_75:.3f}")
+        print(f"Returns Per Order - 75th percentile: {returns_per_order_75:.2f}")
 
         # Create cluster interpretations with data-driven thresholds
         interpretations = {}
         for cluster in cluster_summary.index:
             profile = cluster_summary.loc[cluster]
             
-            # Determine cluster characteristics based on your data distribution
-            if profile['AVG_RETURN_RATE'] >= return_rate_75 and profile['AVG_RETURN_RATIO'] >= return_ratio_75:
+            # Determine cluster characteristics based on combined order-return behavior
+            if (profile['AVG_RETURN_RATE'] >= return_rate_75 and 
+                profile['AVG_RETURN_RATIO'] >= return_ratio_75):
                 cluster_type = "HIGH RISK - Heavy Returners"
                 action = "Immediate retention intervention needed"
-            if (profile['ORDERS_BEFORE_FIRST_RETURN'] >= orders_before_return_75 and 
-                profile['RETURN_DATE_SPREAD'] <= 7):  # Many orders, then bulk returns within week
-                cluster_type = "STOCKPILERS - Order & Bulk Return"
-                action = "Return policy review + purchase limits"
-            elif (profile['AVG_RETURNS_PER_BATCH'] >= returns_per_batch_75 and 
-                profile['RETURN_VELOCITY'] >= velocity_75):
-                cluster_type = "BATCH RETURNERS - High Volume Fast Returns"
-                action = "Fraud investigation + account review"
-            elif profile['DAYS_TO_FIRST_RETURN'] <= first_return_25:
-                cluster_type = "IMMEDIATE RETURNERS - Quick Dissatisfaction"
-                action = "Pre-purchase education + sizing guides"
-            elif (profile['RETURN_DATE_SPREAD'] >= return_spread_75 and 
-                profile['AVG_RETURN_RATE'] >= return_rate_75):
-                cluster_type = "SYSTEMATIC RETURNERS - Spread Out High Returns"
-                action = "Account monitoring + personalized service"
-            elif profile['AVG_RETURN_RATE'] >= return_rate_75 and profile['AVG_RETURN_RATIO'] >= return_ratio_75:
-                cluster_type = "HIGH RISK - Heavy Returners"
-                action = "Immediate retention intervention needed"
-            elif profile['AVG_RETURN_RATE'] >= return_rate_75 and profile['AVG_RECENT_ORDERS'] <= recent_orders_25:
-                cluster_type = "CHURN RISK - High Return + Low Engagement"
-                action = "Re-engagement campaign with product recommendations"
-            elif profile['AVG_ORDERS'] >= orders_75 and profile['AVG_RETURN_RATE'] <= return_rate_25:
+            elif (profile['AVG_RETURNS_PER_ORDER'] >= returns_per_order_75 and 
+                profile['AVG_RETURN_INTENSITY'] >= return_intensity_75):
+                cluster_type = "BULK RETURNERS - High Volume Per Order"
+                action = "Order size limits + return policy review"
+            elif (profile['AVG_RETURN_INTENSITY'] >= return_intensity_75 and 
+                profile['AVG_DAYS_TO_RETURN'] <= 7):
+                cluster_type = "FAST FULL RETURNERS - Quick Complete Returns"
+                action = "Product education + sizing guides"
+            elif (profile['AVG_RETURN_RATE'] >= return_rate_75 and 
+                profile['AVG_RECENT_ORDERS'] <= recent_orders_25):
+                cluster_type = "CHURN RISK - High Returns + Low Engagement"
+                action = "Re-engagement campaign with better recommendations"
+            elif (profile['AVG_ORDERS'] >= orders_75 and 
+                profile['AVG_RETURN_RATE'] <= return_rate_25):
                 cluster_type = "VIP - High Volume Low Returns"
                 action = "Premium loyalty rewards program"
-            elif profile['AVG_ORDERS'] >= orders_75 and profile['AVG_RETURN_RATE'] >= return_rate_75:
+            elif (profile['AVG_ORDERS'] >= orders_75 and 
+                    profile['AVG_RETURN_RATE'] >= return_rate_75):
                 cluster_type = "COMPLEX - High Volume High Returns"
                 action = "Personalized service + product quality review"
             elif profile['AVG_PRODUCT_VARIETY'] >= self.customer_features['SKU_nunique'].quantile(0.75):
@@ -447,7 +424,7 @@ class ReturnsClusteringAnalysis:
         features_for_viz = self.customer_features.drop('CLUSTER', axis=1)
         
         # PCA for 2D visualization
-        X_scaled = self.scaler.fit_transform(features_for_viz)
+        X_scaled = self.scaler.transform(features_for_viz)
         pca = PCA(n_components=2)
         X_pca = pca.fit_transform(X_scaled)
         
