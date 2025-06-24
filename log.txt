@@ -1,0 +1,7 @@
+23:57:23::06:25 - ERROR - Error in feature creation: Unsupported file type: .txt
+23:57:23::06:25 - INFO - Loading data from paste.txt
+23:54:23::06:25 - ERROR - Error in feature creation: Unsupported file type: .txt
+23:54:23::06:25 - INFO - Loading data from paste.txt
+23:52:23::06:25 - ERROR - Error in feature creation: Unsupported file type: .txt
+23:52:23::06:25 - INFO - Loading data from paste.txt
+22:16:23::06:25 - INFO - Test log: logger is working and log.txt should be created.
