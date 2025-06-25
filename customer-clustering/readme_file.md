@@ -64,6 +64,18 @@ jupyter notebook create_clusters.ipynb
 python generate_excel_report.py
 ```
 
+### 5. Export the Silver Layer
+```bash
+# Export the silver layer to Excel/CSV based on size
+python export_silver_layer.py
+```
+
+### 6. Export the Gold Layer
+```bash
+# Export the gold layer to Excel/CSV based on size
+python export_gold_layer.py
+```
+
 ## Pipeline Architecture
 
 ```
@@ -73,8 +85,10 @@ python generate_excel_report.py
     ↓ [Data Quality & Validation]
 🥈 Silver Layer (silver_customer_features)  
     ↓ [Feature Engineering & Testing]
+    ↓ [Export to Excel/CSV]
 🥇 Gold Layer (gold_cluster_processed)
     ↓ [Scaling & Preprocessing]
+    ↓ [Export to Excel/CSV]
 🎯 Clustering Results (clustering_results, cluster_summary)
 ```
 
