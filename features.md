@@ -1,5 +1,38 @@
 """
 Customer Return Clustering Features - Categorized
+
+# Feature Selection and Optimization
+
+The clustering pipeline implements multi-stage feature selection to improve model quality:
+
+## Basic Feature Quality Controls
+- **100% Null Features**: Features with 100% null values are automatically removed
+- **Highly Correlated Features**: Features with correlation > 0.8 are reduced to avoid multicollinearity
+- **Feature Selection Metadata**: Each run tracks which features were removed and why
+
+## Advanced Feature Selection Techniques
+The pipeline now includes advanced feature selection methods:
+- **Variance Inflation Factor (VIF)**: Detects and removes multicollinearity beyond simple correlation
+- **Low-Variance Feature Filtering**: Removes features with minimal variance (< 0.01)
+- **Feature Importance Analysis**: Uses Random Forest to identify and remove low-importance features
+- **PCA Component Analysis**: Examines principal component loadings to reduce dimensionality
+- **Feature Stability Analysis**: Identifies unstable features across K-fold cross-validation
+- **Information Value (IV) Analysis**: Measures predictive power of features for business outcomes
+
+## Optimized Feature Selection Strategy
+Features flagged by multiple methods are prioritized for removal:
+- Primary candidates: Features flagged by 2+ selection techniques
+- Secondary candidates: Features flagged by only one technique but with extreme values
+- Gold layer tables track the feature selection methodology and results
+
+## Correlation Groups Identified
+The following feature groups show high correlation and are candidates for reduction:
+- Return Rate Group: `RETURN_RATE`, `RETURN_RATIO`, `RETURN_FREQUENCY_RATIO`, `HIGH_RETURN_CATEGORY_AFFINITY`
+- Order Volume Group: `SALES_ORDER_NO_nunique`, `RECENT_ORDERS`
+- Return Volume Group: `ITEMS_RETURNED_COUNT`, `RETURN_PRODUCT_VARIETY`
+
+# Feature Categories
+
 📊 BASIC VOLUME METRICS
 Core counting and frequency measures
 
