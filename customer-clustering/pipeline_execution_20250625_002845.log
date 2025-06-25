@@ -214,3 +214,59 @@ duckdb.duckdb.BinderException: Binder Error: table silver_customer_features has 
 
 2025-06-25 00:38:07,030 - ERROR - Failed to insert data into silver layer
 
+2025-06-25 01:11:49,828 - INFO - 4185141521 - Starting: Feature Engineering and Silver Layer Creation
+2025-06-25 01:12:40,430 - INFO - 4185141521 - Step 'Feature Engineering and Silver Layer Creation' completed in 50.60 seconds
+2025-06-25 01:14:11,099 - INFO - 4185141521 - Starting: Cluster Preprocessing and Gold Layer Creation
+2025-06-25 01:14:17,094 - INFO - 4185141521 - Step 'Cluster Preprocessing and Gold Layer Creation' failed in 6.00 seconds
+2025-06-25 01:14:17,095 - ERROR - 4185141521 - Subprocess failed: Command '['c:\\Code\\Local Code\\URBN\\RETRO_hack_25\\.venv\\Scripts\\python.exe', 'cluster_preprocessing.py', '--scaling', 'robust', '--variance-threshold', '0.01', '--outlier-contamination', '0.05']' returned non-zero exit status 1.
+2025-06-25 01:14:17,096 - ERROR - 4185141521 - STDOUT: 
+2025-06-25 01:14:17,096 - ERROR - 4185141521 - STDERR: 2025-06-25 01:14:15,894 - INFO - Starting cluster preprocessing pipeline...
+2025-06-25 01:14:15,894 - INFO - Parameters: scaling=robust, variance_threshold=0.01, contamination=0.05
+2025-06-25 01:14:15,913 - INFO - Connected to customer clustering database
+2025-06-25 01:14:15,913 - INFO - Silver layer contains 14,999 customer records
+2025-06-25 01:14:15,913 - INFO - Initialized ClusterPreprocessor with robust scaling
+2025-06-25 01:14:15,913 - INFO - Loading data from silver layer...
+2025-06-25 01:14:15,928 - INFO - Loaded 14999 customers with 44 features
+2025-06-25 01:14:15,928 - INFO - Selecting features for clustering...
+2025-06-25 01:14:15,928 - INFO - Including category_diversity_score: 99.8% customers have data
+2025-06-25 01:14:15,928 - INFO - Including category_loyalty_score: 100.0% customers have data
+2025-06-25 01:14:15,930 - INFO - Including high_return_category_affinity: 99.8% customers have data
+2025-06-25 01:14:15,930 - INFO - Including sku_adjacency_orders: 98.7% customers have data
+2025-06-25 01:14:15,930 - INFO - Including sku_adjacency_returns: 64.3% customers have data
+2025-06-25 01:14:15,930 - INFO - Including sku_adjacency_timing: 98.2% customers have data
+2025-06-25 01:14:15,930 - INFO - Including sku_adjacency_return_timing: 62.6% customers have data
+2025-06-25 01:14:15,930 - INFO - Including seasonal_susceptibility_orders: 85.9% customers have data
+2025-06-25 01:14:15,930 - INFO - Including seasonal_susceptibility_returns: 80.9% customers have data
+2025-06-25 01:14:15,930 - INFO - Including trend_product_category_order_rate: 99.6% customers have data
+2025-06-25 01:14:15,930 - INFO - Including trend_product_category_return_rate: 92.9% customers have data
+2025-06-25 01:14:15,932 - INFO - Selected 29 features for clustering:
+2025-06-25 01:14:15,932 - INFO -   volume_metrics: 5 features
+2025-06-25 01:14:15,932 - INFO -   return_behavior: 6 features
+2025-06-25 01:14:15,932 - INFO -   temporal_patterns: 3 features
+2025-06-25 01:14:15,932 - INFO -   recency_trends: 4 features
+2025-06-25 01:14:15,932 - INFO -   category_intelligence: 3 features
+2025-06-25 01:14:15,932 - INFO -   adjacency_patterns: 4 features
+2025-06-25 01:14:15,932 - INFO -   seasonal_trends: 2 features
+2025-06-25 01:14:15,932 - INFO -   trend_susceptibility: 2 features
+2025-06-25 01:14:15,932 - INFO - Handling missing values...
+2025-06-25 01:14:15,934 - INFO - Removing low variance features (threshold: 0.01)...
+2025-06-25 01:14:15,936 - INFO - Removed 1 low variance features:
+2025-06-25 01:14:15,936 - INFO -   category_loyalty_score: variance = 0.008292
+2025-06-25 01:14:15,937 - INFO - Detecting outliers using Isolation Forest (contamination: 0.05)...
+2025-06-25 01:14:16,210 - INFO - Detected 750 outliers (5.0%)
+2025-06-25 01:14:16,211 - INFO - Outlier characteristics:
+2025-06-25 01:14:16,211 - INFO -   Avg return rate: 0.393
+2025-06-25 01:14:16,211 - INFO -   Avg order count: 420.0
+2025-06-25 01:14:16,211 - INFO -   Avg lifetime days: 967
+2025-06-25 01:14:16,212 - INFO - Scaling features using robust scaler...
+2025-06-25 01:14:16,228 - INFO - Scaled 28 features
+2025-06-25 01:14:16,228 - INFO - Creating gold layer dataset...
+2025-06-25 01:14:16,228 - INFO - Calculating feature completeness scores...
+2025-06-25 01:14:16,782 - INFO - Average feature completeness: 0.000
+2025-06-25 01:14:16,792 - INFO - Gold layer dataset created: 14999 customers, 35 columns
+2025-06-25 01:14:16,792 - INFO - Inserting data into gold_cluster_processed table...
+2025-06-25 01:14:16,793 - INFO - Cleared existing gold layer data
+2025-06-25 01:14:16,805 - ERROR - Failed to insert gold layer data: Binder Error: table gold_cluster_processed has 41 columns but 34 values were supplied
+2025-06-25 01:14:16,805 - ERROR - Failed to insert data into gold layer
+
+2025-06-25 01:19:00,320 - INFO - 4185141521 - Step 'Feature Analytics and Excel Export' completed in 0.89 seconds
