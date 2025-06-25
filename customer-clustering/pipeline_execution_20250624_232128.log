@@ -1,0 +1,39 @@
+2025-06-24 23:21:28,156 - INFO - 2596682565 - Starting: Database Setup and Data Loading
+2025-06-24 23:21:28,190 - INFO - db - Connected to DuckDB at customer_clustering.db
+2025-06-24 23:21:28,205 - INFO - db - Database schema created successfully
+2025-06-24 23:21:28,205 - INFO - db - Loading data from returns_with_comments.csv into bronze layer
+2025-06-24 23:21:28,373 - INFO - db - Processing chunk 1, rows: 50000
+2025-06-24 23:21:29,498 - INFO - db - Processing chunk 2, rows: 1656
+2025-06-24 23:21:29,581 - INFO - db - Logged 0 data quality issues
+2025-06-24 23:21:29,582 - INFO - db - Loaded 51656 rows into bronze_return_order_data
+2025-06-24 23:21:29,822 - INFO - db - Database connection closed
+2025-06-24 23:21:29,823 - INFO - 2596682565 - Step 'Database Setup and Data Loading' completed in 1.67 seconds
+2025-06-24 23:21:29,872 - INFO - 2596682565 - Step 'Data Analysis' completed in 0.04 seconds
+2025-06-24 23:21:29,879 - INFO - 2596682565 - Starting: Feature Engineering and Silver Layer Creation
+2025-06-24 23:21:30,336 - INFO - 2596682565 - Step 'Feature Engineering and Silver Layer Creation' failed in 0.46 seconds
+2025-06-24 23:21:30,337 - ERROR - 2596682565 - Subprocess failed: Command '['c:\\Code\\Local Code\\URBN\\RETRO_hack_25\\.venv\\Scripts\\python.exe', 'create_features.py']' returned non-zero exit status 1.
+2025-06-24 23:21:30,337 - ERROR - 2596682565 - STDOUT: 
+2025-06-24 23:21:30,338 - ERROR - 2596682565 - STDERR: 2025-06-24 23:21:30,248 - INFO - Starting feature creation pipeline...
+2025-06-24 23:21:30,260 - INFO - Connected to customer clustering database
+2025-06-24 23:21:30,261 - INFO - Bronze layer contains 51,635 records
+2025-06-24 23:21:30,261 - INFO - Starting comprehensive feature creation...
+2025-06-24 23:21:30,266 - INFO - Processing features for 7427 customers in batches of 50000
+2025-06-24 23:21:30,266 - INFO - Dataset small enough to process without batching
+2025-06-24 23:21:30,266 - INFO - Creating basic volume metrics...
+2025-06-24 23:21:30,266 - INFO - Creating basic volume metrics...
+2025-06-24 23:21:30,296 - ERROR - Feature creation failed: Constraint Error: NOT NULL constraint failed: feature_calculation_log.log_id
+2025-06-24 23:21:30,296 - ERROR - Feature creation pipeline failed: Constraint Error: NOT NULL constraint failed: feature_calculation_log.log_id
+2025-06-24 23:21:30,297 - ERROR - Traceback (most recent call last):
+  File "c:\Code\Local Code\URBN\RETRO_hack_25\customer-clustering\create_features.py", line 387, in main
+    features = create_all_features(conn, run_tests=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Code\Local Code\URBN\RETRO_hack_25\customer-clustering\features.py", line 832, in create_all_features
+    features['basic_volume'] = create_basic_volume_metrics(conn)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Code\Local Code\URBN\RETRO_hack_25\customer-clustering\features.py", line 102, in create_basic_volume_metrics
+    feature_eng.log_feature_creation('basic_volume_metrics', start_time, len(result), warnings)
+  File "c:\Code\Local Code\URBN\RETRO_hack_25\customer-clustering\features.py", line 29, in log_feature_creation
+    self.conn.execute("""
+duckdb.duckdb.ConstraintException: Constraint Error: NOT NULL constraint failed: feature_calculation_log.log_id
+
+

@@ -1,0 +1,36 @@
+============================================================
+CUSTOMER FEATURE CREATION SUMMARY REPORT
+============================================================
+Generated on: 2025-06-25 00:56:00
+
+FEATURE GROUPS CREATED:
+------------------------------
+basic_volume        : 14,999 customers,  5 features
+return_behavior     : 14,999 customers,  6 features
+temporal            : 14,999 customers,  6 features
+recency             : 14,999 customers,  4 features
+category            : 14,972 customers,  3 features
+consecutive         : 14,999 customers,  2 features
+adjacency           : 14,999 customers,  4 features
+seasonal            : 14,999 customers,  2 features
+trend               : 14,999 customers,  2 features
+monetary            : 14,999 customers,  3 features
+
+Total features created: 37
+
+SILVER LAYER STATISTICS:
+------------------------------
+Total customers:        14,999
+Average return rate:    0.214
+Average orders:         67.4
+Average lifetime days:  940
+Veteran customers:      14,710
+High return customers:  1,002
+
+FEATURE COMPLETENESS:
+------------------------------
+basic_volume   :  100.0%
+temporal       :  100.0%
+adjacency      :   98.7%
+
+============================================================

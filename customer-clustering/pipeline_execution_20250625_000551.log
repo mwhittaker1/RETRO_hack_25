@@ -1,0 +1,170 @@
+2025-06-25 00:05:51,586 - INFO - 4185141521 - Starting: Database Setup and Data Loading
+2025-06-25 00:05:51,626 - INFO - db - Connected to DuckDB at customer_clustering.db
+2025-06-25 00:05:51,629 - INFO - db - Database schema created successfully
+2025-06-25 00:05:51,629 - INFO - db - Loading data from base_returns_sku_reasoncodes_sent.csv into bronze layer
+2025-06-25 00:05:51,798 - INFO - db - Processing chunk 1, rows: 50000
+2025-06-25 00:05:53,120 - INFO - db - Processing chunk 2, rows: 50000
+2025-06-25 00:05:54,621 - INFO - db - Processing chunk 3, rows: 50000
+2025-06-25 00:05:56,258 - INFO - db - Processing chunk 4, rows: 50000
+2025-06-25 00:05:57,828 - INFO - db - Processing chunk 5, rows: 50000
+2025-06-25 00:05:59,593 - INFO - db - Processing chunk 6, rows: 50000
+2025-06-25 00:06:01,175 - INFO - db - Processing chunk 7, rows: 50000
+2025-06-25 00:06:02,997 - INFO - db - Processing chunk 8, rows: 50000
+2025-06-25 00:06:04,968 - INFO - db - Processing chunk 9, rows: 50000
+2025-06-25 00:06:06,870 - INFO - db - Processing chunk 10, rows: 50000
+2025-06-25 00:06:08,814 - INFO - db - Processing chunk 11, rows: 50000
+2025-06-25 00:06:10,956 - INFO - db - Processing chunk 12, rows: 50000
+2025-06-25 00:06:12,938 - INFO - db - Processing chunk 13, rows: 50000
+2025-06-25 00:06:15,213 - INFO - db - Processing chunk 14, rows: 50000
+2025-06-25 00:06:17,146 - INFO - db - Processing chunk 15, rows: 50000
+2025-06-25 00:06:19,416 - INFO - db - Processing chunk 16, rows: 50000
+2025-06-25 00:06:21,603 - INFO - db - Processing chunk 17, rows: 50000
+2025-06-25 00:06:23,760 - INFO - db - Processing chunk 18, rows: 50000
+2025-06-25 00:06:26,131 - INFO - db - Processing chunk 19, rows: 50000
+2025-06-25 00:06:28,576 - INFO - db - Processing chunk 20, rows: 50000
+2025-06-25 00:06:31,003 - INFO - db - Processing chunk 21, rows: 50000
+2025-06-25 00:06:33,372 - INFO - db - Processing chunk 22, rows: 50000
+2025-06-25 00:06:35,846 - INFO - db - Processing chunk 23, rows: 50000
+2025-06-25 00:06:38,235 - INFO - db - Processing chunk 24, rows: 50000
+2025-06-25 00:06:40,975 - INFO - db - Processing chunk 25, rows: 50000
+2025-06-25 00:06:43,297 - INFO - db - Processing chunk 26, rows: 50000
+2025-06-25 00:06:46,058 - INFO - db - Processing chunk 27, rows: 50000
+2025-06-25 00:06:48,648 - INFO - db - Processing chunk 28, rows: 50000
+2025-06-25 00:06:51,388 - INFO - db - Processing chunk 29, rows: 50000
+2025-06-25 00:06:54,117 - INFO - db - Processing chunk 30, rows: 50000
+2025-06-25 00:06:56,892 - INFO - db - Processing chunk 31, rows: 50000
+2025-06-25 00:06:59,659 - INFO - db - Processing chunk 32, rows: 50000
+2025-06-25 00:07:02,634 - INFO - db - Processing chunk 33, rows: 50000
+2025-06-25 00:07:05,456 - INFO - db - Processing chunk 34, rows: 50000
+2025-06-25 00:07:08,452 - INFO - db - Processing chunk 35, rows: 50000
+2025-06-25 00:07:11,751 - INFO - db - Processing chunk 36, rows: 50000
+2025-06-25 00:07:14,709 - INFO - db - Processing chunk 37, rows: 50000
+2025-06-25 00:07:18,218 - INFO - db - Processing chunk 38, rows: 50000
+2025-06-25 00:07:21,217 - INFO - db - Processing chunk 39, rows: 50000
+2025-06-25 00:07:24,840 - INFO - db - Processing chunk 40, rows: 50000
+2025-06-25 00:07:28,117 - INFO - db - Processing chunk 41, rows: 50000
+2025-06-25 00:07:31,959 - INFO - db - Processing chunk 42, rows: 50000
+2025-06-25 00:07:35,323 - INFO - db - Processing chunk 43, rows: 50000
+2025-06-25 00:07:39,328 - INFO - db - Processing chunk 44, rows: 50000
+2025-06-25 00:07:42,838 - INFO - db - Processing chunk 45, rows: 50000
+2025-06-25 00:07:46,985 - INFO - db - Processing chunk 46, rows: 50000
+2025-06-25 00:07:50,806 - INFO - db - Processing chunk 47, rows: 50000
+2025-06-25 00:07:54,823 - INFO - db - Processing chunk 48, rows: 50000
+2025-06-25 00:07:59,235 - INFO - db - Processing chunk 49, rows: 50000
+2025-06-25 00:08:03,083 - INFO - db - Processing chunk 50, rows: 50000
+2025-06-25 00:08:07,826 - INFO - db - Processing chunk 51, rows: 50000
+2025-06-25 00:08:11,886 - INFO - db - Processing chunk 52, rows: 46197
+2025-06-25 00:08:16,265 - INFO - db - Logged 0 data quality issues
+2025-06-25 00:08:16,266 - INFO - db - Loaded 2434578 rows into bronze_return_order_data
+2025-06-25 00:08:16,556 - INFO - db - Database connection closed
+2025-06-25 00:08:16,556 - INFO - 4185141521 - Step 'Database Setup and Data Loading' completed in 144.97 seconds
+2025-06-25 00:08:16,895 - INFO - 4185141521 - Step 'Data Analysis' completed in 0.32 seconds
+2025-06-25 00:08:16,907 - INFO - 4185141521 - Starting: Feature Engineering and Silver Layer Creation
+2025-06-25 00:08:17,600 - INFO - 4185141521 - Step 'Feature Engineering and Silver Layer Creation' failed in 0.69 seconds
+2025-06-25 00:08:17,601 - ERROR - 4185141521 - Subprocess failed: Command '['c:\\Code\\Local Code\\URBN\\RETRO_hack_25\\.venv\\Scripts\\python.exe', 'create_features.py']' returned non-zero exit status 1.
+2025-06-25 00:08:17,601 - ERROR - 4185141521 - STDOUT: 
+2025-06-25 00:08:17,601 - ERROR - 4185141521 - STDERR: 2025-06-25 00:08:17,254 - INFO - Starting feature creation pipeline...
+2025-06-25 00:08:17,267 - INFO - Connected to customer clustering database
+2025-06-25 00:08:17,269 - INFO - Bronze layer contains 3,635,436 records
+2025-06-25 00:08:17,269 - INFO - Starting comprehensive feature creation...
+2025-06-25 00:08:17,298 - INFO - Processing features for 14999 customers in batches of 50000
+2025-06-25 00:08:17,298 - INFO - Dataset small enough to process without batching
+2025-06-25 00:08:17,298 - INFO - Creating basic volume metrics...
+2025-06-25 00:08:17,298 - INFO - Creating basic volume metrics...
+2025-06-25 00:08:17,547 - WARNING - avg_order_size: 205 values above warning threshold 10
+2025-06-25 00:08:17,549 - ERROR - Feature creation failed: Not implemented Error: Unable to transform python value of type '<class 'numpy.int64'>' to DuckDB LogicalType
+2025-06-25 00:08:17,549 - ERROR - Feature creation pipeline failed: Not implemented Error: Unable to transform python value of type '<class 'numpy.int64'>' to DuckDB LogicalType
+2025-06-25 00:08:17,550 - ERROR - Traceback (most recent call last):
+  File "c:\Code\Local Code\URBN\RETRO_hack_25\customer-clustering\create_features.py", line 387, in main
+    features = create_all_features(conn, run_tests=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Code\Local Code\URBN\RETRO_hack_25\customer-clustering\features.py", line 832, in create_all_features
+    features['basic_volume'] = create_basic_volume_metrics(conn)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Code\Local Code\URBN\RETRO_hack_25\customer-clustering\features.py", line 102, in create_basic_volume_metrics
+    feature_eng.log_feature_creation('basic_volume_metrics', start_time, len(result), warnings)
+  File "c:\Code\Local Code\URBN\RETRO_hack_25\customer-clustering\features.py", line 29, in log_feature_creation
+    self.conn.execute("""
+duckdb.duckdb.NotImplementedException: Not implemented Error: Unable to transform python value of type '<class 'numpy.int64'>' to DuckDB LogicalType
+
+
+2025-06-25 00:14:00,771 - INFO - 4185141521 - Step 'Data Analysis' completed in 0.28 seconds
+2025-06-25 00:16:38,311 - INFO - 4185141521 - Step 'Data Analysis' completed in 0.25 seconds
+2025-06-25 00:17:15,548 - INFO - 4185141521 - Step 'Data Analysis' completed in 0.33 seconds
+2025-06-25 00:25:46,830 - INFO - 4185141521 - Starting: Feature Engineering and Silver Layer Creation
+2025-06-25 00:25:47,702 - INFO - 4185141521 - Step 'Feature Engineering and Silver Layer Creation' failed in 0.87 seconds
+2025-06-25 00:25:47,702 - ERROR - 4185141521 - Subprocess failed: Command '['c:\\Code\\Local Code\\URBN\\RETRO_hack_25\\.venv\\Scripts\\python.exe', 'create_features.py']' returned non-zero exit status 1.
+2025-06-25 00:25:47,703 - ERROR - 4185141521 - STDOUT: 
+2025-06-25 00:25:47,703 - ERROR - 4185141521 - STDERR: 2025-06-25 00:25:47,208 - INFO - Starting feature creation pipeline...
+2025-06-25 00:25:47,221 - INFO - Connected to customer clustering database
+2025-06-25 00:25:47,221 - INFO - Bronze layer contains 3,635,436 records
+2025-06-25 00:25:47,221 - INFO - Starting comprehensive feature creation...
+2025-06-25 00:25:47,252 - INFO - Processing features for 14999 customers in batches of 50000
+2025-06-25 00:25:47,252 - INFO - Dataset small enough to process without batching
+2025-06-25 00:25:47,252 - INFO - Creating basic volume metrics...
+2025-06-25 00:25:47,252 - INFO - Creating basic volume metrics...
+2025-06-25 00:25:47,638 - WARNING - avg_order_size: 205 values above warning threshold 10
+2025-06-25 00:25:47,644 - ERROR - Feature creation failed: Constraint Error: NOT NULL constraint failed: feature_calculation_log.log_id
+2025-06-25 00:25:47,644 - ERROR - Feature creation pipeline failed: Constraint Error: NOT NULL constraint failed: feature_calculation_log.log_id
+2025-06-25 00:25:47,645 - ERROR - Traceback (most recent call last):
+  File "c:\Code\Local Code\URBN\RETRO_hack_25\customer-clustering\create_features.py", line 387, in main
+    features = create_all_features(conn, run_tests=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Code\Local Code\URBN\RETRO_hack_25\customer-clustering\features.py", line 842, in create_all_features
+    features['basic_volume'] = create_basic_volume_metrics(conn)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Code\Local Code\URBN\RETRO_hack_25\customer-clustering\features.py", line 112, in create_basic_volume_metrics
+    feature_eng.log_feature_creation('basic_volume_metrics', start_time, len(result), warnings)
+  File "c:\Code\Local Code\URBN\RETRO_hack_25\customer-clustering\features.py", line 39, in log_feature_creation
+    self.conn.execute("""
+duckdb.duckdb.ConstraintException: Constraint Error: NOT NULL constraint failed: feature_calculation_log.log_id
+
+
+2025-06-25 00:28:33,945 - INFO - 4185141521 - Starting: Feature Engineering and Silver Layer Creation
+2025-06-25 00:28:34,911 - INFO - 4185141521 - Step 'Feature Engineering and Silver Layer Creation' failed in 0.97 seconds
+2025-06-25 00:28:34,912 - ERROR - 4185141521 - Subprocess failed: Command '['c:\\Code\\Local Code\\URBN\\RETRO_hack_25\\.venv\\Scripts\\python.exe', 'create_features.py']' returned non-zero exit status 1.
+2025-06-25 00:28:34,912 - ERROR - 4185141521 - STDOUT: 
+2025-06-25 00:28:34,912 - ERROR - 4185141521 - STDERR: 2025-06-25 00:28:34,300 - INFO - Starting feature creation pipeline...
+2025-06-25 00:28:34,311 - INFO - Connected to customer clustering database
+2025-06-25 00:28:34,312 - INFO - Bronze layer contains 3,635,436 records
+2025-06-25 00:28:34,312 - INFO - Starting comprehensive feature creation...
+2025-06-25 00:28:34,342 - INFO - Processing features for 14999 customers in batches of 50000
+2025-06-25 00:28:34,343 - INFO - Dataset small enough to process without batching
+2025-06-25 00:28:34,343 - INFO - Creating basic volume metrics...
+2025-06-25 00:28:34,343 - INFO - Creating basic volume metrics...
+2025-06-25 00:28:34,596 - WARNING - avg_order_size: 205 values above warning threshold 10
+2025-06-25 00:28:34,604 - INFO - Feature 'basic_volume_metrics' completed in 0.25s, 14999 records processed
+2025-06-25 00:28:34,604 - INFO - Feature 'basic_volume_metrics' completed in 0.25s, 14999 records processed
+2025-06-25 00:28:34,605 - INFO - Creating return behavior patterns...
+2025-06-25 00:28:34,605 - INFO - Creating return behavior patterns...
+2025-06-25 00:28:34,832 - WARNING - return_intensity: 2221 values outside expected range [0, 1]
+2025-06-25 00:28:34,832 - WARNING - return_product_variety: 4553 values above warning threshold 25
+2025-06-25 00:28:34,833 - WARNING - avg_returns_per_order: 17 values above warning threshold 8
+2025-06-25 00:28:34,835 - INFO - Feature 'return_behavior_patterns' completed in 0.23s, 14999 records processed
+2025-06-25 00:28:34,835 - INFO - Feature 'return_behavior_patterns' completed in 0.23s, 14999 records processed
+2025-06-25 00:28:34,836 - INFO - Creating temporal patterns...
+2025-06-25 00:28:34,836 - INFO - Creating temporal patterns...
+2025-06-25 00:28:34,840 - ERROR - Feature creation failed: Binder Error: Cannot compare values of type INTERVAL and type INTEGER_LITERAL - an explicit cast is required
+
+LINE 23:                 WHEN customer_lifetime_days <= 90 THEN 'New'
+                                                     ^
+2025-06-25 00:28:34,840 - ERROR - Feature creation pipeline failed: Binder Error: Cannot compare values of type INTERVAL and type INTEGER_LITERAL - an explicit cast is required
+
+LINE 23:                 WHEN customer_lifetime_days <= 90 THEN 'New'
+                                                     ^
+2025-06-25 00:28:34,840 - ERROR - Traceback (most recent call last):
+  File "c:\Code\Local Code\URBN\RETRO_hack_25\customer-clustering\create_features.py", line 387, in main
+    features = create_all_features(conn, run_tests=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Code\Local Code\URBN\RETRO_hack_25\customer-clustering\features.py", line 864, in create_all_features
+    features['temporal'] = create_temporal_patterns(conn)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Code\Local Code\URBN\RETRO_hack_25\customer-clustering\features.py", line 322, in create_temporal_patterns
+    result = conn.execute(query).fetchdf()
+             ^^^^^^^^^^^^^^^^^^^
+duckdb.duckdb.BinderException: Binder Error: Cannot compare values of type INTERVAL and type INTEGER_LITERAL - an explicit cast is required
+
+LINE 23:                 WHEN customer_lifetime_days <= 90 THEN 'New'
+                                                     ^
+
+

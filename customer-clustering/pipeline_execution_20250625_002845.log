@@ -1,0 +1,216 @@
+2025-06-25 00:28:45,868 - INFO - 4185141521 - Step 'Data Analysis' completed in 0.17 seconds
+2025-06-25 00:28:45,878 - INFO - 4185141521 - Starting: Feature Engineering and Silver Layer Creation
+2025-06-25 00:28:46,841 - INFO - 4185141521 - Step 'Feature Engineering and Silver Layer Creation' failed in 0.96 seconds
+2025-06-25 00:28:46,842 - ERROR - 4185141521 - Subprocess failed: Command '['c:\\Code\\Local Code\\URBN\\RETRO_hack_25\\.venv\\Scripts\\python.exe', 'create_features.py']' returned non-zero exit status 1.
+2025-06-25 00:28:46,842 - ERROR - 4185141521 - STDOUT: 
+2025-06-25 00:28:46,843 - ERROR - 4185141521 - STDERR: 2025-06-25 00:28:46,213 - INFO - Starting feature creation pipeline...
+2025-06-25 00:28:46,224 - INFO - Connected to customer clustering database
+2025-06-25 00:28:46,225 - INFO - Bronze layer contains 3,635,436 records
+2025-06-25 00:28:46,225 - INFO - Starting comprehensive feature creation...
+2025-06-25 00:28:46,257 - INFO - Processing features for 14999 customers in batches of 50000
+2025-06-25 00:28:46,257 - INFO - Dataset small enough to process without batching
+2025-06-25 00:28:46,257 - INFO - Creating basic volume metrics...
+2025-06-25 00:28:46,257 - INFO - Creating basic volume metrics...
+2025-06-25 00:28:46,509 - WARNING - avg_order_size: 205 values above warning threshold 10
+2025-06-25 00:28:46,516 - INFO - Feature 'basic_volume_metrics' completed in 0.25s, 14999 records processed
+2025-06-25 00:28:46,516 - INFO - Feature 'basic_volume_metrics' completed in 0.25s, 14999 records processed
+2025-06-25 00:28:46,516 - INFO - Creating return behavior patterns...
+2025-06-25 00:28:46,516 - INFO - Creating return behavior patterns...
+2025-06-25 00:28:46,762 - WARNING - return_intensity: 2221 values outside expected range [0, 1]
+2025-06-25 00:28:46,763 - WARNING - return_product_variety: 4553 values above warning threshold 25
+2025-06-25 00:28:46,763 - WARNING - avg_returns_per_order: 17 values above warning threshold 8
+2025-06-25 00:28:46,768 - INFO - Feature 'return_behavior_patterns' completed in 0.25s, 14999 records processed
+2025-06-25 00:28:46,768 - INFO - Feature 'return_behavior_patterns' completed in 0.25s, 14999 records processed
+2025-06-25 00:28:46,768 - INFO - Creating temporal patterns...
+2025-06-25 00:28:46,768 - INFO - Creating temporal patterns...
+2025-06-25 00:28:46,769 - ERROR - Feature creation failed: Binder Error: Cannot compare values of type INTERVAL and type INTEGER_LITERAL - an explicit cast is required
+
+LINE 23:                 WHEN customer_lifetime_days <= 90 THEN 'New'
+                                                     ^
+2025-06-25 00:28:46,769 - ERROR - Feature creation pipeline failed: Binder Error: Cannot compare values of type INTERVAL and type INTEGER_LITERAL - an explicit cast is required
+
+LINE 23:                 WHEN customer_lifetime_days <= 90 THEN 'New'
+                                                     ^
+2025-06-25 00:28:46,770 - ERROR - Traceback (most recent call last):
+  File "c:\Code\Local Code\URBN\RETRO_hack_25\customer-clustering\create_features.py", line 387, in main
+    features = create_all_features(conn, run_tests=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Code\Local Code\URBN\RETRO_hack_25\customer-clustering\features.py", line 864, in create_all_features
+    features['temporal'] = create_temporal_patterns(conn)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Code\Local Code\URBN\RETRO_hack_25\customer-clustering\features.py", line 322, in create_temporal_patterns
+    result = conn.execute(query).fetchdf()
+             ^^^^^^^^^^^^^^^^^^^
+duckdb.duckdb.BinderException: Binder Error: Cannot compare values of type INTERVAL and type INTEGER_LITERAL - an explicit cast is required
+
+LINE 23:                 WHEN customer_lifetime_days <= 90 THEN 'New'
+                                                     ^
+
+
+2025-06-25 00:31:00,369 - INFO - 4185141521 - Starting: Feature Engineering and Silver Layer Creation
+2025-06-25 00:31:01,367 - INFO - 4185141521 - Step 'Feature Engineering and Silver Layer Creation' failed in 1.00 seconds
+2025-06-25 00:31:01,367 - ERROR - 4185141521 - Subprocess failed: Command '['c:\\Code\\Local Code\\URBN\\RETRO_hack_25\\.venv\\Scripts\\python.exe', 'create_features.py']' returned non-zero exit status 1.
+2025-06-25 00:31:01,368 - ERROR - 4185141521 - STDOUT: 
+2025-06-25 00:31:01,368 - ERROR - 4185141521 - STDERR: 2025-06-25 00:31:00,729 - INFO - Starting feature creation pipeline...
+2025-06-25 00:31:00,745 - INFO - Connected to customer clustering database
+2025-06-25 00:31:00,746 - INFO - Bronze layer contains 3,635,436 records
+2025-06-25 00:31:00,746 - INFO - Starting comprehensive feature creation...
+2025-06-25 00:31:00,779 - INFO - Processing features for 14999 customers in batches of 50000
+2025-06-25 00:31:00,779 - INFO - Dataset small enough to process without batching
+2025-06-25 00:31:00,779 - INFO - Creating basic volume metrics...
+2025-06-25 00:31:00,779 - INFO - Creating basic volume metrics...
+2025-06-25 00:31:01,060 - WARNING - avg_order_size: 205 values above warning threshold 10
+2025-06-25 00:31:01,068 - INFO - Feature 'basic_volume_metrics' completed in 0.28s, 14999 records processed
+2025-06-25 00:31:01,068 - INFO - Feature 'basic_volume_metrics' completed in 0.28s, 14999 records processed
+2025-06-25 00:31:01,069 - INFO - Creating return behavior patterns...
+2025-06-25 00:31:01,069 - INFO - Creating return behavior patterns...
+2025-06-25 00:31:01,257 - WARNING - return_intensity: 2221 values outside expected range [0, 1]
+2025-06-25 00:31:01,257 - WARNING - return_product_variety: 4553 values above warning threshold 25
+2025-06-25 00:31:01,257 - WARNING - avg_returns_per_order: 17 values above warning threshold 8
+2025-06-25 00:31:01,261 - INFO - Feature 'return_behavior_patterns' completed in 0.19s, 14999 records processed
+2025-06-25 00:31:01,261 - INFO - Feature 'return_behavior_patterns' completed in 0.19s, 14999 records processed
+2025-06-25 00:31:01,261 - INFO - Creating temporal patterns...
+2025-06-25 00:31:01,261 - INFO - Creating temporal patterns...
+2025-06-25 00:31:01,292 - ERROR - Feature creation failed: Conversion Error: Unimplemented type for cast (INTERVAL -> DOUBLE)
+
+LINE 14:             avg(CAST(return_date - order_date AS DOUBLE)) as avg_days_to_re...
+                         ^
+2025-06-25 00:31:01,292 - ERROR - Feature creation pipeline failed: Conversion Error: Unimplemented type for cast (INTERVAL -> DOUBLE)
+
+LINE 14:             avg(CAST(return_date - order_date AS DOUBLE)) as avg_days_to_re...
+                         ^
+2025-06-25 00:31:01,293 - ERROR - Traceback (most recent call last):
+  File "c:\Code\Local Code\URBN\RETRO_hack_25\customer-clustering\create_features.py", line 387, in main
+    features = create_all_features(conn, run_tests=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Code\Local Code\URBN\RETRO_hack_25\customer-clustering\features.py", line 864, in create_all_features
+    features['temporal'] = create_temporal_patterns(conn)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Code\Local Code\URBN\RETRO_hack_25\customer-clustering\features.py", line 322, in create_temporal_patterns
+    result = conn.execute(query).fetchdf()
+             ^^^^^^^^^^^^^^^^^^^
+duckdb.duckdb.ConversionException: Conversion Error: Unimplemented type for cast (INTERVAL -> DOUBLE)
+
+LINE 14:             avg(CAST(return_date - order_date AS DOUBLE)) as avg_days_to_re...
+                         ^
+
+
+2025-06-25 00:33:25,245 - INFO - 4185141521 - Starting: Feature Engineering and Silver Layer Creation
+2025-06-25 00:33:26,319 - INFO - 4185141521 - Step 'Feature Engineering and Silver Layer Creation' failed in 1.07 seconds
+2025-06-25 00:33:26,320 - ERROR - 4185141521 - Subprocess failed: Command '['c:\\Code\\Local Code\\URBN\\RETRO_hack_25\\.venv\\Scripts\\python.exe', 'create_features.py']' returned non-zero exit status 1.
+2025-06-25 00:33:26,320 - ERROR - 4185141521 - STDOUT: 
+2025-06-25 00:33:26,321 - ERROR - 4185141521 - STDERR: 2025-06-25 00:33:25,600 - INFO - Starting feature creation pipeline...
+2025-06-25 00:33:25,617 - INFO - Connected to customer clustering database
+2025-06-25 00:33:25,618 - INFO - Bronze layer contains 3,635,436 records
+2025-06-25 00:33:25,618 - INFO - Starting comprehensive feature creation...
+2025-06-25 00:33:25,649 - INFO - Processing features for 14999 customers in batches of 50000
+2025-06-25 00:33:25,649 - INFO - Dataset small enough to process without batching
+2025-06-25 00:33:25,649 - INFO - Creating basic volume metrics...
+2025-06-25 00:33:25,649 - INFO - Creating basic volume metrics...
+2025-06-25 00:33:25,946 - WARNING - avg_order_size: 205 values above warning threshold 10
+2025-06-25 00:33:25,953 - INFO - Feature 'basic_volume_metrics' completed in 0.30s, 14999 records processed
+2025-06-25 00:33:25,953 - INFO - Feature 'basic_volume_metrics' completed in 0.30s, 14999 records processed
+2025-06-25 00:33:25,953 - INFO - Creating return behavior patterns...
+2025-06-25 00:33:25,953 - INFO - Creating return behavior patterns...
+2025-06-25 00:33:26,213 - WARNING - return_intensity: 2221 values outside expected range [0, 1]
+2025-06-25 00:33:26,213 - WARNING - return_product_variety: 4553 values above warning threshold 25
+2025-06-25 00:33:26,213 - WARNING - avg_returns_per_order: 17 values above warning threshold 8
+2025-06-25 00:33:26,217 - INFO - Feature 'return_behavior_patterns' completed in 0.26s, 14999 records processed
+2025-06-25 00:33:26,217 - INFO - Feature 'return_behavior_patterns' completed in 0.26s, 14999 records processed
+2025-06-25 00:33:26,217 - INFO - Creating temporal patterns...
+2025-06-25 00:33:26,217 - INFO - Creating temporal patterns...
+2025-06-25 00:33:26,245 - ERROR - Feature creation failed: Conversion Error: Unimplemented type for cast (INTERVAL -> INTEGER)
+
+LINE 14:             avg(CAST(return_date - order_date AS INTEGER)) as avg_days_to_r...
+                         ^
+2025-06-25 00:33:26,245 - ERROR - Feature creation pipeline failed: Conversion Error: Unimplemented type for cast (INTERVAL -> INTEGER)
+
+LINE 14:             avg(CAST(return_date - order_date AS INTEGER)) as avg_days_to_r...
+                         ^
+2025-06-25 00:33:26,247 - ERROR - Traceback (most recent call last):
+  File "c:\Code\Local Code\URBN\RETRO_hack_25\customer-clustering\create_features.py", line 387, in main
+    features = create_all_features(conn, run_tests=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Code\Local Code\URBN\RETRO_hack_25\customer-clustering\features.py", line 864, in create_all_features
+    features['temporal'] = create_temporal_patterns(conn)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Code\Local Code\URBN\RETRO_hack_25\customer-clustering\features.py", line 322, in create_temporal_patterns
+    result = conn.execute(query).fetchdf()
+             ^^^^^^^^^^^^^^^^^^^
+duckdb.duckdb.ConversionException: Conversion Error: Unimplemented type for cast (INTERVAL -> INTEGER)
+
+LINE 14:             avg(CAST(return_date - order_date AS INTEGER)) as avg_days_to_r...
+                         ^
+
+
+2025-06-25 00:37:22,910 - INFO - 4185141521 - Starting: Feature Engineering and Silver Layer Creation
+2025-06-25 00:38:07,276 - INFO - 4185141521 - Step 'Feature Engineering and Silver Layer Creation' failed in 44.37 seconds
+2025-06-25 00:38:07,276 - ERROR - 4185141521 - Subprocess failed: Command '['c:\\Code\\Local Code\\URBN\\RETRO_hack_25\\.venv\\Scripts\\python.exe', 'create_features.py']' returned non-zero exit status 1.
+2025-06-25 00:38:07,276 - ERROR - 4185141521 - STDOUT: None
+2025-06-25 00:38:07,277 - ERROR - 4185141521 - STDERR: 2025-06-25 00:37:23,247 - INFO - Starting feature creation pipeline...
+2025-06-25 00:37:23,266 - INFO - Connected to customer clustering database
+2025-06-25 00:37:23,267 - INFO - Bronze layer contains 3,635,436 records
+2025-06-25 00:37:23,267 - INFO - Starting comprehensive feature creation...
+2025-06-25 00:37:23,296 - INFO - Processing features for 14999 customers in batches of 50000
+2025-06-25 00:37:23,296 - INFO - Dataset small enough to process without batching
+2025-06-25 00:37:23,296 - INFO - Creating basic volume metrics...
+2025-06-25 00:37:23,296 - INFO - Creating basic volume metrics...
+2025-06-25 00:37:23,552 - WARNING - avg_order_size: 205 values above warning threshold 10
+2025-06-25 00:37:23,559 - INFO - Feature 'basic_volume_metrics' completed in 0.26s, 14999 records processed
+2025-06-25 00:37:23,559 - INFO - Feature 'basic_volume_metrics' completed in 0.26s, 14999 records processed
+2025-06-25 00:37:23,559 - INFO - Creating return behavior patterns...
+2025-06-25 00:37:23,559 - INFO - Creating return behavior patterns...
+2025-06-25 00:37:23,748 - WARNING - return_intensity: 2221 values outside expected range [0, 1]
+2025-06-25 00:37:23,748 - WARNING - return_product_variety: 4553 values above warning threshold 25
+2025-06-25 00:37:23,748 - WARNING - avg_returns_per_order: 17 values above warning threshold 8
+2025-06-25 00:37:23,752 - INFO - Feature 'return_behavior_patterns' completed in 0.19s, 14999 records processed
+2025-06-25 00:37:23,752 - INFO - Feature 'return_behavior_patterns' completed in 0.19s, 14999 records processed
+2025-06-25 00:37:23,753 - INFO - Creating temporal patterns...
+2025-06-25 00:37:23,753 - INFO - Creating temporal patterns...
+2025-06-25 00:37:23,808 - WARNING - avg_days_to_return: 439 values above warning threshold 60
+2025-06-25 00:37:23,808 - WARNING - return_timing_spread: 1032 values above warning threshold 45
+2025-06-25 00:37:23,811 - INFO - Feature 'temporal_patterns' completed in 0.06s, 14999 records processed
+2025-06-25 00:37:23,811 - INFO - Feature 'temporal_patterns' completed in 0.06s, 14999 records processed
+2025-06-25 00:37:23,813 - INFO - Creating recency analysis...
+2025-06-25 00:37:23,813 - INFO - Creating recency analysis...
+2025-06-25 00:37:23,919 - INFO - Feature 'recency_analysis' completed in 0.10s, 14999 records processed
+2025-06-25 00:37:23,919 - INFO - Feature 'recency_analysis' completed in 0.10s, 14999 records processed
+2025-06-25 00:37:23,919 - INFO - Creating category intelligence...
+2025-06-25 00:37:23,919 - INFO - Creating category intelligence features...
+2025-06-25 00:37:24,140 - WARNING - category_diversity_score: 5999 values above warning threshold 1.5
+2025-06-25 00:37:24,145 - INFO - Feature 'category_intelligence' completed in 0.22s, 14972 records processed
+2025-06-25 00:37:24,145 - INFO - Feature 'category_intelligence' completed in 0.22s, 14972 records processed
+2025-06-25 00:37:24,145 - INFO - Creating consecutive returns...
+2025-06-25 00:37:24,765 - WARNING - consecutive_returns: 5692 values above warning threshold 6
+2025-06-25 00:37:24,765 - WARNING - avg_consecutive_returns: 1247 values above warning threshold 3
+2025-06-25 00:37:24,768 - INFO - Feature 'consecutive_returns' completed in 0.62s, 14999 records processed
+2025-06-25 00:37:24,768 - INFO - Feature 'consecutive_returns' completed in 0.62s, 14999 records processed
+2025-06-25 00:37:24,768 - INFO - Creating adjacency features...
+2025-06-25 00:38:06,099 - INFO - Feature 'adjacency_features' completed in 41.33s, 14999 records processed
+2025-06-25 00:38:06,099 - INFO - Feature 'adjacency_features' completed in 41.33s, 14999 records processed
+2025-06-25 00:38:06,100 - INFO - Creating seasonal features...
+2025-06-25 00:38:06,100 - INFO - Creating seasonal features...
+2025-06-25 00:38:06,353 - INFO - Feature 'seasonal_features' completed in 0.25s, 14999 records processed
+2025-06-25 00:38:06,353 - INFO - Feature 'seasonal_features' completed in 0.25s, 14999 records processed
+2025-06-25 00:38:06,353 - INFO - Creating trend susceptibility...
+2025-06-25 00:38:06,353 - INFO - Creating trend susceptibility features...
+2025-06-25 00:38:06,819 - INFO - trend_product_category_return_rate: 1001 null values found
+2025-06-25 00:38:06,824 - INFO - Feature 'trend_susceptibility' completed in 0.47s, 14999 records processed
+2025-06-25 00:38:06,824 - INFO - Feature 'trend_susceptibility' completed in 0.47s, 14999 records processed
+2025-06-25 00:38:06,824 - INFO - All features created successfully in 43.56 seconds
+2025-06-25 00:38:06,824 - INFO - Merging feature dataframes...
+2025-06-25 00:38:06,882 - INFO - Merged features: 14999 customers, 35 features
+2025-06-25 00:38:06,882 - INFO - Adding metadata features...
+2025-06-25 00:38:06,992 - INFO - Added metadata features. Final dataset: 14999 customers, 41 features
+2025-06-25 00:38:06,993 - INFO - Validating silver layer data...
+2025-06-25 00:38:06,995 - INFO - ✅ Silver layer data validation PASSED
+2025-06-25 00:38:06,995 - INFO - Inserting data into silver_customer_features table...
+2025-06-25 00:38:06,996 - INFO - Cleared existing silver layer data
+2025-06-25 00:38:07,029 - ERROR - Failed to insert silver layer data: Binder Error: table silver_customer_features has 44 columns but 41 values were supplied
+2025-06-25 00:38:07,029 - ERROR - Traceback (most recent call last):
+  File "c:\Code\Local Code\URBN\RETRO_hack_25\customer-clustering\create_features.py", line 251, in insert_silver_layer_data
+    conn.execute("INSERT INTO silver_customer_features SELECT * FROM chunk")
+duckdb.duckdb.BinderException: Binder Error: table silver_customer_features has 44 columns but 41 values were supplied
+
+2025-06-25 00:38:07,030 - ERROR - Failed to insert data into silver layer
+
