@@ -1,0 +1,40 @@
+============================================================
+CLUSTER PREPROCESSING SUMMARY REPORT
+============================================================
+Generated on: 2025-06-25 09:39:07
+Scaling method: robust
+
+FEATURE SELECTION:
+------------------------------
+Selected features: 28
+Total customers: 14,999
+Outliers detected: 750
+Average completeness: 0.000
+
+GOLD LAYER STATISTICS:
+------------------------------
+Total customers: 14,999
+Average completeness: 0.000
+Extreme outliers: 843
+Low completeness: 14,999
+Clean customers: 0
+
+SCALING STATISTICS (sample):
+------------------------------
+sales_order_no_nunique   : median=30.000, scale=47.000
+sku_nunique              : median=64.000, scale=105.000
+items_returned_count     : median=18.000, scale=45.000
+sales_qty_mean           : median=1.009, scale=0.047
+avg_order_size           : median=3.194, scale=1.863
+
+CLUSTERING READINESS:
+------------------------------
+Customers ready for clustering: 0
+Percentage ready: 0.0%
+
+RECOMMENDED NEXT STEPS:
+- Review outliers for potential exclusion from clustering
+- Consider feature selection refinement based on variance
+- Proceed with DBSCAN -> K-means -> sub-DBSCAN pipeline
+
+============================================================

@@ -1,0 +1,134 @@
+{
+  "pipeline_execution": {
+    "start_time": "2025-06-25T09:38:07.960345",
+    "end_time": "2025-06-25T09:39:07.973143",
+    "total_duration_seconds": 60.01279878616333,
+    "total_duration_formatted": "0h 1m 0s"
+  },
+  "configuration": {
+    "data_source": {
+      "csv_file": "base_returns_sku_reasoncodes_sent.csv",
+      "expected_columns": [
+        "SALES_ORDER_NO",
+        "CUSTOMER_EMAILID",
+        "ORDER_DATE",
+        "SKU",
+        "SALES_QTY",
+        "GROSS",
+        "RETURN_QTY",
+        "UNITS_RETURNED_FLAG",
+        "RETURN_DATE",
+        "RETURN_NO",
+        "RETURN_COMMENT",
+        "RETURN_REASON",
+        "ORDERLINK",
+        "MAX(RR.F_ID)",
+        "MAX(RR.F_NAME)",
+        "MAX(RR.Q_D2C_RTRN_REASONCODE_ID)",
+        "MAX(RR.Q_D2C_RET_REASON_NAME)",
+        "MAX(RR.Q_D2C_RET_REASON)",
+        "MAX(RR.Q_D2C_RET_REASON_GROUP_NAME0)",
+        "Q_CLS_ID",
+        "Q_SKU_DESC",
+        "Q_GMM_ID",
+        "Q_SKU_ID",
+        "CLASS_",
+        "DIVISION_",
+        "BRAND_",
+        "Q_CLR_DNUM",
+        "Q_CLR_DESC",
+        "VENDOR_STYLE",
+        "SIZE_",
+        "SENTIMENT",
+        "SCORE"
+      ]
+    },
+    "execution_steps": {
+      "database_setup": false,
+      "data_analysis": true,
+      "feature_creation": true,
+      "preprocessing": true,
+      "clustering": true
+    },
+    "error_handling": {
+      "continue_on_warning": true,
+      "stop_on_error": true,
+      "save_intermediate_results": true,
+      "max_retries": 2
+    },
+    "quality_checks": {
+      "min_customers": 1000,
+      "min_orders_per_customer": 2,
+      "max_missing_data_ratio": 0.3,
+      "min_feature_completeness": 0.5
+    }
+  },
+  "step_execution_log": [
+    {
+      "step": "Data Analysis",
+      "status": "COMPLETED",
+      "timestamp": "2025-06-25T09:38:08.195404",
+      "duration_seconds": 0.19744133949279785,
+      "details": {
+        "total_customers": 14999,
+        "avg_orders_per_customer": 67.40682712180812,
+        "avg_qty_per_customer": 259.8895259683979,
+        "avg_return_rate": 0.2142959550752509,
+        "customers_with_sufficient_orders": 14999
+      }
+    },
+    {
+      "step": "Feature Engineering and Silver Layer Creation",
+      "status": "COMPLETED",
+      "timestamp": "2025-06-25T09:39:00.724923",
+      "duration_seconds": 52.517826557159424,
+      "details": {
+        "stdout": null,
+        "stderr": "2025-06-25 09:38:08,584 - INFO - Starting feature creation pipeline...\n2025-06-25 09:38:08,597 - INFO - Connected to customer clustering database\n2025-06-25 09:38:08,598 - INFO - Bronze layer contains 3,635,436 records\n2025-06-25 09:38:08,598 - INFO - Starting comprehensive feature creation...\n2025-06-25 09:38:08,632 - INFO - Processing features for 14999 customers in batches of 50000\n2025-06-25 09:38:08,632 - INFO - Dataset small enough to process without batching\n2025-06-25 09:38:08,632 - INFO - Creating basic volume metrics...\n2025-06-25 09:38:08,632 - INFO - Creating basic volume metrics...\n2025-06-25 09:38:08,927 - WARNING - avg_order_size: 205 values above warning threshold 10\n2025-06-25 09:38:08,933 - INFO - Feature 'basic_volume_metrics' completed in 0.29s, 14999 records processed\n2025-06-25 09:38:08,933 - INFO - Feature 'basic_volume_metrics' completed in 0.29s, 14999 records processed\n2025-06-25 09:38:08,935 - INFO - Creating return behavior patterns...\n2025-06-25 09:38:08,935 - INFO - Creating return behavior patterns...\n2025-06-25 09:38:09,205 - WARNING - return_intensity: 2221 values outside expected range [0, 1]\n2025-06-25 09:38:09,205 - WARNING - return_product_variety: 4553 values above warning threshold 25\n2025-06-25 09:38:09,205 - WARNING - avg_returns_per_order: 17 values above warning threshold 8\n2025-06-25 09:38:09,209 - INFO - Feature 'return_behavior_patterns' completed in 0.27s, 14999 records processed\n2025-06-25 09:38:09,209 - INFO - Feature 'return_behavior_patterns' completed in 0.27s, 14999 records processed\n2025-06-25 09:38:09,209 - INFO - Creating temporal patterns...\n2025-06-25 09:38:09,209 - INFO - Creating temporal patterns...\n2025-06-25 09:38:09,310 - WARNING - avg_days_to_return: 439 values above warning threshold 60\n2025-06-25 09:38:09,311 - WARNING - return_timing_spread: 1032 values above warning threshold 45\n2025-06-25 09:38:09,314 - INFO - Feature 'temporal_patterns' completed in 0.10s, 14999 records processed\n2025-06-25 09:38:09,314 - INFO - Feature 'temporal_patterns' completed in 0.10s, 14999 records processed\n2025-06-25 09:38:09,315 - INFO - Creating recency analysis...\n2025-06-25 09:38:09,315 - INFO - Creating recency analysis...\n2025-06-25 09:38:09,448 - INFO - Feature 'recency_analysis' completed in 0.13s, 14999 records processed\n2025-06-25 09:38:09,448 - INFO - Feature 'recency_analysis' completed in 0.13s, 14999 records processed\n2025-06-25 09:38:09,448 - INFO - Creating category intelligence...\n2025-06-25 09:38:09,448 - INFO - Creating category intelligence features...\n2025-06-25 09:38:09,687 - WARNING - category_diversity_score: 5999 values above warning threshold 1.5\n2025-06-25 09:38:09,690 - INFO - Feature 'category_intelligence' completed in 0.24s, 14972 records processed\n2025-06-25 09:38:09,690 - INFO - Feature 'category_intelligence' completed in 0.24s, 14972 records processed\n2025-06-25 09:38:09,690 - INFO - Creating consecutive returns...\n2025-06-25 09:38:10,409 - WARNING - consecutive_returns: 5692 values above warning threshold 6\n2025-06-25 09:38:10,409 - WARNING - avg_consecutive_returns: 1247 values above warning threshold 3\n2025-06-25 09:38:10,412 - INFO - Feature 'consecutive_returns' completed in 0.72s, 14999 records processed\n2025-06-25 09:38:10,412 - INFO - Feature 'consecutive_returns' completed in 0.72s, 14999 records processed\n2025-06-25 09:38:10,412 - INFO - Creating adjacency features...\n2025-06-25 09:38:58,267 - INFO - Feature 'adjacency_features' completed in 47.85s, 14999 records processed\n2025-06-25 09:38:58,267 - INFO - Feature 'adjacency_features' completed in 47.85s, 14999 records processed\n2025-06-25 09:38:58,268 - INFO - Creating seasonal features...\n2025-06-25 09:38:58,268 - INFO - Creating seasonal features...\n2025-06-25 09:38:58,574 - INFO - Feature 'seasonal_features' completed in 0.30s, 14999 records processed\n2025-06-25 09:38:58,574 - INFO - Feature 'seasonal_features' completed in 0.30s, 14999 records processed\n2025-06-25 09:38:58,574 - INFO - Creating trend susceptibility...\n2025-06-25 09:38:58,574 - INFO - Creating trend susceptibility features...\n2025-06-25 09:38:59,108 - INFO - trend_product_category_return_rate: 1001 null values found\n2025-06-25 09:38:59,111 - INFO - Feature 'trend_susceptibility' completed in 0.53s, 14999 records processed\n2025-06-25 09:38:59,111 - INFO - Feature 'trend_susceptibility' completed in 0.53s, 14999 records processed\n2025-06-25 09:38:59,112 - INFO - Creating monetary value metrics...\n2025-06-25 09:38:59,112 - INFO - Creating monetary value metrics using actual GROSS data...\n2025-06-25 09:38:59,736 - INFO - Monetary metrics distribution before scaling:\n2025-06-25 09:38:59,737 - INFO -   avg_order_value: min=0.00, max=5835.37, mean=307.07\n2025-06-25 09:38:59,737 - INFO -   avg_return_value: min=0.00, max=2898.00, mean=96.54\n2025-06-25 09:38:59,737 - INFO -   high_value_return_affinity: min=0.00, max=100.00, mean=28.75\n2025-06-25 09:38:59,744 - INFO - Feature 'monetary_value_metrics' completed in 0.63s, 14999 records processed\n2025-06-25 09:38:59,745 - INFO - Feature 'monetary_value_metrics' completed in 0.63s, 14999 records processed\n2025-06-25 09:38:59,745 - INFO - Created monetary value metrics for 14999 customers using actual GROSS values\n2025-06-25 09:38:59,746 - INFO - All features created successfully in 51.15 seconds\n2025-06-25 09:38:59,746 - INFO - Merging feature dataframes...\n2025-06-25 09:38:59,808 - INFO - Merged features: 14999 customers, 35 features\n2025-06-25 09:38:59,808 - INFO - Adding metadata features...\n2025-06-25 09:38:59,900 - INFO - Added metadata features. Final dataset: 14999 customers, 46 features\n2025-06-25 09:38:59,901 - INFO - Validating silver layer data...\n2025-06-25 09:38:59,903 - INFO - \u00e2\u0153\u2026 Silver layer data validation PASSED\n2025-06-25 09:38:59,903 - INFO - Inserting data into silver_customer_features table...\n2025-06-25 09:39:00,188 - INFO - Cleared existing silver layer data\n2025-06-25 09:39:00,213 - INFO - Silver table has 44 columns\n2025-06-25 09:39:00,213 - INFO - DataFrame has 46 columns\n2025-06-25 09:39:00,213 - WARNING - Extra columns in DataFrame not in silver table: {'first_order_date_bronze', 'last_order_date_bronze'}\n2025-06-25 09:39:00,213 - WARNING - Column order mismatch between table and DataFrame\n2025-06-25 09:39:00,213 - WARNING - Silver table columns: ['customer_emailid', 'customer_emailid_cleaned', 'sales_order_no_nunique', 'sku_nunique', 'items_returned_count', 'sales_qty_mean', 'avg_order_size', 'return_rate', 'return_ratio', 'return_product_variety', 'avg_returns_per_order', 'return_frequency_ratio', 'return_intensity', 'consecutive_returns', 'avg_consecutive_returns', 'customer_lifetime_days', 'avg_days_to_return', 'return_timing_spread', 'customer_tenure_stage', 'recent_orders', 'recent_returns', 'recent_vs_avg_ratio', 'behavior_stability_score', 'avg_order_value', 'avg_return_value', 'high_value_return_affinity', 'product_category_loyalty', 'category_diversity_score', 'category_loyalty_score', 'high_return_category_affinity', 'sku_adjacency_orders', 'sku_adjacency_returns', 'sku_adjacency_timing', 'sku_adjacency_return_timing', 'seasonal_susceptibility_returns', 'seasonal_susceptibility_orders', 'trend_product_category_return_rate', 'trend_product_category_order_rate', 'feature_calculation_date', 'data_quality_flags', 'total_sales_qty', 'total_return_qty', 'first_order_date', 'last_order_date']\n2025-06-25 09:39:00,213 - WARNING - DataFrame columns: ['customer_emailid', 'sales_order_no_nunique', 'sku_nunique', 'items_returned_count', 'sales_qty_mean', 'avg_order_size', 'customer_lifetime_days', 'avg_days_to_return', 'return_timing_spread', 'customer_tenure_stage', 'first_order_date', 'last_order_date', 'return_rate', 'return_ratio', 'return_product_variety', 'avg_returns_per_order', 'return_frequency_ratio', 'return_intensity', 'consecutive_returns', 'avg_consecutive_returns', 'recent_orders', 'recent_returns', 'recent_vs_avg_ratio', 'behavior_stability_score', 'category_diversity_score', 'category_loyalty_score', 'high_return_category_affinity', 'sku_adjacency_orders', 'sku_adjacency_returns', 'sku_adjacency_timing', 'sku_adjacency_return_timing', 'seasonal_susceptibility_orders', 'seasonal_susceptibility_returns', 'trend_product_category_order_rate', 'trend_product_category_return_rate', 'customer_emailid_cleaned', 'total_sales_qty', 'total_return_qty', 'first_order_date_bronze', 'last_order_date_bronze', 'avg_order_value', 'avg_return_value', 'high_value_return_affinity', 'feature_calculation_date', 'product_category_loyalty', 'data_quality_flags']\n2025-06-25 09:39:00,217 - INFO - Reordered DataFrame columns to match table schema\n2025-06-25 09:39:00,261 - INFO - Inserted chunk 1: 10000/14999 records\n2025-06-25 09:39:00,287 - INFO - Inserted chunk 2: 14999/14999 records\n2025-06-25 09:39:00,288 - INFO - \u00e2\u0153\u2026 Successfully inserted 14999 customer records into silver layer\n2025-06-25 09:39:00,289 - INFO - Generating feature summary report...\n2025-06-25 09:39:00,294 - INFO - Feature summary report generated and saved\n2025-06-25 09:39:00,294 - INFO - \u00e2\u0153\u2026 Feature creation pipeline completed successfully!\n"
+      }
+    },
+    {
+      "step": "Feature Analytics and Excel Export",
+      "status": "COMPLETED",
+      "timestamp": "2025-06-25T09:39:01.800102",
+      "duration_seconds": 1.0439445972442627,
+      "details": {
+        "total_customers": 14999,
+        "high_return_customers": "1500",
+        "high_value_customers": "1500",
+        "high_return_high_value": "330",
+        "avg_customer_lifetime_days": 939.5241682778852,
+        "avg_return_rate": 0.21429595507525082,
+        "avg_order_value": 27.200453269025843,
+        "high_return_rate_threshold": 0.45696076336965036,
+        "high_value_threshold": 47.524050601690064
+      }
+    },
+    {
+      "step": "Cluster Preprocessing and Gold Layer Creation",
+      "status": "COMPLETED",
+      "timestamp": "2025-06-25T09:39:07.943195",
+      "duration_seconds": 2.76108717918396,
+      "details": {
+        "stdout": "============================================================\nCLUSTER PREPROCESSING SUMMARY REPORT\n============================================================\nGenerated on: 2025-06-25 09:39:07\nScaling method: robust\n\nFEATURE SELECTION:\n------------------------------\nSelected features: 28\nTotal customers: 14,999\nOutliers detected: 750\nAverage completeness: 0.000\n\nGOLD LAYER STATISTICS:\n------------------------------\nTotal customers: 14,999\nAverage completeness: 0.000\nExtreme outliers: 843\nLow completeness: 14,999\nClean customers: 0\n\nSCALING STATISTICS (sample):\n------------------------------\nsales_order_no_nunique   : median=30.000, scale=47.000\nsku_nunique              : median=64.000, scale=105.000\nitems_returned_count     : median=18.000, scale=45.000\nsales_qty_mean           : median=1.009, scale=0.047\navg_order_size           : median=3.194, scale=1.863\n\nCLUSTERING READINESS:\n------------------------------\nCustomers ready for clustering: 0\nPercentage ready: 0.0%\n\nRECOMMENDED NEXT STEPS:\n- Review outliers for potential exclusion from clustering\n- Consider feature selection refinement based on variance\n- Proceed with DBSCAN -> K-means -> sub-DBSCAN pipeline\n\n============================================================\n",
+        "stderr": "2025-06-25 09:39:06,466 - INFO - Starting cluster preprocessing pipeline...\n2025-06-25 09:39:06,466 - INFO - Parameters: scaling=robust, variance_threshold=0.01, contamination=0.05\n2025-06-25 09:39:06,466 - INFO - Using explicit column insert mode to handle schema mismatches\n2025-06-25 09:39:06,479 - INFO - Connected to customer clustering database\n2025-06-25 09:39:06,479 - INFO - Silver layer contains 14,999 customer records\n2025-06-25 09:39:06,479 - INFO - Initialized ClusterPreprocessor with robust scaling\n2025-06-25 09:39:06,480 - INFO - Loading data from silver layer...\n2025-06-25 09:39:06,496 - INFO - Loaded 14999 customers with 44 features\n2025-06-25 09:39:06,496 - INFO - Selecting features for clustering...\n2025-06-25 09:39:06,496 - INFO - Including category_diversity_score: 99.8% customers have data\n2025-06-25 09:39:06,497 - INFO - Including category_loyalty_score: 100.0% customers have data\n2025-06-25 09:39:06,497 - INFO - Including high_return_category_affinity: 99.8% customers have data\n2025-06-25 09:39:06,497 - INFO - Including sku_adjacency_orders: 98.7% customers have data\n2025-06-25 09:39:06,497 - INFO - Including sku_adjacency_returns: 64.3% customers have data\n2025-06-25 09:39:06,497 - INFO - Including sku_adjacency_timing: 98.2% customers have data\n2025-06-25 09:39:06,497 - INFO - Including sku_adjacency_return_timing: 62.6% customers have data\n2025-06-25 09:39:06,497 - INFO - Including seasonal_susceptibility_orders: 85.9% customers have data\n2025-06-25 09:39:06,498 - INFO - Including seasonal_susceptibility_returns: 80.9% customers have data\n2025-06-25 09:39:06,498 - INFO - Including trend_product_category_order_rate: 99.6% customers have data\n2025-06-25 09:39:06,498 - INFO - Including trend_product_category_return_rate: 92.9% customers have data\n2025-06-25 09:39:06,499 - INFO - Selected 29 features for clustering:\n2025-06-25 09:39:06,499 - INFO -   volume_metrics: 5 features\n2025-06-25 09:39:06,499 - INFO -   return_behavior: 6 features\n2025-06-25 09:39:06,499 - INFO -   temporal_patterns: 3 features\n2025-06-25 09:39:06,499 - INFO -   recency_trends: 4 features\n2025-06-25 09:39:06,499 - INFO -   category_intelligence: 3 features\n2025-06-25 09:39:06,499 - INFO -   adjacency_patterns: 4 features\n2025-06-25 09:39:06,499 - INFO -   seasonal_trends: 2 features\n2025-06-25 09:39:06,499 - INFO -   trend_susceptibility: 2 features\n2025-06-25 09:39:06,499 - INFO - Handling missing values...\n2025-06-25 09:39:06,501 - INFO - Removing low variance features (threshold: 0.01)...\n2025-06-25 09:39:06,503 - INFO - Removed 1 low variance features:\n2025-06-25 09:39:06,503 - INFO -   category_loyalty_score: variance = 0.008292\n2025-06-25 09:39:06,504 - INFO - Detecting outliers using Isolation Forest (contamination: 0.05)...\n2025-06-25 09:39:06,776 - INFO - Detected 750 outliers (5.0%)\n2025-06-25 09:39:06,777 - INFO - Outlier characteristics:\n2025-06-25 09:39:06,777 - INFO -   Avg return rate: 0.387\n2025-06-25 09:39:06,777 - INFO -   Avg order count: 421.1\n2025-06-25 09:39:06,778 - INFO -   Avg lifetime days: 984\n2025-06-25 09:39:06,778 - INFO - Scaling features using robust scaler...\n2025-06-25 09:39:06,795 - INFO - Scaled 28 features\n2025-06-25 09:39:06,795 - INFO - Creating gold layer dataset...\n2025-06-25 09:39:06,795 - INFO - Calculating feature completeness scores...\n2025-06-25 09:39:07,315 - INFO - Average feature completeness: 0.000\n2025-06-25 09:39:07,324 - INFO - Gold layer dataset created: 14999 customers, 35 columns\n2025-06-25 09:39:07,324 - INFO - Inserting data into gold_cluster_processed table...\n2025-06-25 09:39:07,490 - INFO - Cleared existing gold layer data\n2025-06-25 09:39:07,495 - INFO - Using explicit column insert with 34 columns\n2025-06-25 09:39:07,521 - INFO - Inserted chunk 1: 5000/14999 records\n2025-06-25 09:39:07,522 - INFO - Using explicit column insert with 34 columns\n2025-06-25 09:39:07,545 - INFO - Inserted chunk 2: 10000/14999 records\n2025-06-25 09:39:07,545 - INFO - Using explicit column insert with 34 columns\n2025-06-25 09:39:07,567 - INFO - Inserted chunk 3: 14999/14999 records\n2025-06-25 09:39:07,568 - INFO - \u00e2\u0153\u2026 Successfully inserted 14999 customer records into gold layer\n2025-06-25 09:39:07,568 - INFO - Generating preprocessing report...\n2025-06-25 09:39:07,570 - INFO - Preprocessing report generated and saved\n2025-06-25 09:39:07,570 - INFO - \u00e2\u0153\u2026 Cluster preprocessing pipeline completed successfully!\n2025-06-25 09:39:07,571 - INFO - Saved preprocessing metadata to preprocessing_metadata.json\n"
+      }
+    },
+    {
+      "step": "Clustering",
+      "status": "SKIPPED",
+      "timestamp": "2025-06-25T09:39:07.955521",
+      "duration_seconds": null,
+      "details": "Manual execution required"
+    }
+  ],
+  "step_durations": {
+    "create_features": 52.517826557159424,
+    "cluster_preprocessing": 2.76108717918396
+  },
+  "status_summary": {
+    "total_steps": 5,
+    "completed_steps": 4,
+    "failed_steps": 0
+  }
+}

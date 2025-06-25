@@ -402,7 +402,17 @@ class ClusterPreprocessor:
             
             for i in range(0, len(df_insert), chunk_size):
                 chunk = df_insert[i:i+chunk_size]
-                conn.execute("INSERT INTO gold_cluster_processed SELECT * FROM chunk")
+                
+                # Use explicit columns for insert if specified
+                if hasattr(self, 'explicit_column_insert') and self.explicit_column_insert:
+                    # Get column names as a comma-separated string
+                    column_names = ', '.join(df_insert.columns)
+                    logger.info(f"Using explicit column insert with {len(df_insert.columns)} columns")
+                    conn.execute(f"INSERT INTO gold_cluster_processed ({column_names}) SELECT {column_names} FROM chunk")
+                else:
+                    # Traditional insert (requires exact column match)
+                    conn.execute("INSERT INTO gold_cluster_processed SELECT * FROM chunk")
+                
                 total_inserted += len(chunk)
                 logger.info(f"Inserted chunk {i//chunk_size + 1}: {total_inserted}/{len(df_insert)} records")
             
@@ -505,7 +515,8 @@ class ClusterPreprocessor:
 
 def main(scaling_method: str = 'robust', 
          variance_threshold: float = 0.01,
-         outlier_contamination: float = 0.05):
+         outlier_contamination: float = 0.05,
+         explicit_column_insert: bool = False):
     """
     Main preprocessing pipeline execution
     
@@ -513,10 +524,13 @@ def main(scaling_method: str = 'robust',
         scaling_method: 'robust' or 'standard'
         variance_threshold: Minimum variance for feature selection
         outlier_contamination: Expected proportion of outliers
+        explicit_column_insert: Use explicit column names when inserting data
     """
     
     logger.info("Starting cluster preprocessing pipeline...")
     logger.info(f"Parameters: scaling={scaling_method}, variance_threshold={variance_threshold}, contamination={outlier_contamination}")
+    if explicit_column_insert:
+        logger.info("Using explicit column insert mode to handle schema mismatches")
     
     try:
         # Connect to database
@@ -533,6 +547,10 @@ def main(scaling_method: str = 'robust',
         
         # Initialize preprocessor
         preprocessor = ClusterPreprocessor(scaling_method)
+        
+        # Set explicit column insert flag if specified
+        if explicit_column_insert:
+            preprocessor.explicit_column_insert = explicit_column_insert
         
         # Load silver layer data
         silver_df = preprocessor.load_silver_data(conn)
@@ -608,13 +626,16 @@ if __name__ == "__main__":
                        help="Minimum variance threshold for feature selection (default: 0.01)")
     parser.add_argument("--outlier-contamination", type=float, default=0.05,
                        help="Expected outlier contamination rate (default: 0.05)")
+    parser.add_argument("--explicit-column-insert", choices=['true', 'false'], default='false',
+                       help="Use explicit column names when inserting data (default: false)")
     
     args = parser.parse_args()
     
     success = main(
         scaling_method=args.scaling,
         variance_threshold=args.variance_threshold,
-        outlier_contamination=args.outlier_contamination
+        outlier_contamination=args.outlier_contamination,
+        explicit_column_insert=args.explicit_column_insert == 'true'
     )
     
     sys.exit(0 if success else 1)

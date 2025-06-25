@@ -1,0 +1,184 @@
+{
+  "feature_stats": {
+    "selected_features": [
+      "sales_order_no_nunique",
+      "sku_nunique",
+      "items_returned_count",
+      "sales_qty_mean",
+      "avg_order_size",
+      "return_rate",
+      "return_ratio",
+      "return_product_variety",
+      "avg_returns_per_order",
+      "return_frequency_ratio",
+      "return_intensity",
+      "customer_lifetime_days",
+      "avg_days_to_return",
+      "return_timing_spread",
+      "recent_orders",
+      "recent_returns",
+      "recent_vs_avg_ratio",
+      "behavior_stability_score",
+      "category_diversity_score",
+      "high_return_category_affinity",
+      "sku_adjacency_orders",
+      "sku_adjacency_returns",
+      "sku_adjacency_timing",
+      "sku_adjacency_return_timing",
+      "seasonal_susceptibility_orders",
+      "seasonal_susceptibility_returns",
+      "trend_product_category_order_rate",
+      "trend_product_category_return_rate"
+    ],
+    "scaling_stats": {
+      "sales_order_no_nunique": {
+        "median": 30.0,
+        "scale": 47.0
+      },
+      "sku_nunique": {
+        "median": 64.0,
+        "scale": 105.0
+      },
+      "items_returned_count": {
+        "median": 18.0,
+        "scale": 45.0
+      },
+      "sales_qty_mean": {
+        "median": 1.009090909090909,
+        "scale": 0.04714222456157935
+      },
+      "avg_order_size": {
+        "median": 3.1944444444444446,
+        "scale": 1.8627450980392153
+      },
+      "return_rate": {
+        "median": 0.18518518518518517,
+        "scale": 0.2502502502502503
+      },
+      "return_ratio": {
+        "median": 0.18518518518518517,
+        "scale": 0.2502502502502503
+      },
+      "return_product_variety": {
+        "median": 11.0,
+        "scale": 29.0
+      },
+      "avg_returns_per_order": {
+        "median": 0.5714285714285714,
+        "scale": 0.8260287721646036
+      },
+      "return_frequency_ratio": {
+        "median": 0.18925233644859812,
+        "scale": 0.2551097980015839
+      },
+      "return_intensity": {
+        "median": 1.0,
+        "scale": 1.0
+      },
+      "customer_lifetime_days": {
+        "median": 1010.0,
+        "scale": 203.0
+      },
+      "avg_days_to_return": {
+        "median": 14.125,
+        "scale": 12.459935897435896
+      },
+      "return_timing_spread": {
+        "median": 8.972389902711571,
+        "scale": 13.810498409937733
+      },
+      "recent_orders": {
+        "median": 2.0,
+        "scale": 5.0
+      },
+      "recent_returns": {
+        "median": 0.0,
+        "scale": 4.0
+      },
+      "recent_vs_avg_ratio": {
+        "median": 0.0,
+        "scale": 1.3119699409554482
+      },
+      "behavior_stability_score": {
+        "median": 0.1,
+        "scale": 0.30000000000000004
+      },
+      "category_diversity_score": {
+        "median": 1.25,
+        "scale": 1.2499999999999998
+      },
+      "high_return_category_affinity": {
+        "median": 0.7,
+        "scale": 0.6
+      },
+      "sku_adjacency_orders": {
+        "median": 188.0,
+        "scale": 822.0
+      },
+      "sku_adjacency_returns": {
+        "median": 14.0,
+        "scale": 142.0
+      },
+      "sku_adjacency_timing": {
+        "median": 6.805555555555555,
+        "scale": 2.0863720736380316
+      },
+      "sku_adjacency_return_timing": {
+        "median": 4.636363636363637,
+        "scale": 7.171570736955353
+      },
+      "seasonal_susceptibility_orders": {
+        "median": 0.4342915988615959,
+        "scale": 0.4023301590412176
+      },
+      "seasonal_susceptibility_returns": {
+        "median": 0.6928203230275508,
+        "scale": 0.8175181456287691
+      },
+      "trend_product_category_order_rate": {
+        "median": 0.10098048745759415,
+        "scale": 0.24992427683035612
+      },
+      "trend_product_category_return_rate": {
+        "median": 0.16243258780950548,
+        "scale": 0.31553670943844214
+      }
+    },
+    "total_customers": 14999,
+    "outlier_count": "750",
+    "avg_completeness": 0.0,
+    "processing_timestamp": "2025-06-25T09:39:07.324067"
+  },
+  "scaling_method": "robust",
+  "selected_features": [
+    "sales_order_no_nunique",
+    "sku_nunique",
+    "items_returned_count",
+    "sales_qty_mean",
+    "avg_order_size",
+    "return_rate",
+    "return_ratio",
+    "return_product_variety",
+    "avg_returns_per_order",
+    "return_frequency_ratio",
+    "return_intensity",
+    "customer_lifetime_days",
+    "avg_days_to_return",
+    "return_timing_spread",
+    "recent_orders",
+    "recent_returns",
+    "recent_vs_avg_ratio",
+    "behavior_stability_score",
+    "category_diversity_score",
+    "high_return_category_affinity",
+    "sku_adjacency_orders",
+    "sku_adjacency_returns",
+    "sku_adjacency_timing",
+    "sku_adjacency_return_timing",
+    "seasonal_susceptibility_orders",
+    "seasonal_susceptibility_returns",
+    "trend_product_category_order_rate",
+    "trend_product_category_return_rate"
+  ],
+  "preprocessing_timestamp": "2025-06-25T09:39:07.570292"
+}
