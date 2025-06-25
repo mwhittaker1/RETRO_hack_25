@@ -30,20 +30,24 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class ClusterPreprocessor:
-    def __init__(self, scaling_method: str = 'robust'):
+    def __init__(self, scaling_method: str = 'robust', correlation_threshold: float = 0.8):
         """
         Initialize the cluster preprocessor
         
         Args:
             scaling_method: 'robust', 'standard', or 'minmax'
+            correlation_threshold: Threshold for identifying highly correlated features (0.0-1.0)
         """
         self.scaling_method = scaling_method
+        self.correlation_threshold = correlation_threshold
         self.scaler = None
         self.feature_stats = {}
         self.outlier_detector = None
         self.selected_features = []
+        self.removed_null_features = []
+        self.removed_correlated_features = []
         
-        logger.info(f"Initialized ClusterPreprocessor with {scaling_method} scaling")
+        logger.info(f"Initialized ClusterPreprocessor with {scaling_method} scaling and correlation threshold {correlation_threshold}")
     
     def load_silver_data(self, conn) -> pd.DataFrame:
         """Load and prepare data from silver layer"""
@@ -447,7 +451,16 @@ class ClusterPreprocessor:
         if self.feature_stats:
             report.append("FEATURE SELECTION:")
             report.append("-" * 30)
+            report.append(f"Original features: {len(self.feature_stats.get('original_features', []))}")
             report.append(f"Selected features: {len(self.feature_stats['selected_features'])}")
+            
+            # Report on removed features
+            if hasattr(self, 'removed_null_features') and self.removed_null_features:
+                report.append(f"Features with 100% nulls removed: {len(self.removed_null_features)}")
+                
+            if hasattr(self, 'removed_correlated_features') and self.removed_correlated_features:
+                report.append(f"Highly correlated features removed: {len(self.removed_correlated_features)}")
+                
             report.append(f"Total customers: {self.feature_stats['total_customers']:,}")
             report.append(f"Outliers detected: {self.feature_stats['outlier_count']:,}")
             report.append(f"Average completeness: {self.feature_stats['avg_completeness']:.3f}")
@@ -512,11 +525,457 @@ class ClusterPreprocessor:
             f.write(report_text)
         
         logger.info("Preprocessing report generated and saved")
+    
+    def remove_null_features(self, df: pd.DataFrame, features: List[str]) -> Tuple[pd.DataFrame, List[str]]:
+        """Remove features with 100% null values"""
+        
+        logger.info("Checking for features with 100% null values...")
+        
+        # Find features that are completely null
+        completely_null_features = []
+        for col in features:
+            if df[col].isnull().sum() == len(df):
+                completely_null_features.append(col)
+        
+        self.removed_null_features = completely_null_features
+        
+        if completely_null_features:
+            logger.info(f"Removing {len(completely_null_features)} features with 100% null values:")
+            for feature in completely_null_features:
+                logger.info(f"  - {feature}")
+            
+            # Remove completely null features
+            valid_features = [f for f in features if f not in completely_null_features]
+            
+            logger.info(f"Features reduced from {len(features)} to {len(valid_features)}")
+        else:
+            logger.info("No features with 100% null values found.")
+            valid_features = features
+            
+        return df, valid_features
+    
+    def remove_correlated_features(self, df: pd.DataFrame, features: List[str]) -> Tuple[pd.DataFrame, List[str]]:
+        """Remove highly correlated features to reduce multicollinearity"""
+        
+        logger.info(f"Analyzing feature correlations (threshold: {self.correlation_threshold})...")
+        
+        # Calculate correlation matrix
+        correlation_matrix = df[features].corr().abs()
+        
+        # Create a set to keep track of features to remove
+        features_to_remove = set()
+        
+        # List of highly correlated feature pairs
+        high_correlation_pairs = []
+        
+        # Identify pairs of highly correlated features
+        for i in range(len(correlation_matrix.columns)):
+            for j in range(i+1, len(correlation_matrix.columns)):
+                if correlation_matrix.iloc[i, j] > self.correlation_threshold:
+                    feat_i = correlation_matrix.columns[i]
+                    feat_j = correlation_matrix.columns[j]
+                    correlation = correlation_matrix.iloc[i, j]
+                    high_correlation_pairs.append((feat_i, feat_j, correlation))
+        
+        if high_correlation_pairs:
+            logger.info(f"Found {len(high_correlation_pairs)} highly correlated feature pairs (|correlation| > {self.correlation_threshold}):")
+            
+            # Print highly correlated pairs
+            for feat_i, feat_j, corr in high_correlation_pairs:
+                logger.info(f"  {feat_i} <-> {feat_j}: {corr:.3f}")
+            
+            # Count occurrence of each feature in high correlation pairs
+            feature_counts = {}
+            for feat_i, feat_j, _ in high_correlation_pairs:
+                feature_counts[feat_i] = feature_counts.get(feat_i, 0) + 1
+                feature_counts[feat_j] = feature_counts.get(feat_j, 0) + 1
+            
+            # For each pair, remove the feature that appears more frequently
+            logger.info("Features selected for removal:")
+            for feat_i, feat_j, _ in high_correlation_pairs:
+                # Skip if both features are already marked for removal
+                if feat_i in features_to_remove and feat_j in features_to_remove:
+                    continue
+                    
+                # If one is already marked, skip
+                if feat_i in features_to_remove:
+                    continue
+                if feat_j in features_to_remove:
+                    continue
+                    
+                # Otherwise, remove the one with higher count
+                if feature_counts[feat_i] > feature_counts[feat_j]:
+                    features_to_remove.add(feat_i)
+                    logger.info(f"  - {feat_i} (appears in {feature_counts[feat_i]} pairs)")
+                else:
+                    features_to_remove.add(feat_j)
+                    logger.info(f"  - {feat_j} (appears in {feature_counts[feat_j]} pairs)")
+            
+            self.removed_correlated_features = list(features_to_remove)
+            
+            # Remove the identified features
+            valid_features = [f for f in features if f not in features_to_remove]
+            
+            logger.info(f"Features reduced from {len(features)} to {len(valid_features)}")
+        else:
+            logger.info("No highly correlated feature pairs found.")
+            valid_features = features
+            self.removed_correlated_features = []
+            
+        return df, valid_features
 
+    def process_data(self, conn) -> pd.DataFrame:
+        """Run the full preprocessing pipeline"""
+        
+        logger.info("Starting cluster preprocessing pipeline...")
+        
+        # Load silver layer data
+        silver_df = self.load_silver_data(conn)
+        original_features = self.select_features(silver_df)
+        
+        # Store original feature list
+        self.feature_stats = {'original_features': original_features}
+        
+        # First, check for and remove 100% null features
+        silver_df, features_no_nulls = self.remove_null_features(silver_df, original_features)
+        
+        # Next, check for and remove highly correlated features
+        silver_df, uncorrelated_features = self.remove_correlated_features(silver_df, features_no_nulls)
+        
+        # Continue with the rest of the preprocessing pipeline
+        silver_df, selected_features = self.remove_low_variance_features(silver_df, uncorrelated_features)
+        silver_df, outlier_scores = self.detect_outliers(silver_df, selected_features)
+        gold_df, scaling_stats = self.scale_features(silver_df, selected_features)
+        gold_df = self.create_gold_layer_dataset(gold_df, selected_features, scaling_stats, original_features)
+        
+        # Insert into gold layer table
+        success = self.insert_gold_layer_data(conn, gold_df)
+        
+        # Generate preprocessing report
+        report = self.generate_preprocessing_report(conn)
+        
+        # Write report to file
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        report_path = f'preprocessing_report_{timestamp}.txt'
+        with open(report_path, 'w') as f:
+            f.write('\n'.join(report))
+        
+        logger.info(f"Preprocessing report written to {report_path}")
+        
+        if success:
+            logger.info("Cluster preprocessing pipeline completed successfully")
+        else:
+            logger.error("Cluster preprocessing pipeline failed")
+        
+        return gold_df
+
+    # Advanced Feature Selection Methods
+    def advanced_feature_selection(self, df: pd.DataFrame, features: List[str], 
+                            min_importance: float = 0.01,
+                            min_variance: float = 0.01,
+                            max_vif: float = 10.0,
+                            max_stability: float = 0.5,
+                            min_iv: float = 0.02) -> Tuple[pd.DataFrame, List[str], Dict]:
+        """
+        Apply advanced feature selection methods to further optimize the feature set
+        
+        Args:
+            df: DataFrame with features
+            features: List of feature names
+            min_importance: Minimum feature importance to retain (Random Forest)
+            min_variance: Minimum variance to retain
+            max_vif: Maximum Variance Inflation Factor allowed
+            max_stability: Maximum stability metric allowed (lower is better)
+            min_iv: Minimum Information Value required
+            
+        Returns:
+            Tuple of (DataFrame, selected_features, selection_metadata)
+        """
+        
+        logger.info("Applying advanced feature selection methods...")
+        
+        # Create output directory for visualizations
+        import os
+        output_dir = "feature_selection_outputs"
+        os.makedirs(output_dir, exist_ok=True)
+        
+        # Set up tracking for features flagged by each method
+        flagged_features = {
+            'high_vif': [],
+            'low_variance': [],
+            'low_importance': [],
+            'unstable': [],
+            'low_iv': []
+        }
+        
+        # Create feature matrix
+        feature_matrix = df[features]
+        X = feature_matrix.values
+        
+        # 1. Variance Inflation Factor (VIF) Analysis
+        try:
+            from statsmodels.stats.outliers_influence import variance_inflation_factor
+            
+            logger.info(f"Running VIF analysis (max_vif={max_vif})...")
+            
+            # Calculate VIF for each feature
+            vif_data = pd.DataFrame()
+            vif_data["Feature"] = features
+            vif_data["VIF"] = [variance_inflation_factor(X, i) for i in range(X.shape[1])]
+            
+            # Sort by highest VIF
+            vif_data = vif_data.sort_values("VIF", ascending=False)
+            
+            # Identify features with high VIF
+            high_vif_features = vif_data[vif_data["VIF"] > max_vif]["Feature"].tolist()
+            if high_vif_features:
+                logger.info(f"Found {len(high_vif_features)} features with VIF > {max_vif}:")
+                for feature in high_vif_features:
+                    logger.info(f"  - {feature} (VIF: {vif_data.loc[vif_data['Feature'] == feature, 'VIF'].values[0]:.3f})")
+                
+                flagged_features['high_vif'] = high_vif_features
+            else:
+                logger.info(f"No features with VIF > {max_vif} detected")
+                
+            # Save VIF results
+            vif_data.to_csv(f"{output_dir}/vif_analysis.csv", index=False)
+            
+        except ImportError:
+            logger.warning("statsmodels not installed. Skipping VIF analysis...")
+        
+        # 2. Low-Variance Feature Filtering
+        logger.info(f"Running variance analysis (min_variance={min_variance})...")
+        
+        # Calculate variance for each feature
+        variance_data = pd.DataFrame({
+            "Feature": features,
+            "Variance": [np.var(feature_matrix[col]) for col in features]
+        })
+        
+        # Sort by variance
+        variance_data = variance_data.sort_values("Variance")
+        
+        # Identify low variance features
+        low_variance_features = variance_data[variance_data["Variance"] < min_variance]["Feature"].tolist()
+        
+        if low_variance_features:
+            logger.info(f"Found {len(low_variance_features)} features with low variance (< {min_variance}):")
+            for feature in low_variance_features:
+                logger.info(f"  - {feature} (variance: {variance_data.loc[variance_data['Feature'] == feature, 'Variance'].values[0]:.6f})")
+            
+            flagged_features['low_variance'] = low_variance_features
+        else:
+            logger.info(f"No features with variance below {min_variance} detected")
+        
+        # 3. Feature Importance using Random Forest
+        logger.info(f"Running feature importance analysis (min_importance={min_importance})...")
+        
+        # We'll use feature completeness score as a proxy target
+        if 'feature_completeness_score' in df.columns:
+            y = df['feature_completeness_score'].values
+        else:
+            # Create a simple target based on data completeness
+            non_zero_counts = (X != 0).sum(axis=1)
+            y = non_zero_counts / X.shape[1]
+        
+        # Train a random forest model
+        from sklearn.ensemble import RandomForestRegressor
+        rf = RandomForestRegressor(n_estimators=100, random_state=42)
+        rf.fit(X, y)
+        
+        # Get feature importances
+        importances = rf.feature_importances_
+        indices = np.argsort(importances)[::-1]
+        
+        # Create DataFrame for importances
+        importance_df = pd.DataFrame({
+            'Feature': [features[i] for i in indices],
+            'Importance': importances[indices]
+        })
+        
+        # Identify low importance features
+        low_importance_features = importance_df[importance_df['Importance'] < min_importance]['Feature'].tolist()
+        
+        if low_importance_features:
+            logger.info(f"Found {len(low_importance_features)} features with low importance (< {min_importance}):")
+            for feature in low_importance_features:
+                logger.info(f"  - {feature} (importance: {importance_df.loc[importance_df['Feature'] == feature, 'Importance'].values[0]:.6f})")
+            
+            flagged_features['low_importance'] = low_importance_features
+        else:
+            logger.info(f"No features with importance below {min_importance} detected")
+        
+        # 4. Feature Stability Analysis
+        logger.info(f"Running feature stability analysis (max_stability={max_stability})...")
+        
+        from sklearn.model_selection import KFold
+        
+        # Set up K-fold cross-validation
+        kf = KFold(n_splits=5, shuffle=True, random_state=42)
+        feature_importance_cv = np.zeros((len(features), 5))
+        
+        # Run Random Forest on each fold and collect feature importances
+        for i, (train_idx, test_idx) in enumerate(kf.split(X)):
+            X_train, y_train = X[train_idx], y[train_idx]
+            
+            # Train Random Forest
+            rf = RandomForestRegressor(n_estimators=50, random_state=42+i)
+            rf.fit(X_train, y_train)
+            
+            # Store importances
+            feature_importance_cv[:, i] = rf.feature_importances_
+        
+        # Calculate stability metric (coefficient of variation = std/mean)
+        mean_importance = np.mean(feature_importance_cv, axis=1)
+        std_importance = np.std(feature_importance_cv, axis=1)
+        stability = std_importance / (mean_importance + 1e-10)  # Add small constant to avoid division by zero
+        
+        # Create DataFrame for stability analysis
+        stability_df = pd.DataFrame({
+            'Feature': features,
+            'Mean_Importance': mean_importance,
+            'Std_Importance': std_importance,
+            'Stability': stability
+        })
+        
+        # Identify unstable features
+        unstable_features = stability_df[stability_df['Stability'] > max_stability]['Feature'].tolist()
+        
+        if unstable_features:
+            logger.info(f"Found {len(unstable_features)} unstable features (stability > {max_stability}):")
+            for feature in unstable_features:
+                feature_data = stability_df.loc[stability_df['Feature'] == feature]
+                logger.info(f"  - {feature} (stability: {feature_data['Stability'].values[0]:.4f})")
+            
+            flagged_features['unstable'] = unstable_features
+        else:
+            logger.info(f"No unstable features detected (stability > {max_stability})")
+        
+        # 5. Information Value (IV) Analysis
+        logger.info(f"Running Information Value analysis (min_iv={min_iv})...")
+        
+        # Create a simple binary target for IV demonstration
+        if 'outlier_flag' in df.columns:
+            binary_target = df['outlier_flag'].astype(int)
+        else:
+            # Use feature completeness as a proxy
+            binary_target = (df['feature_completeness_score'] > df['feature_completeness_score'].median()).astype(int)
+        
+        # Helper function for IV calculation
+        def calculate_woe_iv(feature, target):
+            """Calculate Weight of Evidence (WoE) and Information Value (IV) for a feature"""
+            df = pd.DataFrame({'feature': feature, 'target': target})
+            
+            # Handle numeric features by binning them
+            if np.issubdtype(feature.dtype, np.number):
+                df['feature_bin'] = pd.qcut(feature, q=5, duplicates='drop')
+            else:
+                df['feature_bin'] = feature
+            
+            # Calculate counts and rates
+            grouped = df.groupby('feature_bin')['target'].agg(['count', 'sum'])
+            grouped.columns = ['total', 'event']
+            grouped['non_event'] = grouped['total'] - grouped['event']
+            
+            # Calculate percentages
+            grouped['event_pct'] = grouped['event'] / grouped['event'].sum()
+            grouped['non_event_pct'] = grouped['non_event'] / grouped['non_event'].sum()
+            
+            # Calculate WoE and IV with handling for edge cases
+            grouped['woe'] = np.log(np.maximum(grouped['event_pct'], 1e-10) / np.maximum(grouped['non_event_pct'], 1e-10))
+            grouped['iv'] = (grouped['event_pct'] - grouped['non_event_pct']) * grouped['woe']
+            
+            # Return the total IV
+            return grouped['iv'].sum()
+        
+        # Calculate IV for each feature
+        iv_values = {}
+        for col in features:
+            iv_values[col] = calculate_woe_iv(feature_matrix[col], binary_target)
+        
+        # Create IV DataFrame
+        iv_df = pd.DataFrame({
+            'Feature': list(iv_values.keys()),
+            'IV': list(iv_values.values())
+        }).sort_values('IV', ascending=False)
+        
+        # Identify low IV features
+        low_iv_features = iv_df[iv_df['IV'] < min_iv]['Feature'].tolist()
+        
+        if low_iv_features:
+            logger.info(f"Found {len(low_iv_features)} features with low Information Value (< {min_iv}):")
+            for feature in low_iv_features:
+                logger.info(f"  - {feature} (IV: {iv_df.loc[iv_df['Feature'] == feature, 'IV'].values[0]:.4f})")
+            
+            flagged_features['low_iv'] = low_iv_features
+        else:
+            logger.info(f"No features with IV below {min_iv} detected")
+        
+        # 6. Consolidate results and create optimized feature recommendations
+        logger.info("Consolidating feature selection recommendations...")
+        
+        # Count how many methods flagged each feature
+        feature_flags = {}
+        for feature in features:
+            feature_flags[feature] = sum(1 for method, flagged in flagged_features.items() 
+                                      if feature in flagged)
+        
+        # Create summary DataFrame
+        summary_df = pd.DataFrame({
+            'Feature': list(feature_flags.keys()),
+            'Removal_Flags': list(feature_flags.values())
+        }).sort_values('Removal_Flags', ascending=False)
+        
+        # Select features for removal (flagged by 2+ methods)
+        removal_candidates = summary_df[summary_df['Removal_Flags'] >= 2]['Feature'].tolist()
+        
+        if removal_candidates:
+            logger.info(f"Found {len(removal_candidates)} features flagged by multiple selection methods:")
+            for feature in removal_candidates:
+                flags = []
+                for method, flagged in flagged_features.items():
+                    if feature in flagged:
+                        flags.append(method)
+                logger.info(f"  - {feature}: {feature_flags[feature]} flags ({', '.join(flags)})")
+            
+            # Remove the identified features
+            optimized_features = [f for f in features if f not in removal_candidates]
+            
+            logger.info(f"Advanced feature selection reduced features from {len(features)} to {len(optimized_features)}")
+        else:
+            logger.info("No features were flagged by multiple selection methods - current feature set appears optimal")
+            optimized_features = features
+        
+        # Create metadata about the selection process
+        selection_metadata = {
+            'original_features': features,
+            'optimized_features': optimized_features,
+            'removed_features': removal_candidates,
+            'flagged_features': flagged_features,
+            'timestamp': datetime.now().isoformat(),
+            'parameters': {
+                'min_importance': min_importance,
+                'min_variance': min_variance,
+                'max_vif': max_vif,
+                'max_stability': max_stability,
+                'min_iv': min_iv
+            }
+        }
+        
+        # Save metadata
+        import json
+        with open(f"{output_dir}/advanced_feature_selection.json", 'w') as f:
+            json.dump(selection_metadata, f, indent=2, default=str)
+        
+        logger.info(f"Advanced feature selection results saved to {output_dir}/advanced_feature_selection.json")
+        
+        return df, optimized_features, selection_metadata
+    
 def main(scaling_method: str = 'robust', 
          variance_threshold: float = 0.01,
          outlier_contamination: float = 0.05,
-         explicit_column_insert: bool = False):
+         explicit_column_insert: bool = False,
+         advanced_selection: bool = False):
     """
     Main preprocessing pipeline execution
     
@@ -525,6 +984,7 @@ def main(scaling_method: str = 'robust',
         variance_threshold: Minimum variance for feature selection
         outlier_contamination: Expected proportion of outliers
         explicit_column_insert: Use explicit column names when inserting data
+        advanced_selection: Apply advanced feature selection methods
     """
     
     logger.info("Starting cluster preprocessing pipeline...")
@@ -604,6 +1064,37 @@ def main(scaling_method: str = 'robust',
             json.dump(metadata, f, indent=2, default=str)
         
         logger.info("Saved preprocessing metadata to preprocessing_metadata.json")
+        
+        # Apply advanced feature selection if enabled
+        if advanced_selection:
+            logger.info("Applying advanced feature selection...")
+            
+            # Check if we have the required packages
+            try:
+                import statsmodels
+                has_statsmodels = True
+            except ImportError:
+                logger.warning("statsmodels not installed. Some advanced selection methods will be limited.")
+                has_statsmodels = False
+            
+            # Apply advanced selection with parameters from arguments
+            clustering_df, advanced_features, selection_metadata = preprocessor.advanced_feature_selection(
+                clustering_df, 
+                high_variance_features,
+                min_importance=0.01,
+                min_variance=0.01,
+                max_vif=10.0,
+                max_stability=0.5,
+                min_iv=0.02
+            )
+            
+            # Use the advanced optimized feature set
+            high_variance_features = advanced_features
+            logger.info(f"Advanced feature selection completed. Using {len(advanced_features)} features.")
+            
+            # Store advanced selection metadata
+            preprocessor.advanced_selection_metadata = selection_metadata
+        
         return True
         
     except Exception as e:
@@ -629,13 +1120,40 @@ if __name__ == "__main__":
     parser.add_argument("--explicit-column-insert", choices=['true', 'false'], default='false',
                        help="Use explicit column names when inserting data (default: false)")
     
+    # Add advanced feature selection options
+    parser.add_argument("--advanced-selection", choices=['true', 'false'], default='false',
+                       help="Enable advanced feature selection techniques (default: false)")
+    parser.add_argument("--min-importance", type=float, default=0.01,
+                       help="Minimum feature importance to retain in Random Forest (default: 0.01)")
+    parser.add_argument("--min-variance", type=float, default=0.01,
+                       help="Minimum variance to retain features (default: 0.01)")
+    parser.add_argument("--max-vif", type=float, default=10.0,
+                       help="Maximum Variance Inflation Factor allowed (default: 10.0)")
+    parser.add_argument("--max-stability", type=float, default=0.5,
+                       help="Maximum stability metric allowed, lower is better (default: 0.5)")
+    parser.add_argument("--min-iv", type=float, default=0.02,
+                       help="Minimum Information Value required (default: 0.02)")
+    parser.add_argument("--advanced-selection", choices=['true', 'false'], default='false',
+                       help="Apply advanced feature selection methods (default: false)")
+    parser.add_argument("--min-importance", type=float, default=0.01,
+                       help="Minimum feature importance to retain (Random Forest, default: 0.01)")
+    parser.add_argument("--min-variance", type=float, default=0.01,
+                       help="Minimum variance to retain (default: 0.01)")
+    parser.add_argument("--max-vif", type=float, default=10.0,
+                       help="Maximum Variance Inflation Factor allowed (default: 10.0)")
+    parser.add_argument("--max-stability", type=float, default=0.5,
+                       help="Maximum stability metric allowed (default: 0.5)")
+    parser.add_argument("--min-iv", type=float, default=0.02,
+                       help="Minimum Information Value required (default: 0.02)")
+    
     args = parser.parse_args()
     
     success = main(
         scaling_method=args.scaling,
         variance_threshold=args.variance_threshold,
         outlier_contamination=args.outlier_contamination,
-        explicit_column_insert=args.explicit_column_insert == 'true'
+        explicit_column_insert=args.explicit_column_insert == 'true',
+        advanced_selection=args.advanced_selection == 'true'
     )
     
     sys.exit(0 if success else 1)
