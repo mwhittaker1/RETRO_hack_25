@@ -1,0 +1,1731 @@
+================================================================================
+CUSTOMER RETURN CLUSTERING - FINAL ANALYSIS REPORT
+================================================================================
+Generated on: 2025-06-25 11:35:40
+Clustering Method: DBSCAN -> K-means -> Sub-DBSCAN
+
+EXECUTIVE SUMMARY:
+----------------------------------------
+Total customers analyzed: 14,999
+Customers successfully clustered: 2,019 (13.5%)
+Noise/outlier customers: 12,980 (86.5%)
+Final number of clusters: 280
+
+CLUSTERING QUALITY METRICS:
+----------------------------------------
+
+CLUSTER PROFILES:
+----------------------------------------
+Cluster 0.0: New Customers
+  Size: 829.0 customers (41.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 2.0: New Customers
+  Size: 13.0 customers (0.6%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 63.0: New Customers
+  Size: 13.0 customers (0.6%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 21.0: New Customers
+  Size: 11.0 customers (0.5%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 15.0: New Customers
+  Size: 11.0 customers (0.5%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 1.0: New Customers
+  Size: 10.0 customers (0.5%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 11.0: New Customers
+  Size: 10.0 customers (0.5%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 93.0: New Customers
+  Size: 8.0 customers (0.4%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 53.0: New Customers
+  Size: 7.0 customers (0.3%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 98.0: New Customers
+  Size: 7.0 customers (0.3%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 150.0: New Customers
+  Size: 7.0 customers (0.3%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 71.0: New Customers
+  Size: 6.0 customers (0.3%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 65.0: New Customers
+  Size: 6.0 customers (0.3%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 133.0: New Customers
+  Size: 6.0 customers (0.3%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 134.0: New Customers
+  Size: 6.0 customers (0.3%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 28.0: New Customers
+  Size: 6.0 customers (0.3%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 112.0: New Customers
+  Size: 6.0 customers (0.3%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 111.0: New Customers
+  Size: 6.0 customers (0.3%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 165.0: New Customers
+  Size: 6.0 customers (0.3%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 87.0: New Customers
+  Size: 6.0 customers (0.3%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 92.0: New Customers
+  Size: 6.0 customers (0.3%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 8.0: New Customers
+  Size: 6.0 customers (0.3%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 4.0: New Customers
+  Size: 6.0 customers (0.3%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 208.0: New Customers
+  Size: 6.0 customers (0.3%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 60.0: New Customers
+  Size: 6.0 customers (0.3%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 5.0: New Customers
+  Size: 6.0 customers (0.3%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 9.0: New Customers
+  Size: 6.0 customers (0.3%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 88.0: New Customers
+  Size: 6.0 customers (0.3%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 79.0: New Customers
+  Size: 6.0 customers (0.3%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 174.0: New Customers
+  Size: 6.0 customers (0.3%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 20.0: New Customers
+  Size: 6.0 customers (0.3%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 18.0: New Customers
+  Size: 6.0 customers (0.3%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 43.0: New Customers
+  Size: 6.0 customers (0.3%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 142.0: New Customers
+  Size: 6.0 customers (0.3%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 95.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 86.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 80.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 78.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 107.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 97.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 76.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 135.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 81.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 94.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 84.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 51.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 67.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 57.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 46.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 45.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 59.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 206.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 47.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 56.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 54.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 220.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 223.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 169.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 161.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 236.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 258.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 196.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 175.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 195.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 180.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 145.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 14.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 151.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 25.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 26.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 12.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 31.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 40.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 177.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 178.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 148.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 149.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 154.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 155.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 197.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 202.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 89.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 108.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 127.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 126.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 125.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 128.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 124.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 101.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 106.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 103.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 166.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 120.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 168.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 164.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 109.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 170.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 159.0: New Customers
+  Size: 5.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 276.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 3.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 211.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 210.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 73.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 75.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 74.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 61.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 64.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 6.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 269.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 267.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 231.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 234.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 233.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 222.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 224.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 227.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 212.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 213.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 214.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 215.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 216.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 217.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 204.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 50.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 48.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 44.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 55.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 52.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 66.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 207.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 205.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 69.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 162.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 113.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 110.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 119.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 121.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 129.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 115.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 102.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 100.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 77.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 91.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 82.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 136.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 104.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 139.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 130.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 131.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 118.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 117.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 122.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 123.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 137.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 138.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 262.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 179.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 176.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 191.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 181.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 186.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 187.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 173.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 194.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 141.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 200.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 163.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 140.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 189.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 259.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 254.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 32.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 238.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 41.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 42.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 244.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 245.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 246.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 248.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 24.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 23.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 22.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 33.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 34.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 13.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 17.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 19.0: New Customers
+  Size: 4.0 customers (0.2%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 16.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 27.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 29.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 30.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 35.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 36.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 37.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 38.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 39.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 237.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 239.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 240.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 241.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 242.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 243.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 247.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 249.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 250.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 251.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 252.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 253.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 255.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 256.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 257.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 260.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 261.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 263.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 264.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 265.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 266.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 172.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 182.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 183.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 184.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 185.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 188.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 190.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 192.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 193.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 198.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 199.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 201.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 203.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 143.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 144.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 146.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 147.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 152.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 153.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 156.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 157.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 158.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 160.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 167.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 171.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 114.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 116.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 132.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 83.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 85.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 90.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 96.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 99.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 105.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 49.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 58.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 62.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 68.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 70.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 72.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 209.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 218.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 219.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 221.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 225.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 226.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 228.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 229.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 230.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 232.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 235.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 268.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 10.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 270.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 271.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 272.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 273.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 274.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 275.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 7.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 277.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 278.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+Cluster 279.0: New Customers
+  Size: 3.0 customers (0.1%)
+  Avg Return Rate: 0.000
+  Avg Order Count: 0.0
+  Avg Lifetime (days): 0
+
+ALGORITHM CONFIGURATION:
+----------------------------------------
+Initial DBSCAN eps: 0.7
+Initial DBSCAN min_samples: 10
+K-means clusters: 4
+Sub-DBSCAN eps: 0.8
+Sub-DBSCAN min_samples: 20
+
+BUSINESS RECOMMENDATIONS:
+----------------------------------------
+* Develop targeted strategies for 1 major customer segments
+  - Create personalized marketing campaigns
+  - Optimize product recommendations
+  - Design cluster-specific retention programs
+
+* Monitor 279 niche customer segments
+  - Assess if specialized attention is warranted
+  - Consider merging with similar larger clusters
+
+* Investigate 12,980 outlier customers
+  - Check for data quality issues
+  - Identify potential fraud or unusual behavior
+  - Consider manual review for high-value outliers
+
+NEXT STEPS:
+----------------------------------------
+1. Validate cluster profiles with business stakeholders
+2. Implement cluster-based customer segmentation in CRM
+3. Design A/B tests for cluster-specific interventions
+4. Monitor cluster stability over time
+5. Refine clustering based on business feedback
+
+================================================================================

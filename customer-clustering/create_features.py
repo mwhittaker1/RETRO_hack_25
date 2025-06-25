@@ -92,6 +92,82 @@ def merge_feature_dataframes(features: Dict[str, pd.DataFrame]) -> pd.DataFrame:
     )
     
     logger.info(f"Merged features: {len(merged_df)} customers, {len(merged_df.columns)} features")
+    
+    # Define feature categories for imputation strategy
+    # 1. Core business metrics that should cause row dropping if missing
+    core_metrics = [
+        'sales_order_no_nunique',  # Number of orders
+        'sku_nunique',             # Number of unique products
+        'sales_qty_mean',          # Average sales quantity
+        'customer_lifetime_days',  # Customer lifetime
+        'first_order_date',        # First order date
+        'last_order_date'          # Last order date
+    ]
+    
+    # 2. Return-related features that should be 0-filled if missing
+    zero_fill_features = [
+        'items_returned_count',
+        'return_rate', 
+        'return_ratio', 
+        'return_product_variety', 
+        'avg_returns_per_order', 
+        'return_frequency_ratio', 
+        'return_intensity',
+        'consecutive_returns', 
+        'avg_consecutive_returns',
+        'avg_days_to_return', 
+        'return_timing_spread',
+        'recent_returns', 
+        'recent_vs_avg_ratio', 
+        'high_return_category_affinity',
+        'sku_adjacency_returns', 
+        'sku_adjacency_return_timing',
+        'seasonal_susceptibility_returns',
+        'trend_product_category_return_rate'
+    ]
+    
+    # 3. Category defaults for non-numeric fields
+    category_defaults = {
+        'customer_tenure_stage': 'New'
+    }
+    
+    # Log initial counts
+    initial_count = len(merged_df)
+    logger.info(f"Initial customer count before NA handling: {initial_count}")
+    
+    # Check for missing core metrics and drop rows
+    missing_core_metrics = merged_df[core_metrics].isnull().any(axis=1)
+    drop_count = missing_core_metrics.sum()
+    
+    if drop_count > 0:
+        logger.warning(f"Dropping {drop_count} rows ({drop_count/initial_count:.1%}) with missing core metrics")
+        merged_df = merged_df[~missing_core_metrics].copy()
+        logger.info(f"Remaining customers after core metric filtering: {len(merged_df)}")
+    
+    # Apply zero filling for return-related features
+    zero_fill_dict = {feature: 0 for feature in zero_fill_features if feature in merged_df.columns}
+    merged_df = merged_df.fillna(zero_fill_dict)
+    
+    # Apply category defaults
+    merged_df = merged_df.fillna(category_defaults)
+    
+    # Apply mean imputation to remaining numeric features
+    numeric_columns = merged_df.select_dtypes(include=['number']).columns.tolist()
+    remaining_numeric = [col for col in numeric_columns if col not in zero_fill_features + core_metrics]
+    
+    # Calculate means for each remaining numeric column
+    means = {col: merged_df[col].mean() for col in remaining_numeric}
+    merged_df = merged_df.fillna(means)
+    
+    # Log counts of remaining NAs
+    remaining_nas = merged_df.isnull().sum().sum()
+    if remaining_nas > 0:
+        logger.warning(f"Still have {remaining_nas} missing values after imputation")
+        na_columns = merged_df.columns[merged_df.isnull().any()].tolist()
+        logger.warning(f"Columns with remaining NAs: {na_columns}")
+    else:
+        logger.info("All missing values have been handled")
+    
     return merged_df
 
 def add_metadata_features(conn, merged_df: pd.DataFrame, features: Dict[str, pd.DataFrame]) -> pd.DataFrame:
@@ -120,50 +196,19 @@ def add_metadata_features(conn, merged_df: pd.DataFrame, features: Dict[str, pd.
     # Merge metadata
     merged_df = merged_df.merge(metadata_df, on='customer_emailid', how='left')
     
-    # Fill missing values with appropriate defaults
-    fill_values = {
-        'sales_order_no_nunique': 0,
-        'sku_nunique': 0,
-        'items_returned_count': 0,
-        'sales_qty_mean': 0,
-        'avg_order_size': 0,
-        'return_rate': 0,
-        'return_ratio': 0,
-        'return_product_variety': 0,
-        'avg_returns_per_order': 0,
-        'return_frequency_ratio': 0,
-        'return_intensity': 0,
-        'consecutive_returns': 0,
-        'avg_consecutive_returns': 0,
-        'customer_lifetime_days': 0,
-        'avg_days_to_return': 0,
-        'return_timing_spread': 0,
-        'customer_tenure_stage': 'New',
-        'recent_orders': 0,
-        'recent_returns': 0,
-        'recent_vs_avg_ratio': 0,
-        'behavior_stability_score': 1.0,
-        'category_diversity_score': 0,
-        'category_loyalty_score': 1.0,
-        'high_return_category_affinity': 0,
-        'sku_adjacency_orders': 0,
-        'sku_adjacency_returns': 0,
-        'sku_adjacency_timing': 0,
-        'sku_adjacency_return_timing': 0,
-        'seasonal_susceptibility_orders': 0,
-        'seasonal_susceptibility_returns': 0,
-        'trend_product_category_order_rate': 0,
-        'trend_product_category_return_rate': 0
-    }
-    
-    merged_df = merged_df.fillna(fill_values)
-    
     # Add monetary value features
     monetary_features = ['avg_order_value', 'avg_return_value', 'high_value_return_affinity']
     merged_df = merged_df.merge(
         features['monetary'][['customer_emailid'] + monetary_features], 
         on='customer_emailid', how='left'
     )
+    
+    # Fill any remaining nulls in monetary features with means
+    for col in monetary_features:
+        if merged_df[col].isnull().any():
+            col_mean = merged_df[col].mean()
+            merged_df[col].fillna(col_mean, inplace=True)
+            logger.info(f"Filled {col} nulls with mean value: {col_mean:.2f}")
     
     # Add feature_calculation_date column
     merged_df['feature_calculation_date'] = datetime.now()
@@ -200,34 +245,84 @@ def validate_silver_layer_data(df: pd.DataFrame) -> Dict[str, any]:
         'duplicate_customers': df['customer_emailid'].duplicated().sum(),
         'features_with_nulls': {},
         'business_logic_violations': {},
+        'imputation_statistics': {},
         'validation_passed': True
     }
     
-    # Check for nulls in key features
-    key_features = ['sales_order_no_nunique', 'return_rate', 'customer_lifetime_days']
-    for feature in key_features:
-        null_count = df[feature].isnull().sum()
-        if null_count > 0:
+    # Define core metrics that should never be null
+    core_metrics = [
+        'sales_order_no_nunique', 'customer_lifetime_days', 'sku_nunique', 
+        'first_order_date', 'last_order_date'
+    ]
+    
+    # Check for nulls in all features
+    all_null_counts = df.isnull().sum()
+    features_with_nulls = all_null_counts[all_null_counts > 0]
+    
+    if len(features_with_nulls) > 0:
+        for feature, null_count in features_with_nulls.items():
             validation_results['features_with_nulls'][feature] = null_count
-            logger.warning(f"Feature '{feature}' has {null_count} null values")
+            
+            # Critical error if core metrics have nulls
+            if feature in core_metrics:
+                validation_results['validation_passed'] = False
+                logger.error(f"CRITICAL: Core feature '{feature}' has {null_count} null values - these should have been dropped")
+            else:
+                logger.warning(f"Feature '{feature}' has {null_count} null values")
+    
+    # Check for zero-imputed return features
+    return_features = [
+        'return_rate', 'return_ratio', 'avg_returns_per_order', 
+        'return_frequency_ratio', 'items_returned_count'
+    ]
+    
+    for feature in return_features:
+        if feature in df.columns:
+            zero_count = (df[feature] == 0).sum()
+            zero_pct = zero_count / len(df) * 100
+            validation_results['imputation_statistics'][f'{feature}_zero_count'] = zero_count
+            validation_results['imputation_statistics'][f'{feature}_zero_pct'] = zero_pct
+            
+            if zero_pct > 95:
+                logger.warning(f"Feature '{feature}' has {zero_pct:.1f}% zero values, which may indicate over-imputation")
     
     # Business logic validation
+    # Return rate should be between 0 and 1
     if (df['return_rate'] < 0).any() or (df['return_rate'] > 1).any():
         invalid_count = ((df['return_rate'] < 0) | (df['return_rate'] > 1)).sum()
         validation_results['business_logic_violations']['return_rate_out_of_range'] = invalid_count
         validation_results['validation_passed'] = False
         logger.error(f"return_rate has {invalid_count} values outside [0,1] range")
     
+    # Customer lifetime days should be positive
     if (df['customer_lifetime_days'] < 0).any():
         invalid_count = (df['customer_lifetime_days'] < 0).sum()
         validation_results['business_logic_violations']['negative_lifetime'] = invalid_count
         validation_results['validation_passed'] = False
         logger.error(f"customer_lifetime_days has {invalid_count} negative values")
     
+    # Order logic: First order date should be before or equal to last order date
+    if 'first_order_date' in df.columns and 'last_order_date' in df.columns:
+        try:
+            # Convert to datetime if not already
+            first_dates = pd.to_datetime(df['first_order_date'])
+            last_dates = pd.to_datetime(df['last_order_date'])
+            
+            # Check for date integrity
+            invalid_dates = (first_dates > last_dates).sum()
+            if invalid_dates > 0:
+                validation_results['business_logic_violations']['first_date_after_last_date'] = invalid_dates
+                validation_results['validation_passed'] = False
+                logger.error(f"Date integrity error: {invalid_dates} customers have first_order_date > last_order_date")
+        except:
+            logger.warning("Could not validate order date integrity")
+    
     # Summary statistics
     validation_results['avg_return_rate'] = df['return_rate'].mean()
     validation_results['avg_order_count'] = df['sales_order_no_nunique'].mean()
     validation_results['avg_lifetime_days'] = df['customer_lifetime_days'].mean()
+    validation_results['zero_return_rate_count'] = (df['return_rate'] == 0).sum()
+    validation_results['zero_return_rate_pct'] = (df['return_rate'] == 0).sum() / len(df) * 100
     
     if validation_results['validation_passed']:
         logger.info("✅ Silver layer data validation PASSED")
@@ -346,19 +441,56 @@ def generate_feature_summary_report(conn, features: Dict[str, pd.DataFrame]) -> 
             avg(sales_order_no_nunique) as avg_orders,
             avg(customer_lifetime_days) as avg_lifetime_days,
             count(*) FILTER (WHERE customer_tenure_stage = 'Veteran') as veteran_customers,
-            count(*) FILTER (WHERE return_rate > 0.5) as high_return_customers
+            count(*) FILTER (WHERE return_rate > 0.5) as high_return_customers,
+            count(*) FILTER (WHERE return_rate = 0) as zero_return_customers
         FROM silver_customer_features;
     """).fetchone()
+    
+    # Get bronze layer counts for comparison
+    bronze_count = conn.execute("SELECT count(DISTINCT customer_emailid) FROM bronze_return_order_data").fetchone()[0]
     
     report.append("")
     report.append("SILVER LAYER STATISTICS:")
     report.append("-" * 30)
-    report.append(f"Total customers:        {silver_stats[0]:,}")
+    report.append(f"Total customers:        {silver_stats[0]:,} ({silver_stats[0]/bronze_count:.1%} of bronze layer)")
     report.append(f"Average return rate:    {silver_stats[1]:.3f}")
     report.append(f"Average orders:         {silver_stats[2]:.1f}")
     report.append(f"Average lifetime days:  {silver_stats[3]:.0f}")
-    report.append(f"Veteran customers:      {silver_stats[4]:,}")
-    report.append(f"High return customers:  {silver_stats[5]:,}")
+    report.append(f"Veteran customers:      {silver_stats[4]:,} ({silver_stats[4]/silver_stats[0]:.1%})")
+    report.append(f"High return customers:  {silver_stats[5]:,} ({silver_stats[5]/silver_stats[0]:.1%})")
+    report.append(f"Zero return customers:  {silver_stats[6]:,} ({silver_stats[6]/silver_stats[0]:.1%})")
+    
+    # Feature completeness with imputation info
+    report.append("")
+    report.append("IMPUTATION SUMMARY:")
+    report.append("-" * 30)
+    report.append("Missing value handling strategy:")
+    report.append("  - Core metrics: Row drop if any missing [STRICT]")
+    report.append("  - Return behavior: Zero-fill if missing [PERMISSIVE]")
+    report.append("  - Other metrics: Mean imputation [ADAPTIVE]")
+    
+    # Get imputation statistics
+    imputation_stats = conn.execute("""
+        SELECT 
+            -- Zero-filled return features
+            sum(CASE WHEN return_rate = 0 THEN 1 ELSE 0 END) as zero_return_rate_count,
+            100.0 * sum(CASE WHEN return_rate = 0 THEN 1 ELSE 0 END) / count(*) as zero_return_rate_pct,
+            sum(CASE WHEN return_product_variety = 0 THEN 1 ELSE 0 END) as zero_return_variety_count,
+            100.0 * sum(CASE WHEN return_product_variety = 0 THEN 1 ELSE 0 END) / count(*) as zero_return_variety_pct,
+            
+            -- Mean-imputed features (approximation)
+            avg(category_diversity_score) as avg_category_diversity,
+            avg(avg_order_value) as avg_order_value
+        FROM silver_customer_features;
+    """).fetchone()
+    
+    report.append("")
+    report.append("IMPUTATION STATISTICS:")
+    report.append("-" * 30)
+    report.append(f"Zero return rate:       {imputation_stats[0]:,} customers ({imputation_stats[1]:.1f}%)")
+    report.append(f"Zero return variety:    {imputation_stats[2]:,} customers ({imputation_stats[3]:.1f}%)")
+    report.append(f"Avg category diversity: {imputation_stats[4]:.3f}")
+    report.append(f"Avg order value:        {imputation_stats[5]:.2f}")
     
     # Feature completeness
     completeness_stats = conn.execute("""
@@ -370,6 +502,11 @@ def generate_feature_summary_report(conn, features: Dict[str, pd.DataFrame]) -> 
         SELECT 
             'temporal' as feature_group,
             100.0 * count(*) FILTER (WHERE customer_lifetime_days > 0) / count(*) as completeness_pct
+        FROM silver_customer_features
+        UNION ALL
+        SELECT 
+            'returns' as feature_group,
+            100.0 * count(*) FILTER (WHERE return_rate > 0) / count(*) as completeness_pct
         FROM silver_customer_features
         UNION ALL
         SELECT 

@@ -1,0 +1,52 @@
+============================================================
+CUSTOMER FEATURE CREATION SUMMARY REPORT
+============================================================
+Generated on: 2025-06-25 12:11:06
+
+FEATURE GROUPS CREATED:
+------------------------------
+basic_volume        : 14,999 customers,  5 features
+return_behavior     : 14,999 customers,  6 features
+temporal            : 14,999 customers,  6 features
+recency             : 14,999 customers,  4 features
+category            : 14,972 customers,  3 features
+consecutive         : 14,999 customers,  2 features
+adjacency           : 14,999 customers,  4 features
+seasonal            : 14,999 customers,  2 features
+trend               : 14,999 customers,  2 features
+monetary            : 14,999 customers,  3 features
+
+Total features created: 37
+
+SILVER LAYER STATISTICS:
+------------------------------
+Total customers:        14,999 (100.0% of bronze layer)
+Average return rate:    0.214
+Average orders:         67.4
+Average lifetime days:  940
+Veteran customers:      14,710 (98.1%)
+High return customers:  1,002 (6.7%)
+Zero return customers:  1,016 (6.8%)
+
+IMPUTATION SUMMARY:
+------------------------------
+Missing value handling strategy:
+  - Core metrics: Row drop if any missing [STRICT]
+  - Return behavior: Zero-fill if missing [PERMISSIVE]
+  - Other metrics: Mean imputation [ADAPTIVE]
+
+IMPUTATION STATISTICS:
+------------------------------
+Zero return rate:       1,016 customers (6.8%)
+Zero return variety:    1,040 customers (6.9%)
+Avg category diversity: 1.613
+Avg order value:        27.20
+
+FEATURE COMPLETENESS:
+------------------------------
+basic_volume   :  100.0%
+temporal       :  100.0%
+returns        :   93.2%
+adjacency      :   98.7%
+
+============================================================

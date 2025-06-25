@@ -1,0 +1,79 @@
+{
+    "timestamp": "20250625_113527",
+    "config": {
+        "dimensionality_reduction": {
+            "pca_components": "10",
+            "tsne_components": "2",
+            "tsne_perplexity": "30",
+            "umap_components": "2",
+            "umap_neighbors": "15",
+            "umap_min_dist": "0.1",
+            "random_state": "42"
+        },
+        "dbscan": {
+            "eps": "0.7",
+            "min_samples": "10",
+            "metric": "euclidean",
+            "algorithm": "auto",
+            "n_jobs": "-1"
+        },
+        "kmeans": {
+            "n_clusters": "auto",
+            "random_state": "42",
+            "n_init": "10",
+            "max_clusters": "8",
+            "exclude_dbscan_noise": "True",
+            "strict_clusters": "True",
+            "n_clusters_range": "range(2, 9)",
+            "optimal_k": "4",
+            "max_iter": "300",
+            "algorithm": "auto"
+        },
+        "sub_dbscan": {
+            "eps": "0.6",
+            "min_samples": "15",
+            "metric": "euclidean",
+            "algorithm": "auto",
+            "n_jobs": "-1",
+            "max_sub_clusters": "2"
+        },
+        "dbscan_subclusters": {
+            "eps": "0.8",
+            "min_samples": "20",
+            "metric": "euclidean",
+            "algorithm": "auto",
+            "n_jobs": "-1",
+            "max_sub_clusters_per_main": "2",
+            "max_total_clusters": "15"
+        },
+        "best_technique": "tsne",
+        "timestamp": "20250625_113527"
+    },
+    "n_samples": 14999,
+    "n_features": 35,
+    "n_noise_points": 12980,
+    "noise_percentage": 86.53910260684046,
+    "n_clusters": 4,
+    "cluster_sizes": [
+        {
+            "cluster_id": 0,
+            "size": 1996,
+            "percentage": 98.86082218920258
+        },
+        {
+            "cluster_id": 1,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 2,
+            "size": 2,
+            "percentage": 0.09905894006934125
+        },
+        {
+            "cluster_id": 3,
+            "size": 18,
+            "percentage": 0.8915304606240713
+        }
+    ]
+}

@@ -1,0 +1,1455 @@
+{
+    "timestamp": "20250625_105338",
+    "config": {
+        "dimensionality_reduction": {
+            "pca_components": "10",
+            "tsne_components": "2",
+            "tsne_perplexity": "30",
+            "umap_components": "2",
+            "umap_neighbors": "15",
+            "umap_min_dist": "0.1",
+            "random_state": "42"
+        },
+        "dbscan": {
+            "eps": "0.5",
+            "min_samples": "5",
+            "metric": "euclidean",
+            "algorithm": "auto",
+            "n_jobs": "-1"
+        },
+        "kmeans": {
+            "n_clusters": "auto",
+            "random_state": "42",
+            "n_init": "10",
+            "max_clusters": "15",
+            "exclude_dbscan_noise": "True",
+            "n_clusters_range": "range(2, 16)",
+            "optimal_k": "2",
+            "max_iter": "300",
+            "algorithm": "auto"
+        },
+        "sub_dbscan": {
+            "eps": "0.3",
+            "min_samples": "3",
+            "metric": "euclidean",
+            "algorithm": "auto",
+            "n_jobs": "-1"
+        },
+        "dbscan_subclusters": {
+            "eps": "0.15",
+            "min_samples": "2",
+            "metric": "euclidean",
+            "algorithm": "auto",
+            "n_jobs": "-1"
+        },
+        "best_technique": "tsne",
+        "timestamp": "20250625_105338"
+    },
+    "n_samples": 14999,
+    "n_features": 35,
+    "n_noise_points": 12980,
+    "noise_percentage": 86.53910260684046,
+    "n_clusters": 280,
+    "cluster_sizes": [
+        {
+            "cluster_id": 0,
+            "size": 829,
+            "percentage": 41.05993065874195
+        },
+        {
+            "cluster_id": 1,
+            "size": 10,
+            "percentage": 0.49529470034670625
+        },
+        {
+            "cluster_id": 2,
+            "size": 13,
+            "percentage": 0.6438831104507181
+        },
+        {
+            "cluster_id": 3,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 4,
+            "size": 6,
+            "percentage": 0.2971768202080238
+        },
+        {
+            "cluster_id": 5,
+            "size": 6,
+            "percentage": 0.2971768202080238
+        },
+        {
+            "cluster_id": 6,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 7,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 8,
+            "size": 6,
+            "percentage": 0.2971768202080238
+        },
+        {
+            "cluster_id": 9,
+            "size": 6,
+            "percentage": 0.2971768202080238
+        },
+        {
+            "cluster_id": 10,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 11,
+            "size": 10,
+            "percentage": 0.49529470034670625
+        },
+        {
+            "cluster_id": 12,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 13,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 14,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 15,
+            "size": 11,
+            "percentage": 0.5448241703813769
+        },
+        {
+            "cluster_id": 16,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 17,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 18,
+            "size": 6,
+            "percentage": 0.2971768202080238
+        },
+        {
+            "cluster_id": 19,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 20,
+            "size": 6,
+            "percentage": 0.2971768202080238
+        },
+        {
+            "cluster_id": 21,
+            "size": 11,
+            "percentage": 0.5448241703813769
+        },
+        {
+            "cluster_id": 22,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 23,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 24,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 25,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 26,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 27,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 28,
+            "size": 6,
+            "percentage": 0.2971768202080238
+        },
+        {
+            "cluster_id": 29,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 30,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 31,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 32,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 33,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 34,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 35,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 36,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 37,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 38,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 39,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 40,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 41,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 42,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 43,
+            "size": 6,
+            "percentage": 0.2971768202080238
+        },
+        {
+            "cluster_id": 44,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 45,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 46,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 47,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 48,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 49,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 50,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 51,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 52,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 53,
+            "size": 7,
+            "percentage": 0.3467062902426944
+        },
+        {
+            "cluster_id": 54,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 55,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 56,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 57,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 58,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 59,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 60,
+            "size": 6,
+            "percentage": 0.2971768202080238
+        },
+        {
+            "cluster_id": 61,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 62,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 63,
+            "size": 13,
+            "percentage": 0.6438831104507181
+        },
+        {
+            "cluster_id": 64,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 65,
+            "size": 6,
+            "percentage": 0.2971768202080238
+        },
+        {
+            "cluster_id": 66,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 67,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 68,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 69,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 70,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 71,
+            "size": 6,
+            "percentage": 0.2971768202080238
+        },
+        {
+            "cluster_id": 72,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 73,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 74,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 75,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 76,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 77,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 78,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 79,
+            "size": 6,
+            "percentage": 0.2971768202080238
+        },
+        {
+            "cluster_id": 80,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 81,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 82,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 83,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 84,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 85,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 86,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 87,
+            "size": 6,
+            "percentage": 0.2971768202080238
+        },
+        {
+            "cluster_id": 88,
+            "size": 6,
+            "percentage": 0.2971768202080238
+        },
+        {
+            "cluster_id": 89,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 90,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 91,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 92,
+            "size": 6,
+            "percentage": 0.2971768202080238
+        },
+        {
+            "cluster_id": 93,
+            "size": 8,
+            "percentage": 0.396235760277365
+        },
+        {
+            "cluster_id": 94,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 95,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 96,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 97,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 98,
+            "size": 7,
+            "percentage": 0.3467062902426944
+        },
+        {
+            "cluster_id": 99,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 100,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 101,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 102,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 103,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 104,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 105,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 106,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 107,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 108,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 109,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 110,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 111,
+            "size": 6,
+            "percentage": 0.2971768202080238
+        },
+        {
+            "cluster_id": 112,
+            "size": 6,
+            "percentage": 0.2971768202080238
+        },
+        {
+            "cluster_id": 113,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 114,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 115,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 116,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 117,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 118,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 119,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 120,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 121,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 122,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 123,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 124,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 125,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 126,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 127,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 128,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 129,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 130,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 131,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 132,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 133,
+            "size": 6,
+            "percentage": 0.2971768202080238
+        },
+        {
+            "cluster_id": 134,
+            "size": 6,
+            "percentage": 0.2971768202080238
+        },
+        {
+            "cluster_id": 135,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 136,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 137,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 138,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 139,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 140,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 141,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 142,
+            "size": 6,
+            "percentage": 0.2971768202080238
+        },
+        {
+            "cluster_id": 143,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 144,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 145,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 146,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 147,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 148,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 149,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 150,
+            "size": 7,
+            "percentage": 0.3467062902426944
+        },
+        {
+            "cluster_id": 151,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 152,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 153,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 154,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 155,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 156,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 157,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 158,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 159,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 160,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 161,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 162,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 163,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 164,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 165,
+            "size": 6,
+            "percentage": 0.2971768202080238
+        },
+        {
+            "cluster_id": 166,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 167,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 168,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 169,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 170,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 171,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 172,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 173,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 174,
+            "size": 6,
+            "percentage": 0.2971768202080238
+        },
+        {
+            "cluster_id": 175,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 176,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 177,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 178,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 179,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 180,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 181,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 182,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 183,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 184,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 185,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 186,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 187,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 188,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 189,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 190,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 191,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 192,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 193,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 194,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 195,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 196,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 197,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 198,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 199,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 200,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 201,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 202,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 203,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 204,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 205,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 206,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 207,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 208,
+            "size": 6,
+            "percentage": 0.2971768202080238
+        },
+        {
+            "cluster_id": 209,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 210,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 211,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 212,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 213,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 214,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 215,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 216,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 217,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 218,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 219,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 220,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 221,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 222,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 223,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 224,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 225,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 226,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 227,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 228,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 229,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 230,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 231,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 232,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 233,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 234,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 235,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 236,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 237,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 238,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 239,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 240,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 241,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 242,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 243,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 244,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 245,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 246,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 247,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 248,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 249,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 250,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 251,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 252,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 253,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 254,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 255,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 256,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 257,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 258,
+            "size": 5,
+            "percentage": 0.24764735017335313
+        },
+        {
+            "cluster_id": 259,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 260,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 261,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 262,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 263,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 264,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 265,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 266,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 267,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 268,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 269,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 270,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 271,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 272,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 273,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 274,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 275,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 276,
+            "size": 4,
+            "percentage": 0.1981178801386825
+        },
+        {
+            "cluster_id": 277,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 278,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        },
+        {
+            "cluster_id": 279,
+            "size": 3,
+            "percentage": 0.1485884101040119
+        }
+    ]
+}
