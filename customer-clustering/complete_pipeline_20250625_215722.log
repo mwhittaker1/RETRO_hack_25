@@ -1,0 +1,17 @@
+2025-06-25 21:57:22,695 - INFO - Starting complete pipeline
+2025-06-25 21:57:22,715 - INFO - Connected to database: customer_clustering.db
+2025-06-25 21:57:22,715 - INFO - Checking for duplicates in all layers
+2025-06-25 21:57:22,932 - INFO - Bronze layer: 6072683 total rows, 6072683 unique primary keys, 0 duplicates
+2025-06-25 21:57:22,936 - INFO - Silver layer: 14999 total rows, 14999 unique emails, 0 duplicates
+2025-06-25 21:57:22,940 - INFO - Gold layer: 14999 total rows, 14999 unique emails, 0 duplicates
+2025-06-25 21:57:22,940 - INFO - Importing data from ../data/random1_FINAL_SENT.csv
+2025-06-25 21:57:22,941 - INFO - Bronze layer has 6072683 rows before import
+2025-06-25 21:57:22,941 - INFO - Loading CSV into temporary table
+2025-06-25 21:57:34,419 - INFO - Temporary table has 31 columns
+2025-06-25 21:57:34,419 - INFO - Mapping columns and generating primary keys
+2025-06-25 21:57:34,420 - INFO - Bronze layer has 24 columns: ['primary_key', 'sales_order_no', 'customer_emailid', 'order_date', 'sku', 'sales_qty', 'gross', 'return_qty', 'units_returned_flag', 'return_date', 'return_no', 'return_comment', 'orderlink', 'q_cls_id', 'q_sku_desc', 'q_gmm_id', 'q_sku_id', 'class_', 'division_', 'brand_', 'q_clr_dnum', 'q_clr_desc', 'vendor_style', 'size_']
+2025-06-25 21:57:34,420 - INFO - Creating formatted table with all required columns
+2025-06-25 21:57:37,969 - INFO - Inserting data into bronze layer
+2025-06-25 21:57:48,658 - INFO - Added 0 new rows to bronze layer
+2025-06-25 21:57:48,721 - ERROR - Failed to import to bronze layer
+2025-06-25 21:57:49,764 - INFO - Database connection closed

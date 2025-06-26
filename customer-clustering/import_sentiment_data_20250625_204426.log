@@ -1,0 +1,11 @@
+2025-06-25 20:44:26,000 - INFO - Starting sentiment data import and diversity score update
+2025-06-25 20:44:26,021 - INFO - Connected to database: customer_clustering.db
+2025-06-25 20:44:26,035 - INFO - Importing data from sentiment_and_raw/new_base_returns_sku_reasoncodes_sent.csv
+2025-06-25 20:44:27,714 - INFO - Read 388410 rows from CSV file
+2025-06-25 20:44:27,714 - INFO - Original columns: ['SALES_ORDER_NO', 'CUSTOMER_EMAILID', 'ORDER_DATE', 'SKU', 'SALES_QTY', 'GROSS', 'RETURN_QTY', 'UNITS_RETURNED_FLAG', 'RETURN_DATE', 'RETURN_NO', 'RETURN_COMMENT', 'RETURN_REASON', 'ORDERLINK', 'F_ID', 'F_NAME', 'Q_D2C_RTRN_REASONCODE_ID', 'Q_D2C_RET_REASON_NAME', 'Q_D2C_RET_REASON', 'Q_D2C_RET_REASON_GROUP_NAME0', 'Q_CLS_ID', 'Q_SKU_DESC', 'Q_GMM_ID', 'Q_SKU_ID', 'CLASS_', 'DIVISION_', 'BRAND_', 'Q_CLR_DNUM', 'Q_CLR_DESC', 'VENDOR_STYLE', 'SIZE_', 'SAMPLE_ID', 'SENTIMENT SCORE']
+2025-06-25 20:44:27,802 - INFO - Generated primary key column
+2025-06-25 20:44:28,017 - INFO - Prepared DataFrame with 388410 rows and 24 columns
+2025-06-25 20:44:28,034 - INFO - Bronze layer has 3635436 rows before import
+2025-06-25 20:44:28,144 - ERROR - Error inserting data: Conversion Error: invalid timestamp field format: "No", expected format is (YYYY-MM-DD HH:MM:SS[.US][±HH[:MM[:SS]]| ZONE]) when casting from source column units_returned_flag
+2025-06-25 20:44:28,144 - ERROR - Failed to import sentiment data
+2025-06-25 20:44:28,184 - INFO - Database connection closed

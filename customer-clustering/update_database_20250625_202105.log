@@ -1,0 +1,7 @@
+2025-06-25 20:21:05,501 - INFO - Starting update and export process
+2025-06-25 20:21:05,577 - INFO - Connected to database: customer_clustering.db
+2025-06-25 20:21:05,578 - INFO - Step 1: Updating bronze layer with new sentiment data
+2025-06-25 20:21:05,578 - INFO - Importing new data from: sentiment_and_raw/new_base_returns_sku_reasoncodes_sent.csv
+2025-06-25 20:21:05,743 - WARNING - Column count mismatch. Expected 24, got 32
+2025-06-25 20:21:05,777 - ERROR - Error updating bronze layer: Parser Error: syntax error at or near "MERGE"
+2025-06-25 20:21:05,796 - INFO - Database connection closed

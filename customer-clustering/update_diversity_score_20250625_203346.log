@@ -1,0 +1,10 @@
+2025-06-25 20:33:46,427 - INFO - Starting diversity score update process
+2025-06-25 20:33:46,442 - INFO - Connected to database: customer_clustering.db
+2025-06-25 20:33:46,483 - INFO - Found 623 unique product categories in bronze layer
+2025-06-25 20:33:46,483 - INFO - Updating category_diversity_score calculation...
+2025-06-25 20:33:46,644 - INFO - Updated category_diversity_score for 14972 customers
+2025-06-25 20:33:46,644 - INFO - Exporting silver layer to silver_customer_features_updated_20250625_203346.csv...
+2025-06-25 20:33:46,671 - INFO - Retrieved 14999 rows with 44 columns
+2025-06-25 20:33:47,039 - INFO - Successfully exported to CSV: silver_customer_features_updated_20250625_203346.csv
+2025-06-25 20:33:47,039 - INFO - Process completed successfully. Output file: silver_customer_features_updated_20250625_203346.csv
+2025-06-25 20:33:47,085 - INFO - Database connection closed

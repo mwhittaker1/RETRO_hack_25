@@ -1,0 +1,7 @@
+2025-06-25 21:33:38,174 - INFO - Starting product diversity score update and silver layer export
+2025-06-25 21:33:38,211 - INFO - Connected to database: customer_clustering.db
+2025-06-25 21:33:38,211 - INFO - Updating category_diversity_score calculation
+2025-06-25 21:33:38,240 - INFO - Found 623 unique product categories in bronze layer
+2025-06-25 21:33:38,377 - ERROR - Error updating category_diversity_score: 'NoneType' object is not subscriptable
+2025-06-25 21:33:38,378 - ERROR - Failed to update product diversity score
+2025-06-25 21:33:38,390 - INFO - Database connection closed

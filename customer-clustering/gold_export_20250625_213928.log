@@ -1,0 +1,13 @@
+2025-06-25 21:39:28,173 - INFO - Starting gold layer update and export process
+2025-06-25 21:39:28,188 - INFO - Connected to database: customer_clustering.db
+2025-06-25 21:39:28,188 - INFO - Updating category_diversity_score_scaled in gold layer
+2025-06-25 21:39:29,147 - INFO - Updated category_diversity_score_scaled for 14999 customers in gold layer
+2025-06-25 21:39:29,148 - INFO - Successfully updated category_diversity_score_scaled in gold layer
+2025-06-25 21:39:29,148 - INFO - Exporting to CSV: gold_cluster_processed_20250625_213928.csv
+2025-06-25 21:39:29,148 - INFO - Retrieving gold layer data...
+2025-06-25 21:39:29,167 - INFO - Retrieved 14999 rows with 41 columns
+2025-06-25 21:39:29,507 - INFO - Successfully exported to CSV: gold_cluster_processed_20250625_213928.csv
+2025-06-25 21:39:29,507 - INFO - Exporting to Excel: gold_cluster_processed_20250625_213928.xlsx
+2025-06-25 21:39:35,444 - INFO - Successfully exported to Excel: gold_cluster_processed_20250625_213928.xlsx
+2025-06-25 21:39:35,445 - INFO - Export completed successfully
+2025-06-25 21:39:35,546 - INFO - Database connection closed

@@ -1,0 +1,33 @@
+2025-06-25 20:30:18,688 - INFO - Starting update and export process
+2025-06-25 20:30:18,702 - INFO - Connected to database: customer_clustering.db
+2025-06-25 20:30:18,702 - INFO - Step 1: Updating bronze layer with new sentiment data
+2025-06-25 20:30:18,702 - INFO - Importing new data from: sentiment_and_raw/new_base_returns_sku_reasoncodes_sent.csv
+2025-06-25 20:30:18,864 - WARNING - Column count mismatch. Expected 24, got 32
+2025-06-25 20:30:18,865 - WARNING - Added empty column primary_key
+2025-06-25 20:30:18,875 - INFO - Mapped column SALES_ORDER_NO to sales_order_no
+2025-06-25 20:30:18,881 - INFO - Mapped column CUSTOMER_EMAILID to customer_emailid
+2025-06-25 20:30:18,885 - INFO - Mapped column ORDER_DATE to order_date
+2025-06-25 20:30:18,890 - INFO - Mapped column SKU to sku
+2025-06-25 20:30:18,894 - INFO - Mapped column SALES_QTY to sales_qty
+2025-06-25 20:30:18,899 - INFO - Mapped column GROSS to gross
+2025-06-25 20:30:18,904 - INFO - Mapped column RETURN_QTY to return_qty
+2025-06-25 20:30:18,908 - INFO - Mapped column UNITS_RETURNED_FLAG to units_returned_flag
+2025-06-25 20:30:18,913 - INFO - Mapped column RETURN_DATE to return_date
+2025-06-25 20:30:18,918 - INFO - Mapped column RETURN_NO to return_no
+2025-06-25 20:30:18,922 - INFO - Mapped column RETURN_COMMENT to return_comment
+2025-06-25 20:30:18,926 - INFO - Mapped column ORDERLINK to orderlink
+2025-06-25 20:30:18,931 - INFO - Mapped column Q_CLS_ID to q_cls_id
+2025-06-25 20:30:18,935 - INFO - Mapped column Q_SKU_DESC to q_sku_desc
+2025-06-25 20:30:18,939 - INFO - Mapped column Q_GMM_ID to q_gmm_id
+2025-06-25 20:30:18,944 - INFO - Mapped column Q_SKU_ID to q_sku_id
+2025-06-25 20:30:18,949 - INFO - Mapped column CLASS_ to class_
+2025-06-25 20:30:18,953 - INFO - Mapped column DIVISION_ to division_
+2025-06-25 20:30:18,956 - INFO - Mapped column BRAND_ to brand_
+2025-06-25 20:30:18,962 - INFO - Mapped column Q_CLR_DNUM to q_clr_dnum
+2025-06-25 20:30:18,966 - INFO - Mapped column Q_CLR_DESC to q_clr_desc
+2025-06-25 20:30:18,970 - INFO - Mapped column VENDOR_STYLE to vendor_style
+2025-06-25 20:30:18,974 - INFO - Mapped column SIZE_ to size_
+2025-06-25 20:30:19,313 - INFO - Generated primary keys for data
+2025-06-25 20:30:22,695 - ERROR - Error updating bronze layer: Constraint Error: PRIMARY KEY or UNIQUE constraint violation: duplicate key "FP10145790-69504066-ashleyjdimare@gmail.com"
+2025-06-25 20:30:22,708 - ERROR - FAILED: Failed to update bronze layer
+2025-06-25 20:30:22,712 - INFO - Database connection closed

@@ -1,0 +1,39 @@
+2025-06-25 22:02:02,672 - INFO - Connected to database: customer_clustering.db
+2025-06-25 22:02:02,716 - INFO - Processing 9 new customers into silver layer
+2025-06-25 22:02:02,716 - INFO - New customers: ['LDRONSKI@ANTHROPOLOGIE.COM', 'PLILLIS@URBANOUTFITTERS.COM', 'AREVEAL@FREEPEOPLE.COM', 'KMOSES@FREEPEOPLE.COM', 'LSIMONET@URBANOUTFITTERS.COM', 'Melissa.dicerbo@gmail.com', 'MHANNUM@FREEPEOPLE.COM', 'JCOOPER1@ANTHROPOLOGIE.COM', 'MRAMIREZ-MENDEZ@URBANOUTFITTERS.COM']
+2025-06-25 22:02:02,716 - INFO - Calculating basic features for new customers
+2025-06-25 22:02:02,717 - INFO - Calculating category diversity scores
+2025-06-25 22:02:02,755 - INFO - Found 623 unique product categories
+2025-06-25 22:02:03,303 - INFO - Features calculated for new customers:
+2025-06-25 22:02:03,304 - INFO - Feature columns: ['customer_emailid', 'category_diversity_score', 'sales_order_no_nunique', 'sku_nunique', 'items_returned_count', 'return_qty_sum', 'sales_qty_sum', 'sales_qty_mean', 'return_rate', 'avg_returns_per_order', 'return_frequency_ratio', 'customer_lifetime_days']
+2025-06-25 22:02:03,311 - INFO - Sample features:
+                      customer_emailid  ...  customer_lifetime_days
+0               MHANNUM@FREEPEOPLE.COM  ...                     279
+1  MRAMIREZ-MENDEZ@URBANOUTFITTERS.COM  ...                     579
+2           LDRONSKI@ANTHROPOLOGIE.COM  ...                     129
+3          PLILLIS@URBANOUTFITTERS.COM  ...                     594
+4            Melissa.dicerbo@gmail.com  ...                      67
+
+[5 rows x 12 columns]
+2025-06-25 22:02:03,312 - INFO - Silver layer has 44 columns
+2025-06-25 22:02:03,313 - INFO - Temp table has 12 columns
+2025-06-25 22:02:03,317 - INFO - Creating silver layer entry for MHANNUM@FREEPEOPLE.COM
+2025-06-25 22:02:03,319 - ERROR - Error inserting MHANNUM@FREEPEOPLE.COM: Parser Error: syntax error at or near "12"
+2025-06-25 22:02:03,320 - INFO - Creating silver layer entry for MRAMIREZ-MENDEZ@URBANOUTFITTERS.COM
+2025-06-25 22:02:03,321 - ERROR - Error inserting MRAMIREZ-MENDEZ@URBANOUTFITTERS.COM: Parser Error: syntax error at or near "12"
+2025-06-25 22:02:03,321 - INFO - Creating silver layer entry for LDRONSKI@ANTHROPOLOGIE.COM
+2025-06-25 22:02:03,322 - ERROR - Error inserting LDRONSKI@ANTHROPOLOGIE.COM: Parser Error: syntax error at or near "12"
+2025-06-25 22:02:03,322 - INFO - Creating silver layer entry for PLILLIS@URBANOUTFITTERS.COM
+2025-06-25 22:02:03,324 - ERROR - Error inserting PLILLIS@URBANOUTFITTERS.COM: Parser Error: syntax error at or near "12"
+2025-06-25 22:02:03,324 - INFO - Creating silver layer entry for Melissa.dicerbo@gmail.com
+2025-06-25 22:02:03,325 - ERROR - Error inserting Melissa.dicerbo@gmail.com: Parser Error: syntax error at or near "12"
+2025-06-25 22:02:03,325 - INFO - Creating silver layer entry for JCOOPER1@ANTHROPOLOGIE.COM
+2025-06-25 22:02:03,326 - ERROR - Error inserting JCOOPER1@ANTHROPOLOGIE.COM: Parser Error: syntax error at or near "12"
+2025-06-25 22:02:03,327 - INFO - Creating silver layer entry for LSIMONET@URBANOUTFITTERS.COM
+2025-06-25 22:02:03,328 - ERROR - Error inserting LSIMONET@URBANOUTFITTERS.COM: Parser Error: syntax error at or near "12"
+2025-06-25 22:02:03,328 - INFO - Creating silver layer entry for KMOSES@FREEPEOPLE.COM
+2025-06-25 22:02:03,329 - ERROR - Error inserting KMOSES@FREEPEOPLE.COM: Parser Error: syntax error at or near "12"
+2025-06-25 22:02:03,329 - INFO - Creating silver layer entry for AREVEAL@FREEPEOPLE.COM
+2025-06-25 22:02:03,331 - ERROR - Error inserting AREVEAL@FREEPEOPLE.COM: Parser Error: syntax error at or near "12"
+2025-06-25 22:02:03,369 - INFO - Added 0 out of 9 new customers to silver layer
+2025-06-25 22:02:03,396 - INFO - Finished processing new customers

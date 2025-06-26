@@ -1,0 +1,17 @@
+2025-06-25 21:47:09,549 - INFO - Starting complete pipeline
+2025-06-25 21:47:09,571 - INFO - Connected to database: customer_clustering.db
+2025-06-25 21:47:09,571 - INFO - Checking for duplicates in all layers
+2025-06-25 21:47:09,668 - INFO - Bronze layer: 3635436 total rows, 3635436 unique primary keys, 0 duplicates
+2025-06-25 21:47:09,671 - INFO - Silver layer: 14999 total rows, 14999 unique emails, 0 duplicates
+2025-06-25 21:47:09,674 - INFO - Gold layer: 14999 total rows, 14999 unique emails, 0 duplicates
+2025-06-25 21:47:09,674 - INFO - Importing data from ../data/random1_FINAL_SENT.csv
+2025-06-25 21:47:09,675 - INFO - Bronze layer has 3635436 rows before import
+2025-06-25 21:47:09,675 - INFO - Loading CSV into temporary table
+2025-06-25 21:47:21,152 - INFO - Temporary table has 31 columns
+2025-06-25 21:47:21,152 - INFO - Mapping columns and generating primary keys
+2025-06-25 21:47:21,153 - INFO - Bronze layer has 24 columns: ['primary_key', 'sales_order_no', 'customer_emailid', 'order_date', 'sku', 'sales_qty', 'gross', 'return_qty', 'units_returned_flag', 'return_date', 'return_no', 'return_comment', 'orderlink', 'q_cls_id', 'q_sku_desc', 'q_gmm_id', 'q_sku_id', 'class_', 'division_', 'brand_', 'q_clr_dnum', 'q_clr_desc', 'vendor_style', 'size_']
+2025-06-25 21:47:21,153 - INFO - Creating formatted table with all required columns
+2025-06-25 21:47:24,569 - INFO - Inserting data into bronze layer
+2025-06-25 21:47:29,112 - ERROR - Error importing to bronze layer: Constraint Error: PRIMARY KEY or UNIQUE constraint violation: duplicate key "FN07107403-79711628-andelkachorak@gmail.com"
+2025-06-25 21:47:29,112 - ERROR - Failed to import to bronze layer
+2025-06-25 21:47:29,191 - INFO - Database connection closed

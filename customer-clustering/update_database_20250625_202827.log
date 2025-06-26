@@ -1,0 +1,32 @@
+2025-06-25 20:28:27,800 - INFO - Starting update and export process
+2025-06-25 20:28:27,816 - INFO - Connected to database: customer_clustering.db
+2025-06-25 20:28:27,816 - INFO - Step 1: Updating bronze layer with new sentiment data
+2025-06-25 20:28:27,816 - INFO - Importing new data from: sentiment_and_raw/new_base_returns_sku_reasoncodes_sent.csv
+2025-06-25 20:28:28,008 - WARNING - Column count mismatch. Expected 24, got 32
+2025-06-25 20:28:28,008 - WARNING - Added empty column primary_key
+2025-06-25 20:28:28,018 - INFO - Mapped column SALES_ORDER_NO to sales_order_no
+2025-06-25 20:28:28,022 - INFO - Mapped column CUSTOMER_EMAILID to customer_emailid
+2025-06-25 20:28:28,027 - INFO - Mapped column ORDER_DATE to order_date
+2025-06-25 20:28:28,032 - INFO - Mapped column SKU to sku
+2025-06-25 20:28:28,037 - INFO - Mapped column SALES_QTY to sales_qty
+2025-06-25 20:28:28,043 - INFO - Mapped column GROSS to gross
+2025-06-25 20:28:28,048 - INFO - Mapped column RETURN_QTY to return_qty
+2025-06-25 20:28:28,053 - INFO - Mapped column UNITS_RETURNED_FLAG to units_returned_flag
+2025-06-25 20:28:28,058 - INFO - Mapped column RETURN_DATE to return_date
+2025-06-25 20:28:28,062 - INFO - Mapped column RETURN_NO to return_no
+2025-06-25 20:28:28,066 - INFO - Mapped column RETURN_COMMENT to return_comment
+2025-06-25 20:28:28,072 - INFO - Mapped column ORDERLINK to orderlink
+2025-06-25 20:28:28,076 - INFO - Mapped column Q_CLS_ID to q_cls_id
+2025-06-25 20:28:28,083 - INFO - Mapped column Q_SKU_DESC to q_sku_desc
+2025-06-25 20:28:28,086 - INFO - Mapped column Q_GMM_ID to q_gmm_id
+2025-06-25 20:28:28,092 - INFO - Mapped column Q_SKU_ID to q_sku_id
+2025-06-25 20:28:28,097 - INFO - Mapped column CLASS_ to class_
+2025-06-25 20:28:28,102 - INFO - Mapped column DIVISION_ to division_
+2025-06-25 20:28:28,106 - INFO - Mapped column BRAND_ to brand_
+2025-06-25 20:28:28,112 - INFO - Mapped column Q_CLR_DNUM to q_clr_dnum
+2025-06-25 20:28:28,116 - INFO - Mapped column Q_CLR_DESC to q_clr_desc
+2025-06-25 20:28:28,122 - INFO - Mapped column VENDOR_STYLE to vendor_style
+2025-06-25 20:28:28,127 - INFO - Mapped column SIZE_ to size_
+2025-06-25 20:28:28,186 - ERROR - Error updating bronze layer: Conversion Error: invalid timestamp field format: "No", expected format is (YYYY-MM-DD HH:MM:SS[.US][±HH[:MM[:SS]]| ZONE]) when casting from source column units_returned_flag
+2025-06-25 20:28:28,188 - ERROR - FAILED: Failed to update bronze layer
+2025-06-25 20:28:28,193 - INFO - Database connection closed

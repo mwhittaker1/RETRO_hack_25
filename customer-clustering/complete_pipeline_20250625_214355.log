@@ -1,0 +1,41 @@
+2025-06-25 21:43:55,217 - INFO - Starting complete pipeline
+2025-06-25 21:43:55,250 - INFO - Connected to database: customer_clustering.db
+2025-06-25 21:43:55,251 - INFO - Checking for duplicates in all layers
+2025-06-25 21:43:55,344 - INFO - Bronze layer: 3635436 total rows, 3635436 unique primary keys, 0 duplicates
+2025-06-25 21:43:55,348 - INFO - Silver layer: 14999 total rows, 14999 unique emails, 0 duplicates
+2025-06-25 21:43:55,351 - INFO - Gold layer: 14999 total rows, 14999 unique emails, 0 duplicates
+2025-06-25 21:43:55,351 - INFO - Importing data from ../data/random1_FINAL_SENT.csv
+2025-06-25 21:43:55,351 - INFO - Bronze layer has 3635436 rows before import
+2025-06-25 21:43:55,356 - INFO - Loading CSV into temporary table
+2025-06-25 21:43:55,448 - ERROR - Error importing to bronze layer: Conversion Error: CSV Error on Line: 7649
+Original Line: 
+AP37072870,rossjac@hhsc.ca,2025-03-19 21:24:15.000,95552659,1.0,99.95,1.0,Yes,2025-04-12 10:28:28.000,C005660307076,, ,AP3707287095552659,,,,,,,1700004.0,LOVE STORIES REESE SILK S,900001.0,-633875149.0,4141:SLEEP (NA),042:OFF HOURS (NA),ANTHROPOLOGIE (NA),15.0,NEUTRAL PATTERN (NA),L25103109-180,4000.0,3.0
+Error when converting column "RETURN_REASON". Could not convert string " " to 'BIGINT'
+
+Column RETURN_REASON is being converted as type BIGINT
+This type was auto-detected from the CSV file.
+Possible solutions:
+* Override the type for this column manually by setting the type explicitly, e.g., types={'RETURN_REASON': 'VARCHAR'}
+* Set the sample size to a larger value to enable the auto-detection to scan more values, e.g., sample_size=-1
+* Use a COPY statement to automatically derive types from an existing table.
+* Check whether the null string value is set correctly (e.g., nullstr = 'N/A')
+
+  file = ../data/random1_FINAL_SENT.csv
+  delimiter = , (Auto-Detected)
+  quote = " (Auto-Detected)
+  escape = " (Auto-Detected)
+  new_line = \r\n (Auto-Detected)
+  header = true (Set By User)
+  skip_rows = 0 (Auto-Detected)
+  comment = (empty) (Auto-Detected)
+  strict_mode = true (Auto-Detected)
+  date_format =  (Auto-Detected)
+  timestamp_format =  (Auto-Detected)
+  null_padding = 0
+  sample_size = 2048
+  ignore_errors = false
+  all_varchar = 0
+
+
+2025-06-25 21:43:55,448 - ERROR - Failed to import to bronze layer
+2025-06-25 21:43:55,505 - INFO - Database connection closed

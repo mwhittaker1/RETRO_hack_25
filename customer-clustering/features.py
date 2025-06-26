@@ -422,9 +422,17 @@ def create_category_intelligence(conn: duckdb.DuckDBPyConnection) -> pd.DataFram
     start_time = time.time()
     feature_eng = FeatureEngineering(conn)
     
+    # Get the total number of unique categories in the database
+    unique_categories_count = conn.execute("SELECT COUNT(DISTINCT class_) FROM bronze_return_order_data").fetchone()[0]
+    if unique_categories_count <= 0:
+        unique_categories_count = 20  # Default to 20 if no categories found
+        logger.warning(f"No unique categories found, using default value of {unique_categories_count}")
+    else:
+        logger.info(f"Found {unique_categories_count} unique product categories for diversity score calculation")
+    
     logger.info("Creating category intelligence features...")
     
-    query = """
+    query = f"""
     WITH customer_categories AS (
         SELECT 
             customer_emailid,
@@ -461,8 +469,8 @@ def create_category_intelligence(conn: duckdb.DuckDBPyConnection) -> pd.DataFram
     )
     SELECT 
         customer_emailid,
-        -- Category diversity (normalized by total categories available)
-        CAST(unique_categories AS DOUBLE) / 20.0 as category_diversity_score,  -- Assuming ~20 categories max
+        -- Category diversity (normalized by actual total unique categories in the database)
+        CAST(unique_categories AS DOUBLE) / {unique_categories_count}.0 as category_diversity_score,
         -- Category loyalty (0-1 scale)
         category_loyalty_raw as category_loyalty_score,
         -- High return category affinity (simplified)

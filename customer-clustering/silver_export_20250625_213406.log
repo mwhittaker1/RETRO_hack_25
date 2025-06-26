@@ -1,0 +1,15 @@
+2025-06-25 21:34:06,665 - INFO - Starting product diversity score update and silver layer export
+2025-06-25 21:34:06,701 - INFO - Connected to database: customer_clustering.db
+2025-06-25 21:34:06,702 - INFO - Updating category_diversity_score calculation
+2025-06-25 21:34:06,734 - INFO - Found 623 unique product categories in bronze layer
+2025-06-25 21:34:06,913 - INFO - Updated category_diversity_score for 14972 customers
+2025-06-25 21:34:06,914 - INFO - Found 0 new customers not yet in silver layer
+2025-06-25 21:34:06,914 - INFO - Successfully updated product diversity score
+2025-06-25 21:34:06,914 - INFO - Exporting to CSV: silver_customer_features_20250625_213406.csv
+2025-06-25 21:34:06,914 - INFO - Retrieving silver layer data...
+2025-06-25 21:34:06,934 - INFO - Retrieved 14999 rows with 44 columns
+2025-06-25 21:34:07,261 - INFO - Successfully exported to CSV: silver_customer_features_20250625_213406.csv
+2025-06-25 21:34:07,261 - INFO - Exporting to Excel: silver_customer_features_20250625_213406.xlsx
+2025-06-25 21:34:13,925 - INFO - Successfully exported to Excel: silver_customer_features_20250625_213406.xlsx
+2025-06-25 21:34:13,926 - INFO - Export completed successfully
+2025-06-25 21:34:13,986 - INFO - Database connection closed

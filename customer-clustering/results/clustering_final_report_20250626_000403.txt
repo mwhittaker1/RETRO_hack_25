@@ -1,0 +1,29 @@
+=== CUSTOMER CLUSTERING ANALYSIS REPORT ===
+
+Analysis completed: 20250626_000403
+Total customers analyzed: 176
+Optimal number of clusters identified: 2
+
+CLUSTER SIZES:
+Cluster 0: 136 customers (77.27%)
+Cluster 1: 40 customers (22.73%)
+
+CLUSTER PROFILES:
+
+CLUSTER 0:
+Size: 136 customers (77.27%)
+Distinctive HIGH features: ['customer_lifetime_days_scaled', 'sku_adjacency_timing_scaled', 'seasonal_susceptibility_orders_scaled', 'trend_product_category_order_rate_scaled', 'sales_order_no_nunique_scaled']
+Distinctive LOW features: ['avg_order_size_scaled', 'behavior_stability_score_scaled', 'recent_returns_scaled', 'recent_vs_avg_ratio_scaled', 'sku_adjacency_returns_scaled']
+Key characteristics:
+- Low return activity
+- Active shoppers
+- Occasional shoppers
+
+CLUSTER 1:
+Size: 40 customers (22.73%)
+Distinctive HIGH features: ['avg_order_size_scaled', 'behavior_stability_score_scaled', 'recent_returns_scaled', 'recent_vs_avg_ratio_scaled', 'sku_adjacency_returns_scaled']
+Distinctive LOW features: ['customer_lifetime_days_scaled', 'sku_adjacency_timing_scaled', 'seasonal_susceptibility_orders_scaled', 'trend_product_category_order_rate_scaled', 'sales_order_no_nunique_scaled']
+Key characteristics:
+- High return activity
+- Active shoppers
+- Occasional shoppers

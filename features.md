@@ -102,9 +102,12 @@ Response to external patterns and trends
 
 SEASONAL_SUSCEPTIBIITY_RETURNS – Customer's susceptibility to seasonal trends in returns *
 SEASONAL_SUSCEPTIBIITY_ORDERS – Customer's susceptibility to seasonal trends in orders *
-TREND_PRODUCT_CATEGORY_RETURN_RATE – Compares returned product category to recency of other customer returns (same product category within 90 days) *
-TREND_SKU_RETURN_RATE – Compares returned SKU to recency of other customer returns (same SKU within 90 days) *
-TREND_PRODUCT_CATEGORY_ORDER_RATE – Compares ordered product category to recency of other customer orders *
+TREND_PRODUCT_CATEGORY_RETURN_RATE – Compares returned product category to recency of 
+        other customer returns (same product category within 90 days) *
+TREND_SKU_RETURN_RATE – Compares returned SKU to recency of other customer returns 
+        (same SKU within 90 days) *
+TREND_PRODUCT_CATEGORY_ORDER_RATE – Compares ordered product category to recency of 
+        other customer orders *
 TREND_SKU_ORDER_RATE – Compares ordered SKU to recency of other customer orders *
 
 """
